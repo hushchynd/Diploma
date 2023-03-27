@@ -1,0 +1,27 @@
+@import '../../atributes'
+@import '../../buttons'
+@import '../../zeroing.css'
+.hall
+  display: grid
+  justify-content: center
+  width: 100%
+  align-items: center
+  margin-bottom: 100px
+  grid-gap: 3px
+  &__row
+    display: grid
+    grid-template-columns: repeat(15,30px)
+    grid-template-rows: 30px
+    grid-gap: 3px
+
+  &__item
+    padding: 10px
+    background: $gray-soft-color
+    &:hover
+      background: $purple-light-color
+  &__seat
+    padding: 10px
+    background: $purple-dark-color
+.btn-row
+  display: flex
+  margin-bottom: 50px

@@ -1,0 +1,60 @@
+{% extends 'admin_panel/base3.html' %}
+{% load static %}
+
+{% block content %}
+      <head>
+          <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">
+          <link rel="stylesheet" href="{% static 'admin_panel/hall/scheme.css' %}">
+
+          <link rel="stylesheet" href="{% static 'upload.css' %}">
+      </head>
+         <form id="hall_form"  runat="server" action="{% url 'admin_cinemas' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form">
+                  {% for row in hall_form %}
+                       <div class="form__row">
+                          <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>
+                          {{ row }}
+                      </div>
+                  {% endfor %}
+              </div>
+
+              <div class="form">
+                 {{ hallImgs_form.management_form }}
+                  <div class="form__title">Галерея картинок:</div>
+                  {% for form_img in hallImgs_form %}
+                      {{ form_img }}
+                  {% endfor %}
+              </div>
+              <div class="form__title"> Конструктор Зала </div>
+              <div class="hall">
+
+              </div>
+              <div class="btn-row">
+                  <button  type="button" class="form__btn btn-primary row-add-btn ">Добавить ряд</button>
+                  <button  type="button" class="form__btn row-remove-btn btn-primary">Удалить ряд</button>
+                  <button  type="button" class="form__btn numerate-btn btn-primary">Cформировать</button>
+              </div>
+               <div class="form">
+                 <div class="form__title">SEO блок </div>
+
+                 {% for seo in seo_form %}
+                      <div class="form__row">
+                          <label class="form__label" for="{{ seo.id_for_label }}" class="">{{ seo.label }}:</label>
+                          {{ seo }}
+                      </div>
+
+                 {% endfor %}
+               </div>
+               <div class="form__bottom">
+                   <button class="form__btn btn-primary btn-primary_corner">Сохранить</button>
+               </div>
+         </form>
+      <script>
+         let urlImgRemove = "{% static 'imgs/remove.png' %}";
+      </script>
+     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+     <script type="module" src="{% static 'admin_panel/hall/hall_form.js' %}"></script>
+     <script type="module" src="{% static 'admin_panel/hall/constructor_scheme.js' %}"></script>
+
+{% endblock %}

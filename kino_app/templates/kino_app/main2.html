@@ -1,0 +1,73 @@
+{% extends 'kino_app/base2.html' %}
+{% load static %}
+{% block title %}
+    Главная
+{% endblock %}
+{% block head %}
+        <link  rel="stylesheet" href="{% static 'kino_app/node_modules/lightslider/src/css/lightslider.css' %} " />
+        <link  rel="stylesheet" href="{% static 'kino_app/carousel.css' %} " />
+        <link  rel="stylesheet" href="{% static 'kino_app/main/main.css' %} " />
+{% endblock %}
+{% block content %}
+     <div class="main__content">
+         <div  class= "carousel main__carousel" data-number=1>
+             {% for item in banners_sliders.top_carousel %}
+                     <div class="carousel__item" data-link="{{ item.link }}" data-background = ../../../media/{{ item.img }} >
+                         <div class="carousel__title">
+                             {{ item.title }}
+                         </div>
+
+                     </div>
+             {% endfor %}
+
+         </div>
+         <div class="main__title">Смотрите сегодня:  {{ today_date }}</div>
+        {{ response_file }}
+         <div class="main__grid film">
+               {% for seance in seances_today %}
+                    <div class="film__item">
+                        <a href="{% url 'film_card' seance.film.name %}">
+                            <img class="film__img" src="../../../media/{{ seance.film.card_img }}" alt="">
+                        </a>
+                        <div class="film__text">{{ seance.film.name}}</div>
+                        <button class="film__btn btn-primary">
+                                Купить билет
+                        </button>
+                    </div>
+
+                {% endfor %}
+         </div>
+         <div class="main__title">Cмотрите скоро</div>
+         <div class="main__grid film">
+                {% for film in unreleased_films %}
+                    <div class="film__item">
+                        <a href="#">
+                            <img class="film__img" src="../../../media/{{ film.card_img }}" alt="">
+                        </a>
+                        <div class="film__text">{{ film.name}}</div>
+                        <div class="film__text film__text_yellow">
+                            C {{ film.released }}
+                        </div>
+                    </div>
+                {% endfor %}
+         </div>
+         <div class="main__title">Новости и Акции</div>
+         <div  class= "carousel cinema__carousel" data-number="2">
+             {% for item in banners_sliders.bottom_carousel %}
+                     <div class="carousel__item" data-link="{{ item.link }}" data-background = ../../../media/{{ item.img }} >
+                         <div class="carousel__title">
+                             {{ item.title }}
+                         </div>
+                     </div>
+             {% endfor %}
+         </div>
+        <div class="main__ads ">
+            Контекстная реклама
+        </div>
+     </div>
+{% endblock %}
+{% block script %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'kino_app/node_modules/lightslider/src/js/lightslider.js' %}"></script>
+    <script type="module" src="{% static 'kino_app/main/main.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'admin_panel/page_update.html' %}
+{% load static %}
+
+{% block content3 %}
+    <h4 class="text-center">Меню Кафе-Бара</h4>
+    <table class="table table-bordered table-hover"  style="width: 90%">
+        <thead>
+
+          <tr>
+
+            <th>Название</th>
+            <th>Вес</th>
+            <th>Цена</th>
+            <th>Удалить</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ menu_formset.management_form }}
+          {% for menu_form in menu_formset %}
+              <tr class="menu-form" data-widget="expandable-table" aria-expanded="true">
+              {% for row in menu_form %}
+                <td>{{ row }}</td>
+              {% endfor %}
+              </tr>
+          {% endfor %}
+                <tr>
+                    <td>
+                                      <button id="add-menu-form" class="btn btn-success my-3">Добавить блюдо</button>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <script></script>
+
+{% endblock %}
