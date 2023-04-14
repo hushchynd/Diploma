@@ -17,6 +17,7 @@ body
   display: grid
   grid-template-columns: 300px 1fr
   grid-template-rows:  100px 1fr
+
   grid-template-areas: 'header header' 'sidebar main'
 
 .header
@@ -31,12 +32,28 @@ body
      width: 120px
      height: 100%
      border-radius: 16px
+   &__right
+     width: 300px
+.user
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: end
+  gap: 15px
+  &__avatar
+    width: 50px
+    height: 50px
+  &__logout
+    width: 40px
+    height: 40px
+  &__name
+    font-family: $font-family
+    font-size: 18px
+    font-weight: bold
 
 .sidebar
    border-radius: 16px
-   height: 500px
    position: sticky
-
    grid-area: sidebar
    background: $white-color
    padding: 20px

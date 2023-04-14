@@ -20,7 +20,6 @@ $('.btn-add').on('click',function (event) {
 
 $("[name$='DELETE'], [for$='DELETE']").hide()
 $('.table').on('click','.btn-remove',function (event) {
-    alert('hello')
     $(this).siblings('[name$=\'DELETE\']').attr('checked','checked')
     $(this).parents("tr:first").fadeOut("slow", function() {
     // Animation complete.

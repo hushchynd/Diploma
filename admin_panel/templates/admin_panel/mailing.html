@@ -1,198 +1,88 @@
-{% extends 'admin_panel/base.html' %}
+{% extends 'admin_panel/base3.html' %}
 {% load static %}
 
 {% block content %}
-    <div class="content-wrapper">
-        <div class="content">
-            <div class="container">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="card card-danger">
-
-                          <div class="card-body">
-                              <div class="mb-5">
-                                <h3 class="text-center">SMS</h3>
-                              </div>
-                              <div class="container-fluid">
-                            <!-- Small boxes (Stat box) -->
-                                    <div class="row">
-                                          <div class="col-lg-2 col-6">
-                                                <h6>Кому слать:</h6>
-                                          </div>
-                                          <div class="col-lg-4 col-6">
-                                              <div class="form-check">
-                                                      <input class="form-check-input" type="radio" name="type_choosing">
-                                                      <label class="form-check-label">Все пользователи</label>
-                                              </div>
-                                          </div>
-                                          <div class="col-lg-1 col-6">
-                                              <div class="form-check">
-                                                      <input class="form-check-input" type="radio" name="type_choosing">
-                                                      <label class="form-check-label">Выборочно</label>
-                                              </div>
-                                          </div>
-                                           <div class="col-lg-5 col-6">
-                                              <div class="form-check">
-                                                  <a href="choose_client.html"style="text-decoration: none">
-                                                     <button type="button" style="width: 70%; margin-left: 70px;text-align: left " class="btn-sm rounded-pill btn-block btn-success">
-                                                    <h6 class="text-center">Выбрать пользователей</h6>
-                                          </button></a>
-                                              </div>
-                                          </div>
-                                    </div>
-
-                                    <div class="row">
-                                          <div class="col-lg-6">
-                                              <div class="form-group">
-                                                  <div class="row">
-                                                  <div class="row">
-                                                            <div class="col-lg-7">
-                                                                <label>Текст смс:</label>
-                                                            </div>
-                                                            <div class="col-lg-5">
-                                                                <label >Кол-во символов:  <span id ="charNum">0</span> </label>
-                                                            </div>
-                                                            <textarea class="form-control" id="field" onkeyup="countChar(this)" rows="3"></textarea>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-lg-6">
-                                              <div class="form-group">
-                                                  <div class="row mt-5">
-                                                            <h6>Кол-во смс: 0</h6>
-                                                            <h6>Рассылка выполнена на 45%:  20 000  </h6>                                                  </div>
-                                                  </div>
-                                              </div>
-
-                                          </div>
-
-
-
-
-                                    </div>
-                                    <div class="row mt-5" style="margin-left: 400px;">
-                                          <button type="button" style="width: 30%; text-align: center " class="btn-sm rounded-pill btn-block btn-secondary">
-                                                    <h6>Начать рассылку</h6>
-                                          </button>
-                                </div>
-                          </div>
+    <head>
+        <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">
+        <link rel="stylesheet" href="{% static 'admin_panel/mailing/mailing.css' %}">
+        <link rel="stylesheet" href="{% static 'admin_panel/mailing/upload_html.css' %}">
+    </head>
+     <div class="main__blocks">
+         <div class="main__block">
+             <div class="main__title">
+                 E-mail
+             </div>
+             <div class="main__card card">
+                 <form action="" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
+                    <div class="card__sample">
+                        <div class="card__title">Выбрать адресатов: </div>
+                        <div class="card__radio form__elem form__elem_radio">
+                            <div>
+                                <label for="all_clients">
+                                    Всех
+                                    <input type="radio" class="form__elem form__elem_radio" id="all_clients" name="clients" value="all" checked/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="selected_clients">
+                                    Выборочно
+                                    <input type="radio" class="form__elem form__elem_radio" id="selected_clients" name="clients" value="selected" />
+                                </label>
+                            </div>
+                        </div>
+                        <a href="{% url 'choose_client' %}" >
+                        <input type="button" class="card__btn btn-primary" value="Выбрать клиентов">
+                        </a>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="card card-danger">
+                    <div class="card__subtitle">Выбрать шаблон HTML </div>
 
-                          <div class="card-body">
-                              <div class="mb-5">
-                                <h3 class="text-center">E-mail</h3>
-                              </div>
-                              <div class="container-fluid">
-                            <!-- Small boxes (Stat box) -->
-                                    <div class="row">
-                                          <div class="col-lg-2 col-6">
-                                                <h6>Кому слать:</h6>
-                                          </div>
-                                          <div class="col-lg-4 col-6">
-                                              <div class="form-check">
-                                                      <input class="form-check-input" type="radio" name="type_choosing">
-                                                      <label class="form-check-label">Все пользователи</label>
-                                              </div>
-                                          </div>
-                                          <div class="col-lg-1 col-6">
-                                              <div class="form-check">
-                                                      <input class="form-check-input" type="radio" name="type_choosing">
-                                                      <label class="form-check-label">Выборочно</label>
-                                              </div>
-                                          </div>
-                                           <div class="col-lg-5 col-6">
-                                              <div class="form-check text-center">
-                                                  <a href="choose_client.html"style="text-decoration: none">
-                                                     <button type="button" style="width: 70%; margin-left: 70px;text-align: left " class="btn-sm rounded-pill btn-block btn-secondary">
-                                                    <h6 class="text-center" >Выбрать пользователей</h6>
-                                                     </button></a>
-                                              </div>
-                                          </div>
-                                    </div>
-
-                                    <div class="row">
-                                          <div class="col-lg-6 col-6">
-                                               <div class="card card-danger mt-5">
-                                                    <div class="card-body">
-                                                        <div class="mb-5">
-                                                            <h6>Список последних загруженных шаблонов</h6>
-                                                             <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" name="one">
-                                                                  <label class="form-check-label">Рассылка новостей</label>
-                                                                  <ion-icon name="trash-outline" ></ion-icon>
-
-                                                             </div>
-                                                             <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" name="one">
-                                                                  <label class="form-check-label">Рассылка новостей</label>
-                                                                  <ion-icon name="trash-outline" ></ion-icon>
-                                                             </div>
-                                                             <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" name="one">
-                                                                  <label class="form-check-label">Рассылка новостей</label>
-                                                                  <ion-icon name="trash-outline" ></ion-icon>
-                                                             </div>
-                                                             <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" name="one">
-                                                                  <label class="form-check-label">Рассылка новостей</label>
-                                                                  <ion-icon name="trash-outline" ></ion-icon>
-                                                             </div>
-                                                             <div class="form-check">
-                                                                  <input class="form-check-input" type="checkbox" name="one">
-                                                                  <label class="form-check-label">Рассылка новостей</label>
-                                                                  <ion-icon name="trash-outline" ></ion-icon>
-                                                             </div>
-                                                        </div>
-                                                    </div>
-                                               </div>
-                                          </div>
-
-                                          <div class="col-lg-6 col-6">
-
-                                              <div class="form-group">
-                                                  <div class="row mt-5">
-                                                            <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" >
-                                                                <label class="custom-file-label" for="exampleInputFile">Загрузить HTML письмо</label>
-                                                            </div>
-                                                            <h6 class="mt-5">Кол-во смс: 0</h6>
-
-                                                            <h6>Рассылка выполнена на 45%:  20 000  </h6>                                                  </div>
-                                                  </div>
-                                              </div>
-
-
-
-                                          </div>
-
-
-
-
-                                    </div>
-                                    <div class="row mt-5" style="margin-left: 400px;">
-                                          <button type="button" style="width: 30%; text-align: center " class="btn-sm rounded-pill btn-block btn-secondary">
-                                                    <h6 class="text-center">Начать рассылку</h6>
-                                          </button>
-                                </div>
-                          </div>
+                    <div class="card__row form__elem form__elem_radio">
+                        <div>
+                            <label for="new_template">
+                                Новый
+                                <input type="radio" class="form__elem form__elem_radio" id="new_template" name="template" value="new" checked/>
+                            </label>
+                        </div>
+                        <div>
+                            <label for="previous_template">
+                                Старый
+                                <input type="radio" class="form__elem form__elem_radio" id="previous_template" name="template" value="previous" />
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  <!-- /.content-wrapper -->
+                    <div class="card__file">
+                        {% for row in file_form %}
+                            {{ row }}
+                        {% endfor %}
+                    </div>
+                    <div class="card__list">
+                        <div class="card__subtitle">Список последних загруженных шаблонов</div>
+                        {% for file in templates_html %}
+                            <div class="card__list-item list-item">
+                                <div class="list-item__radio">
+                                    <input type="radio" name="templates_filter" value="{{ file.id }}">
+                                </div>
+                                <div class="list-item__name">{{ file.filename }}</div>
+                                <a href="{% url 'delete_template' file.id %}">
+                                    <div class="list-item__del">
+                                        Удалить
+                                    </div>
+                                </a>
 
-{% endblock %}
-{% block scripts %}
-    <script src="http://code.jquery.com/jquery-1.5.js"></script>
-    <script>
-      function countChar(val) {
-        var len = val.value.length;
-          $('#charNum').text(len);
+                            </div>
+                        {% endfor %}
 
-      };
-    </script>
+                    </div>
+                    <div class="form__bottom">
+                        <button class="form__btn btn-primary btn-primary_corner">Начать рассылку</button>
+                    </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script type="module" src="{% static 'admin_panel/mailing/upload_html.js' %}"></script>
+    <script type="module" src="{% static 'admin_panel/mailing/mailing.js' %}"></script>
 {% endblock %}

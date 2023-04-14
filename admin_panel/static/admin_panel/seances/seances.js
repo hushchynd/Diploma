@@ -9,9 +9,11 @@ $('.info__time').mouseenter(function () {
 
 })
 $('.info__time').mouseleave(function () {
+    $('.hall__booked').removeClass('hall__booked')
+
     setTimeout(()=>{
-        $(this).find('.info__descr').stop().fadeOut('slow')
-        $(this).find('.info__remove').stop().fadeOut('slow')
+        $(this).find('.info__descr').stop().fadeOut('fast')
+        $(this).find('.info__remove').stop().fadeOut('fast')
     },5000)
     $(this).parents('.info__hall').find('.info__hall_scheme').stop().fadeToggle('fast')
 }
@@ -51,9 +53,10 @@ function getTickets() {
             for (let row in data){
                 let rowElement = $(`.hall__row[data-number=${row}]`)
                 for (let seat of data[row]){
-                    rowElement.children('.hall__seat').filter( function (index,value) {
+                   $( rowElement.children('.hall__seat').filter( function (index,value) {
                         return value.innerText == seat
-                    }).replaceWith(`<div class="hall__booked">&#10006;</div>`)
+                    })).toggleClass('hall__booked')
+                       // .replaceWith(`<div class="hall__booked">&#10006;</div>`)
                 }
                 // console.log(row,'hello')
             }

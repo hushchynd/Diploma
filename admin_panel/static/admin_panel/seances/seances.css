@@ -141,9 +141,10 @@
   margin-left: 30px;
 }
 .info__hall_scheme {
+  padding: 20px;
   position: fixed;
   background: #2D3436;
-  width: 500px;
+  width: 400px;
   left: 10px;
   bottom: 10px;
   height: 200px;

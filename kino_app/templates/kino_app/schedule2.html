@@ -63,18 +63,25 @@
                                  <div class="info__text">{{ date }}</div>
                                  {% for hall,tech_film in hall_film %}
                                      <div class="info__hall">
+                                         <div class="info__hall_scheme" hidden>
+                                             <div class="hall" >
+                                                {{ hall.scheme_html | safe }}
+                                             </div>
+                                         </div>
                                          <div class="info__text">Зал №{{ hall }}</div>
                                          {% for tech,seances in tech_film %}
                                              <div class="info__tech">
                                                  <div class="info__text">{{ tech }}</div>
                                                  <div class="info__grid">
                                                      {% for seance in seances %}
-                                                         <a href="{% url 'seance'  seance.id %}">
-                                                         <button type="button" lin class="info__time">
+
+                                                         <button type="button"  class="info__time">
+                                                            <a href="{% url 'seance'  seance.id %}">
                                                             <div class="info__descr" hidden>Купить билет</div>
                                                              {{ seance.time }}
+                                                            </a>
                                                          </button>
-                                                         </a>
+
                                                      {% endfor %}
                                                  </div>
                                              </div>

@@ -36,7 +36,6 @@ class FilmForm(forms.ModelForm):
             'technology_types',
             'countries',
 
-
         )
 
         genres = forms.ModelMultipleChoiceField(
@@ -68,13 +67,15 @@ class FilmForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem form__elem_textarea', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'class': 'form__vertical-img', }),
-            'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', }),
+            'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'}),
             'trailer_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
-            'year': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'year': forms.TextInput(
+                attrs={'size': 20, 'class': 'form__elem form__elem_number', 'type': 'number', 'min': 1900,
+                       'max': 2100}, ),
             'budget': forms.NumberInput(attrs={'size': 20, 'class': 'form__elem form__elem_number', }),
             'legal_age': forms.NumberInput(attrs={'size': 20, 'class': 'form__elem form__elem_number', }),
-            'duration': forms.NumberInput(attrs={'size': 10, 'class': 'form__elem form__elem_number', }),
+            'duration': forms.NumberInput(attrs={'size': 10, 'class': 'form__elem form__elem_number','placeholder': 'В минутах' }),
             'genres': forms.SelectMultiple(attrs={'class': 'form__elem'}),
             'editors': forms.SelectMultiple(attrs={'class': 'form__elem'}),
             'producers': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
@@ -82,17 +83,6 @@ class FilmForm(forms.ModelForm):
             'operators': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
             'technology_types': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
             'countries': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
-
-            # 'name': forms.TextInput(attrs={'size': 20, 'class': '', }),
-            # 'description': forms.Textarea(attrs={'size': 20, 'class': '', }),
-            # 'card_img': forms.FileInput(attrs={'size': 20, 'class': '', }),
-            # 'released': forms.DateInput(attrs={'size': 20, 'class': '', }),
-            # 'trailer_link': forms.URLInput(attrs={'size': 20, 'class': '', }),
-            # 'banner': forms.FileInput(attrs={'size': 20, 'class': '', }),
-            # 'year': forms.TextInput(attrs={'size': 20, 'class': '', }),
-            # 'budget': forms.NumberInput(attrs={'size': 20, 'class': '', }),
-            # 'legal_age': forms.NumberInput(attrs={'size': 20, 'class': '', }),
-            # 'duration': forms.NumberInput(attrs={'size': 10, 'class': '', }),
             'genres': forms.SelectMultiple(attrs={'class': ''}),
             'editors': forms.SelectMultiple(attrs={'class': ''}),
             'producers': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': ''}),
@@ -401,4 +391,13 @@ class SeanceForm(forms.ModelForm):
             'film': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio'}),
             'time': forms.TimeInput(attrs={'class': 'form__elem'}),
             'tech_type': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'hidden': True}),
+        }
+
+
+class TemplateHtmlForm(forms.ModelForm):
+    class Meta:
+        model = TemplateHtml
+        fields = ('template_html',)
+        widgets = {
+            'template_html': forms.FileInput(attrs={'class': 'file-html', 'required': False})
         }

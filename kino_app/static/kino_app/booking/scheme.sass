@@ -1,0 +1,37 @@
+@import '../atributes'
+@import '../buttons'
+@import '../zeroing.css'
+.hall
+  text-align: center
+  margin: 0 auto
+  display: grid
+  justify-content: center
+  width: 100%
+  align-items: center
+  margin-bottom: 50px
+  grid-gap: 3px
+  color: $white-color
+  &__row
+    display: grid
+    grid-template-columns: repeat(15,50px)
+    grid-template-rows: 50px
+    grid-gap: 3px
+
+  &__item
+    padding: 10px
+    background: $gray-soft-color
+    visibility: hidden
+    &:hover
+      background: $yellow-light-color
+  &__seat
+    visibility: visible
+    padding: 10px
+    cursor: pointer
+    background: $yellow-dark-color
+    &_booked
+      background: $gray-light-color
+    &_choosed
+      background: $green-dark-color
+.btn-row
+  display: flex
+  margin-bottom: 50px

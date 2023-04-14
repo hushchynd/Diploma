@@ -7,6 +7,7 @@
     <link  rel="stylesheet" href="{% static 'kino_app/node_modules/lightslider/src/css/lightslider.css' %} " />
     <link  rel="stylesheet" href="{% static 'kino_app/carousel.css' %} " />
     <link  rel="stylesheet" href="{% static 'kino_app/booking/booking.css' %} " />
+    <link  rel="stylesheet" href="{% static 'kino_app/booking/scheme.css' %} " />
 {% endblock %}
 
 {% block content %}
@@ -14,8 +15,6 @@
          <div class="content__banner" data-background="../../../media/{{ seance.hall.banner }}">
 
          </div>
-
-
          <div class="content__grid">
              <div class="content__main main-card">
                   <div class="main-card__info info">
@@ -23,46 +22,30 @@
                      <div class="info__subtitle">Зал №{{ seance.hall.number }}&nbsp;&nbsp;&nbsp;&nbsp;{{ seance.date }}&nbsp;&nbsp;&nbsp;&nbsp;{{ seance.time }}</div>
                      <div class="info__row">
                          <div class="info__item">
-                             <span>Цена в грн:</span>&nbsp;&nbsp; <div class="price">55</div>
+                             <span>Цена в грн:</span>&nbsp;&nbsp; <div class="price">{{ seance.price }}</div>
                          </div>
                          <div class="info__item">
                              <span>Ваш заказ:&nbsp;&nbsp;</span>
                              <div class="info__row info__row_border">
-                                 <div class="tickets-count">Билетов:&nbsp;&nbsp; 0</div>
-                                 <div class="total-price">Сумма:&nbsp;&nbsp; 0 грн</div>
+                                 <div class="tickets-count">Билетов:&nbsp; <span class="tcount">0</span></div>
+                                 <div class="total-price">Сумма:&nbsp;&nbsp;<span class="tprice">0</span> грн</div>
                              </div>
                          </div>
 
                      </div>
 
                  </div>
-                 <div class="main-card__booking">
-                     <table class="main-card__table">
-                         <tr>
-                             <td>1 </td>
-                             <td>2</td>
-                             <td>3</td>
-                         </tr>
-                         <tr>
-                             <td>1</td>
-                             <td>2</td>
-                             <td>3</td>
-                         </tr>
-                         <tr>
-                             <td>1</td>
-                             <td>2</td>
-                             <td>3</td>
-                         </tr>
-                         <tr>
-                             <td>1</td>
-                             <td>2</td>
-                             <td>3</td>
-                         </tr>
-                     </table>
+                 <h3 class="main-card__title">
+                     ------ЭКРАН------
+                 </h3>
+                 <div class="main-card__booking hall">
+                    {{ seance.hall.scheme_html|safe|escape }}
                  </div>
+                 <button class="main-card__btn">Купить</button>
+
              </div>
              <div class="content__sidebar">
-                 <div class="content__card"  data-background="../../../media/{{ seance.film.card_img }}"></div>
+                 <div class="content__card" data-background="../../../media/{{ seance.film.card_img }}"></div>
                  <div class="content__ads">Контекстная реклама</div>
 
              </div>
@@ -71,7 +54,13 @@
      </div>
 {% endblock %}
 {% block script %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'kino_app/node_modules/lightslider/src/js/lightslider.js' %}"></script>
+    <script>
+        let seance_id = {{ seance.id }};
+        let user_id = {{request.user.id}};
+
+    </script>
     <script src="{% static 'kino_app/booking/booking.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
-$('.form__elem_radio').on('mousedown','div',function (event) {
 
+$('.form__elem_radio').on('mousedown','div',function (event) {
     $(this).find('input').click();
 
     $(this).parent().children().css({

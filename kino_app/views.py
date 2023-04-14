@@ -1,6 +1,7 @@
 import datetime
 import json
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -34,7 +35,7 @@ def page(request, page_id):
     return render(request, '../templates/kino_app/page2.html', context=data)
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class SeanceDetail(DetailView):
     model = Seance
     template_name = '../templates/kino_app/booking.html'
@@ -58,14 +59,18 @@ def getBookedTickets(request, seance_id):
 
 
 def booking(request):
+    print('hwllo')
     if request.POST:
-        data = json.loads(request.POST.get('data'))
+        print('Hello world')
+        data = json.loads(request.POST.get('choosedTickets'))
+        print(data)
         seance_id = request.POST.get('seance_id')
         user_id = request.POST.get('user_id')
-        for row, seats in data.items():
-            for seat in seats:
+        print(seance_id, user_id)
+        for key, value in data.items():
+            for row, seat in value.items():
                 Ticket(row=row, seat=seat, seance_id=seance_id, user_id=user_id).save()
-
+        return JsonResponse(data={'Success': 200})
     return render(request, '../templates/kino_app/booking.html', context=None)
 
 
@@ -89,7 +94,6 @@ def cinemas(request):
         "cinemas": cinemas,
     }
     return render(request, '../templates/kino_app/cinemas2.html', context=data)
-
 
 
 class Poster(ListView):
@@ -125,7 +129,6 @@ class Soon(ListView):
 
 
 def posterSoonAjax(request):
-    print(request.GET['page'])
     if request.GET['page'] == 'poster':
         data = {
             'type': 'poster',
@@ -139,11 +142,9 @@ def posterSoonAjax(request):
     return render(request, '../templates/kino_app/poster_soon_ajax.html', context=data)
 
 
-
 def schedule(request):
     template = '../templates/kino_app/schedule2.html'
     seances = Seance.objects.all()
-    print(seances )
     if is_ajax(request):
         template = '../templates/kino_app/schedule_items.html'
         date_filter = request.GET.get('period')
@@ -416,7 +417,6 @@ def stocks(request):
     else:
         page_num = 1
     page = paginator.get_page(page_num)
-
     data = {'stocks': page.object_list, 'page': page, }
     return render(request, '../templates/kino_app/stocks2.html', context=data)
 

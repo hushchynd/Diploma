@@ -76,10 +76,33 @@ body {
   height: 100%;
   border-radius: 16px;
 }
+.header__right {
+  width: 300px;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 15px;
+}
+.user__avatar {
+  width: 50px;
+  height: 50px;
+}
+.user__logout {
+  width: 40px;
+  height: 40px;
+}
+.user__name {
+  font-family: "Arvo", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
 
 .sidebar {
   border-radius: 16px;
-  height: 500px;
   position: sticky;
   grid-area: sidebar;
   background: #ffffff;

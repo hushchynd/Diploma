@@ -83,7 +83,7 @@ def loginView(request):
                 print('IS AUTHENTICATED')
 
                 login(request, user)
-                return redirect('main')
+                return redirect(request.GET.get('next',None))
     else:
         form = SignInForm()
     data = {

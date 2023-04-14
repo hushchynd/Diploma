@@ -1,9 +1,14 @@
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMultiAlternatives
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import FormView, DeleteView
 
 from admin_panel import forms as my_forms
+from admin_panel.tasks import send_email
 from kino_app.views import is_ajax
 from user import forms as user_forms
 from django.forms import inlineformset_factory, modelformset_factory
@@ -12,47 +17,44 @@ from admin_panel.models import *
 from datetime import date, timedelta
 
 
+@login_required
+@staff_member_required
 def statistic(request):
     data = {'users_count': Account.objects.count()}
     return render(request, 'admin_panel/statistic.html', context=data)
 
 
+@login_required
+@staff_member_required
 def clients(request):
-    data = {'users': Account.objects.all()
-            }
+    data = {'users': Account.objects.all()}
     return render(request, 'admin_panel/clients.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_client(request, id):
     client = Account.objects.get(id=id)
     if request.method == 'POST':
-        client_form = user_forms.UserForm(request.POST, instance=client)
+        client_form = user_forms.AdminUserForm(request.POST, instance=client)
         if client_form.is_valid():
             client_form.save()
             return redirect('clients')
-    client_form = user_forms.UserForm(instance=client)
+    client_form = user_forms.AdminUserForm(instance=client, )
+
     data = {'client_form': client_form, 'client_id': id}
     return render(request, 'admin_panel/update_client.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_client(request, id):
     return render(request, 'admin_panel/clients.html', )
 
 
-
+@login_required
+@staff_member_required
 def films(request):
-    if request.method == 'POST':
-        filmImgForm = my_forms.FilmImgForm(request.POST, request.FILES)
-        film_form = my_forms.FilmForm(request.POST, request.FILES)
-        seo_block = my_forms.SeoBlockForm(request.POST)
-        if seo_block.is_valid():
-            seo_obj = seo_block.save()
-            if film_form.is_valid() and filmImgForm.is_valid():
-                film_obj = film_form.save()
-                film_obj.seo_block_id = seo_obj.id
-                film_obj.save()
-                for file in request.FILES.getlist('img'):
-                    FilmImg.objects.create(img=file, film_id=film_obj.id)
     start_date = date.today()
     released_films = Film.objects.filter(released__lte=start_date)
     unreleased_films = Film.objects.filter(released__gte=start_date)
@@ -63,9 +65,32 @@ def films(request):
         },
         'title': 'Фильмы'
     }
+    if request.method == 'POST':
+        filmImgForm = my_forms.FilmImgForm(request.POST, request.FILES)
+        film_form = my_forms.FilmForm(request.POST, request.FILES)
+        seo_block = my_forms.SeoBlockForm(request.POST)
+
+        if seo_block.is_valid() and film_form.is_valid() and filmImgForm.is_valid():
+            seo_obj = seo_block.save()
+            film_obj = film_form.save()
+            film_obj.seo_block_id = seo_obj.id
+            film_obj.save()
+            for file in request.FILES.getlist('img'):
+                FilmImg.objects.create(img=file, film_id=film_obj.id)
+
+        else:
+            data = {
+                'seo_form': seo_block,
+                'form': film_form,
+                'filmImg_form': filmImgForm,
+            }
+            return render(request, 'admin_panel/film_form.html', context=data)
+
     return render(request, 'admin_panel/films2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def cinemas(request):
     if request.method == "POST":
         hall_form = my_forms.HallForm(request.POST, request.FILES)
@@ -87,14 +112,61 @@ def cinemas(request):
     return render(request, 'admin_panel/cinemas.html', context=data)
 
 
+@login_required
+@staff_member_required
 def choose_client(request):
-    return render(request, 'admin_panel/choose_client.html')
+    users = Account.objects.all()
+    data = {
+        'users': users
+    }
+    return render(request, 'admin_panel/choose_client.html', context=data)
 
 
+@login_required
+@staff_member_required
 def mailing(request):
-    return render(request, 'admin_panel/mailing.html')
+    clients_filter = request.GET.getlist('clients_filter')
+    if clients_filter:
+        users = Account.objects.filter(id__in=clients_filter)
+    else:
+        users = Account.objects.all()
+
+    if request.method == 'POST':
+        templates_filter = request.POST.getlist('templates_filter')
+        if templates_filter:
+            obj = TemplateHtml.objects.get(id__in=templates_filter)
+        else:
+            form = my_forms.TemplateHtmlForm(request.POST, request.FILES)
+            if form.is_valid():
+                obj = form.save()
+
+        with open(f'media/{obj.template_html}', 'r') as file:
+            html_content = file.read()
+        to = []
+        for i in users:
+            to.append(i.email)
+
+        task = send_email.delay(html_content, to)
+
+    templates_html = TemplateHtml.objects.all()[:5]
+    file_form = my_forms.TemplateHtmlForm()
+    data = {
+        'file_form': file_form,
+        'templates_html': templates_html,
+    }
+    return render(request, 'admin_panel/mailing.html', context=data)
 
 
+@login_required
+@staff_member_required
+def deleteHtmlTemplate(request, id):
+    templates_html = TemplateHtml.objects.get(id=id)
+    templates_html.delete()
+    return redirect('mailing')
+
+
+@login_required
+@staff_member_required
 def stocks(request):
     if request.method == "POST":
         stock_form = my_forms.StockForm(request.POST, request.FILES)
@@ -115,6 +187,8 @@ def stocks(request):
     return render(request, 'admin_panel/stocks2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def get_stock_form(request):
     stockImgs_form = my_forms.StockImgForm()
     stock_form = my_forms.StockForm()
@@ -124,6 +198,8 @@ def get_stock_form(request):
     return render(request, 'admin_panel/stock_form.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_stock(request, id):
     stock = Stock.objects.get(id=id)
     if request.method == 'POST':
@@ -142,6 +218,8 @@ def update_stock(request, id):
     return render(request, 'admin_panel/stock_update2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_stock(request, id):
     stock = Stock.objects.get(id=id)
     seo_block = SeoBlock.objects.get(id=stock.seo_block.id)
@@ -151,6 +229,8 @@ def delete_stock(request, id):
     return redirect('stocks_table')
 
 
+@login_required
+@staff_member_required
 def news(request):
     if request.method == "POST":
         news_form = my_forms.NewsForm(request.POST, request.FILES)
@@ -173,6 +253,8 @@ def news(request):
     return render(request, 'admin_panel/news2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def get_news_form(request):
     newsImgs_form = my_forms.NewsImgForm()
     news_form = my_forms.NewsForm()
@@ -182,6 +264,8 @@ def get_news_form(request):
     return render(request, 'admin_panel/news_form.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_news(request, id):
     news = News.objects.get(id=id)
     if request.method == 'POST':
@@ -200,6 +284,8 @@ def update_news(request, id):
     return render(request, 'admin_panel/news_update2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_news(request, id):
     news = News.objects.get(id=id)
     seo_block = SeoBlock.objects.get(id=news.seo_block.id)
@@ -217,7 +303,7 @@ def delete_news(request, id):
 #     data = {'form': film_form, 'filmImg_form': filmImgForm, 'seo_form': seo}
 #     return render(request, 'admin_panel/film_form.html', context=data)
 
-
+@method_decorator([login_required, staff_member_required], name='dispatch')
 class FilmForm(FormView):
     initial = {'name': 'Film name'}
     template_name = 'admin_panel/film_form.html'
@@ -235,6 +321,8 @@ class FilmForm(FormView):
         return redirect('films')
 
 
+@login_required
+@staff_member_required
 def cinema_card(request, name):
     cinema = Cinema.objects.get(name=name)
     if request.method == 'POST':
@@ -259,6 +347,8 @@ def cinema_card(request, name):
     return render(request, 'admin_panel/cinema_update.html', context=data)
 
 
+@login_required
+@staff_member_required
 def get_hall_form(request):
     hallImgs_form = my_forms.HallImgForm()
     hall_form = my_forms.HallForm()
@@ -268,6 +358,8 @@ def get_hall_form(request):
     return render(request, 'admin_panel/hall_form.html', context=data)
 
 
+@login_required
+@staff_member_required
 def banners_sliders(request):
     TopCarouselFormset = modelformset_factory(TopCarousel, form=my_forms.TopCarouselForm, extra=0, can_delete=True)
     top_carousel_formset = TopCarouselFormset(queryset=TopCarousel.objects.all(), prefix='top_carousel')
@@ -294,6 +386,8 @@ def banners_sliders(request):
     return render(request, 'admin_panel/banners_sliders2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def top_carousel(request):
     TopCarouselFormSet = modelformset_factory(TopCarousel, form=my_forms.TopCarouselForm, extra=0, can_delete=True)
     top_carousel_formset = TopCarouselFormSet(request.POST, request.FILES, prefix='top_carousel')
@@ -307,6 +401,8 @@ def top_carousel(request):
     return redirect('banners_sliders')
 
 
+@login_required
+@staff_member_required
 def bottom_carousel(request):
     BottomCarouselFormSet = modelformset_factory(BottomCarousel, form=my_forms.BottomCarouselForm, extra=0,
                                                  can_delete=True)
@@ -321,6 +417,8 @@ def bottom_carousel(request):
     return redirect('banners_sliders')
 
 
+@login_required
+@staff_member_required
 def back_img(request):
     back_img_form = my_forms.BackImgForm(request.POST, request.FILES)
     if back_img_form.is_valid():
@@ -330,6 +428,8 @@ def back_img(request):
     return redirect('banners_sliders')
 
 
+@login_required
+@staff_member_required
 def pages(request):
     if request.method == "POST":
         page_form = my_forms.PageForm(request.POST, request.FILES)
@@ -353,6 +453,8 @@ def pages(request):
     return render(request, 'admin_panel/pages2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def get_page_form(request):
     pageImgs_form = my_forms.PageImgForm()
     page_form = my_forms.PageForm()
@@ -362,6 +464,8 @@ def get_page_form(request):
     return render(request, 'admin_panel/page_form.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_page(request, id):
     menuFormset = modelformset_factory(can_delete=True, model=CafeBarMenu, form=my_forms.CafeBarMenuForm, extra=0)
 
@@ -393,6 +497,8 @@ def update_page(request, id):
     return render(request, 'admin_panel/page_update2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_page(request, id):
     page = Page.objects.get(id=id)
     seo_block = SeoBlock.objects.get(id=page.seo_block.id)
@@ -402,6 +508,8 @@ def delete_page(request, id):
     return redirect('pages')
 
 
+@login_required
+@staff_member_required
 def update_film(request, name):
     film = Film.objects.get(name=name)
     if request.method == 'POST':
@@ -422,6 +530,8 @@ def update_film(request, name):
     return render(request, 'admin_panel/film_update.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_hall(request, number):
     hall = Hall.objects.get(number=number)
     if request.method == 'POST':
@@ -441,6 +551,8 @@ def update_hall(request, number):
     return render(request, 'admin_panel/hall_update2.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_hall(request, number):
     hall = Hall.objects.get(number=number)
     seo_block = SeoBlock.objects.get(id=hall.seo_block.id)
@@ -450,6 +562,8 @@ def delete_hall(request, number):
     return redirect('admin_cinemas')
 
 
+@login_required
+@staff_member_required
 def update_main_page(request):
     main_page_obj = MainPage.objects.first()
 
@@ -468,6 +582,8 @@ def update_main_page(request):
     return render(request, 'admin_panel/main_page.html', context=data)
 
 
+@login_required
+@staff_member_required
 def update_contacts(request):
     contactFormset = modelformset_factory(can_delete=True, model=Contact, form=my_forms.ContactForm, extra=1)
     if request.method == 'POST':
@@ -480,6 +596,8 @@ def update_contacts(request):
     return render(request, 'admin_panel/update_contacts.html', context=data)
 
 
+@login_required
+@staff_member_required
 def seances(request):
     template = '../templates/admin_panel/seances.html'
     seances = Seance.objects.all()
@@ -541,6 +659,8 @@ def seances(request):
     return render(request, template, context=data)
 
 
+@login_required
+@staff_member_required
 def get_seance_form(request):
     if request.method == 'POST':
         seance_form = my_forms.SeanceForm(request.POST)
@@ -555,6 +675,8 @@ def get_seance_form(request):
     return render(request, 'admin_panel/seance_form.html', context=data)
 
 
+@login_required
+@staff_member_required
 def delete_seance(request, id):
     tickets = Ticket.objects.filter(seance_id=id)
     for ticket in tickets:

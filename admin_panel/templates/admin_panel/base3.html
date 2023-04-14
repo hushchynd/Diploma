@@ -13,13 +13,19 @@
         <div class="header">
             <div class="header__left">
                 <img class="header__logo" src="{% static 'admin_panel/imgs/home_alone.jpg' %}">
-            </div>
-            <div class="header__right">
 
+            </div>
+            <div class="header__right user">
+                <img class="user__avatar" src="{% static 'imgs/avatar.png' %}">
+                <div class="user__name">{{ request.user.first_name }}</div>
+                <a href="{% url 'logout' %}">
+                    <img class="user__logout"  src="{% static 'imgs/logout.png' %}">
+                </a>
             </div>
         </div>
         <aside class="sidebar">
             <ul class="sidebar__list">
+                <a href="{% url 'statistic' %}"><li class="sidebar__li">Статистика</li></a>
                 <a href="{% url 'banners_sliders' %}"><li class="sidebar__li">Баннера/Слайдеры</li></a>
                 <a href="{% url 'films' %}"><li class="sidebar__li">Фильмы</li></a>
                 <a href="{% url 'admin_cinemas' %}"><li class="sidebar__li">Кинотеатры</li></a>
@@ -27,6 +33,8 @@
                 <a href="{% url 'news_table' %}"><li class="sidebar__li">Новости</li></a>
                 <a href="{% url 'stocks_table' %}"><li class="sidebar__li">Акции</li></a>
                 <a href="{% url 'pages' %}"><li class="sidebar__li">Страницы</li></a>
+                <a href="{% url 'clients' %}"><li class="sidebar__li">Пользователи</li></a>
+                <a href="{% url 'mailing' %}"><li class="sidebar__li">Рассылка</li></a>
 
             </ul>
         </aside>

@@ -114,6 +114,21 @@
   margin-bottom: 30px;
 }
 
+.main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main-card__title {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 28px;
+  line-height: normal;
+  letter-spacing: 5px;
+  color: #FDCB6E;
+  font-family: "Arvo", sans-serif;
+}
 .main-card__booking td {
   width: 50px;
   height: 50px;
@@ -122,7 +137,25 @@
   color: #ffffff;
   text-align: center;
 }
+.main-card__btn {
+  width: 150px;
+  padding: 10px 30px;
+  border-radius: 0px;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: 0.25px;
+  background: #FDCB6E;
+  color: #ffffff;
+}
+.main-card__btn:hover {
+  background: #FFEAA7;
+}
 
+.info {
+  margin-bottom: 50px;
+}
 .info__title {
   padding: 10px 50px;
   display: inline;

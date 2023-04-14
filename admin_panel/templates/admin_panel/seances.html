@@ -4,7 +4,7 @@
 {% block content %}
     <head>
         <link rel="stylesheet" href="{% static 'admin_panel/seances/seances.css' %}">
-        <link  rel="stylesheet" href="{% static 'kino_app/schedule/scheme.css' %} " />
+        <link  rel="stylesheet" href="{% static 'admin_panel/seances/preview_scheme.css' %} " />
     </head>
       <div class="content">
          <div class="content__grid">
@@ -52,9 +52,9 @@
                                  <div class="info__date">
                                      <div class="info__text">{{ date }}</div>
                                      {% for hall,tech_film in hall_film %}
-                                         <div class="info__hall">
+                                         <div class="info__hall" >
                                              <div class="info__hall_scheme" hidden>
-                                                 <div class="hall">
+                                                 <div class="hall" >
                                                     {{ hall.scheme_html | safe }}
                                                  </div>
                                              </div>

@@ -160,13 +160,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Arvo", sans-serif;
   font-size: 18px;
 }
-.form__elem_date {
-  grid-area: auto;
-  grid-auto-columns: 130px;
-  width: 130px;
-  display: flex;
-  flex-direction: row;
-}
 .form__elem_radio {
   background: inherit;
   display: flex;

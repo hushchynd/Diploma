@@ -35,8 +35,11 @@ urlpatterns = [
     path("update_client/<str:id>", admin_panel.views.update_client, name='update_client'),
     path("delete_client/<str:id>", admin_panel.views.delete_client, name='delete_client'),
 
-    path("choose_client", admin_panel.views.choose_client),
-    path("mailing", admin_panel.views.mailing),
+    path("choose_client", admin_panel.views.choose_client, name='choose_client'),
+    path("delete_template/<str:id>", admin_panel.views.deleteHtmlTemplate, name='delete_template'),
+
+
+    path("mailing", admin_panel.views.mailing, name='mailing'),
     path("cinema_card/<str:name>", admin_panel.views.cinema_card, name='cinema_card'),
 
     path("hall_form", admin_panel.views.get_hall_form, name='hall_form'),
@@ -45,7 +48,7 @@ urlpatterns = [
 
     path("banners_sliders", admin_panel.views.banners_sliders, name='banners_sliders'),
     path("top_carousel", admin_panel.views.top_carousel, name='top_carousel'),
-    path("background", admin_panel.views.back_img,name='background'),
+    path("background", admin_panel.views.back_img, name='background'),
     path("bottom_carousel", admin_panel.views.bottom_carousel, name='bottom_carousel'),
     path("update_contacts", admin_panel.views.update_contacts, name='update_contacts'),
 

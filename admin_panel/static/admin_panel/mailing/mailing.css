@@ -1,0 +1,143 @@
+@import '../../zeroing.css';
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap");
+.btn-default {
+  font-family: "Arvo", sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-primary {
+  background: #6C5CE7;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: 0.25px;
+  color: #ffffff;
+  text-shadow: 0px 2px 4px rgba(38, 50, 56, 0.16), 0px 4px 8px rgba(38, 50, 56, 0.08);
+}
+.btn-primary:hover, .btn-primary:focus {
+  transition: background 0.3s ease;
+  background-color: #A29BFE;
+}
+
+.btn-primary_corner {
+  border-radius: 999px;
+}
+
+.btn-default {
+  font-size: 18px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  color: #6C5CE7;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ADADAD;
+}
+.btn-default:hover, .btn-default:focus {
+  transition: background 0.3s ease;
+  background-color: #6C5CE7;
+  color: #ffffff;
+}
+
+.main {
+  background: #6C5CE7;
+  padding: 0;
+}
+.main__blocks {
+  display: flex;
+  flex-direction: column;
+  font-family: "Arvo", sans-serif;
+}
+.main__block {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  border-radius: 16px;
+  position: relative;
+}
+.main__title {
+  font-family: "Arvo", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.card__title {
+  font-size: 18px;
+  font-family: "Arvo", sans-serif;
+  font-weight: bold;
+  grid-area: ctitle;
+}
+.card__subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-family: "Arvo", sans-serif;
+  text-align: center;
+}
+.card__row {
+  margin: 0 auto;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.card__radio {
+  grid-area: cradio;
+}
+.card__btn {
+  justify-self: right;
+  grid-area: cbtn;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: none;
+}
+.card__sample {
+  display: grid;
+  grid-template-areas: "ctitle cradio cbtn .";
+  grid-template-columns: 250px 300px 1fr 30px;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+.card__file {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.card__bottom {
+  display: grid;
+  grid-template-areas: "interval submit";
+  grid-template-columns: 300px 1fr;
+  justify-items: center;
+  align-items: end;
+}
+.card__list {
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.list-item {
+  font-size: 20px;
+  font-family: "Arvo", sans-serif;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: 20px 200px 100px;
+  grid-gap: 30px;
+}
+.list-item * {
+  margin-bottom: 20px;
+}
+
+/*# sourceMappingURL=mailing.css.map */

@@ -1,13 +1,12 @@
-{% extends 'admin_panel/page_update.html' %}
+{% extends 'admin_panel/page_update2.html' %}
 {% load static %}
 
 {% block content3 %}
+    <link rel="stylesheet" href="{% static 'admin_panel/cafe-bar/cafe.css' %}">
     <h4 class="text-center">Меню Кафе-Бара</h4>
     <table class="table table-bordered table-hover"  style="width: 90%">
         <thead>
-
           <tr>
-
             <th>Название</th>
             <th>Вес</th>
             <th>Цена</th>
@@ -17,15 +16,16 @@
         <tbody>
           {{ menu_formset.management_form }}
           {% for menu_form in menu_formset %}
-              <tr class="menu-form" data-widget="expandable-table" aria-expanded="true">
+              <tr  data-widget="expandable-table" aria-expanded="true">
               {% for row in menu_form %}
                 <td>{{ row }}</td>
+                  {{ row.errors }}
               {% endfor %}
               </tr>
           {% endfor %}
                 <tr>
                     <td>
-                                      <button id="add-menu-form" class="btn btn-success my-3">Добавить блюдо</button>
+                        <button id="add-menu-form" class="btn btn-success my-3">Добавить блюдо</button>
 
                     </td>
                 </tr>

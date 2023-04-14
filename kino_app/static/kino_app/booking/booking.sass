@@ -67,6 +67,18 @@
     margin-bottom: 30px
 
 .main-card
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  &__title
+    margin-bottom: 20px
+    text-align: center
+    font-size: 28px
+    line-height: normal
+    letter-spacing: 5px
+    color: $yellow-dark-color
+    font-family: $font-family
   &__booking
     & td
       width: 50px
@@ -75,7 +87,21 @@
       background: $yellow-dark-color
       color: $white-color
       text-align: center
+  &__btn
+    width: 150px
+    padding: 10px 30px
+    border-radius: 0px
+    font-weight: bold
+    font-size: 24px
+    line-height: 36px
+    text-align: center
+    letter-spacing: 0.25px
+    background: $yellow-dark-color
+    color: $white-color
+    &:hover
+      background: $yellow-light-color
 .info
+  margin-bottom: 50px
   &__title
     padding: 10px 50px
     display: inline
