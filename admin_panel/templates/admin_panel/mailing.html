@@ -54,6 +54,7 @@
                     <div class="card__file">
                         {% for row in file_form %}
                             {{ row }}
+                            {{ row.errors }}
                         {% endfor %}
                     </div>
                     <div class="card__list">

@@ -13,6 +13,7 @@
                   <div class="form__row">
                       <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>
                       {{ row }}
+                      {{ row.errors }}
                   </div>
              {% endfor %}
          </div>
@@ -23,6 +24,7 @@
                       <div class="form__row">
                           <label class="form__label" for="{{ seo.id_for_label }}" class="">{{ seo.label }}:</label>
                           {{ seo }}
+                          {{ seo.errors }}
                       </div>
                  {% endfor %}
          </div>

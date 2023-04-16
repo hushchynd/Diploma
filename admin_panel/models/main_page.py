@@ -9,9 +9,12 @@ class TopCarousel(models.Model):
     img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,
                             validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     link = models.URLField(verbose_name='', default='',
-                           validators=[validators.URLValidator(),
-                                       validators.RegexValidator(
-                                           '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)',message='Неверный url' )],
+                           validators=[
+                               validators.URLValidator(
+                                   regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
+                                   message='XYZ'),
+
+                           ],
                            )
     title = models.CharField(verbose_name='', max_length=50, default='',
                              validators=[
@@ -40,9 +43,12 @@ class BottomCarousel(models.Model):
     img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,
                             validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     link = models.URLField(verbose_name='', default='',
-                           validators=[validators.URLValidator(),
-                                       validators.RegexValidator(
-                                           '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)',message='Неверный url' )],
+                           validators=[
+                               validators.URLValidator(
+                                   regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
+                                   message='XYZ'),
+
+                           ],
                            )
 
     interval = 5
@@ -73,7 +79,8 @@ class MainPage(models.Model):
     seo_text = models.TextField(max_length=500,
                                 validators=[
                                     validators.MaxLengthValidator(500),
-                                    validators.RegexValidator('^[A-ZА-Я]{1}.*',message='Описание должно начинаться с заглавной буквы.'),
+                                    validators.RegexValidator('^[A-ZА-Я]{1}.*',
+                                                              message='Описание должно начинаться с заглавной буквы.'),
                                     validators.ProhibitNullCharactersValidator(),
 
                                 ]

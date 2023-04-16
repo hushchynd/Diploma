@@ -26,6 +26,7 @@ class SignUp(CreateView):
         context = super().get_context_data(**kwargs)
         return context
 
+
 #
 # class SignIn(LoginView):
 #     template_name = '../templates/user/signin.html'
@@ -77,22 +78,26 @@ def loginView(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            print('IS VALID')
-            user = authenticate(email=email, password=password)
-            if user:
-                print('IS AUTHENTICATED')
-
-                login(request, user)
-                return redirect(request.GET.get('next',None))
+            user_obj = authenticate(email=email, password=password)
+            if user_obj:
+                login(request, user_obj)
+                if request.GET.get('next', None) is None:
+                    return redirect('main')
+                else:
+                    return redirect(request.GET.get('next', None))
     else:
         form = SignInForm()
     data = {
         'form': form,
     }
     return render(request, '../templates/user/signin.html', context=data)
+
+
 def logoutView(request):
     logout(request)
     return redirect('main')
+
+
 class SignOut(LogoutView):
     redirect_field_name = reverse_lazy('main')
 

@@ -19,10 +19,10 @@
                      {% csrf_token %}
                      <div class="card__grid">
                          {{ top_carousel_formset.management_form }}
-                         {% for model,form in top_carousel %}
+                         {% for form in top_carousel_formset %}
                              <div class="card__item">
-                                 <img class="card__preview card__preview_horizontal" src="../../../media/{{ model.img }}" alt="">
-                                 {{ form }}
+                                 <img class="card__preview card__preview_horizontal" src="{% get_media_prefix %}{{ form.img.value }}" alt="">
+                                 {{form}}
                                   <button type='button' class="card__btn card__btn_remove">Удалить</button>
                              </div>
                          {% endfor %}
@@ -51,7 +51,7 @@
                  <div class="card__permission">
                      Размер: 2000x3000
                  </div>
-                 <form action="{% url 'background' %}" method="post" enctype="multipart/form-data">
+                 <form action="{% url 'background' %}" novalidate method="post" enctype="multipart/form-data">
                      {% csrf_token %}
                      <div class="card__grid">
                          {% for row in back_img_form %}
@@ -79,9 +79,9 @@
                     {% csrf_token %}
                     <div class="card__grid">
                          {{ bottom_carousel_formset.management_form }}
-                         {% for model,form in bottom_carousel %}
+                         {% for form in bottom_carousel_formset %}
                              <div class="card__item">
-                                 <img class="card__preview card__preview_horizontal" src="../../../media/{{ model.img }}" alt="">
+                                 <img class="card__preview card__preview_horizontal" src="{% get_media_prefix %}{{ form.img.value }}" alt="">
                                  {{ form }}
                                  <button type='button' class="card__btn card__btn_remove">Удалить</button>
 

@@ -6,13 +6,14 @@
         <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">
 
     </head>
-    <form action="{% url 'update_client' client_id %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'update_client' client_id %}" novalidate method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form">
              {% for row in client_form %}
                   <div class="form__row">
                       <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>
                       {{ row }}
+                      {{ row.errors }}
                   </div>
              {% endfor %}
           </div>

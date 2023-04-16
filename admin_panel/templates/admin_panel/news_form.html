@@ -14,6 +14,7 @@
                       <div class="form__row">
                           <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>
                           {{ row }}
+                          {{ row.errors }}
                       </div>
                  {% endfor %}
              </div>
@@ -22,6 +23,7 @@
                   <div class="form__title">Галерея картинок:</div>
                   {% for form_img in newsImgs_form %}
                       {{ form_img }}
+                      {{ form_img.errors }}
                   {% endfor %}
             </div>
             <div class="form">
@@ -31,6 +33,7 @@
                       <div class="form__row">
                           <label class="form__label" for="{{ seo.id_for_label }}" class="">{{ seo.label }}:</label>
                           {{ seo }}
+                          {{ seo.errors }}
                       </div>
 
                  {% endfor %}

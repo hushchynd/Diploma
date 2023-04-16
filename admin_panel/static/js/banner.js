@@ -8,7 +8,7 @@ $('.card__item_add').on('click',function () {
 
         newForm = $(`
        <div class='card__item'> 
-           <button type='button' class='card__btn card__btn_add btn-primary'> Добавить картинку </button>
+           <button type='button' class='card__btn card__btn_add btn-primary'> Выбрать картинку </button>
            <input type="file" name="top_carousel-${topCarouselTotal.val()}-img" class="form__horizontal-img" accept="image/*" id="id_top_carousel-${topCarouselTotal.val()}-img">
            <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem" placeholder="Ссылка" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
            <input type="text" name="top_carousel-${topCarouselTotal.val()}-title" class="form__elem" placeholder="Заголовок" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title">
@@ -24,7 +24,7 @@ $('.card__item_add').on('click',function () {
 
     newForm =  $(`
        <div class='card__item'> 
-           <button type='button' class='card__btn card__btn_add btn-primary'> Добавить картинку </button>
+           <button type='button' class='card__btn card__btn_add btn-primary'> Выбрать картинку </button>
            <input type="file" name="bottom_carousel-${bottomCarouselTotal.val()}-img" class="form__horizontal-img" accept="image/*" id="id_bottom_carousel-${bottomCarouselTotal.val()}-img">
            <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem" placeholder="Ссылка" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
            <input type="hidden" name="bottom_carousel-${bottomCarouselTotal.val()}-id"  id="id_bottom_carousel-${bottomCarouselTotal.val()}-id">
@@ -50,9 +50,8 @@ $('.main__blocks').on('click','.card__btn_remove',function () {
 
 })
 
-
 $('.main__blocks').on('click','.card__btn_add',function () {
-    $(this).next().click()
+    $(this).siblings('[name$=\'img\']').click()
 })
 $('.main__blocks').on('change','.form__horizontal-img, .form__vertical-img',function () {
       let inputElem = $(this)
@@ -60,14 +59,21 @@ $('.main__blocks').on('change','.form__horizontal-img, .form__vertical-img',func
       let reader = new FileReader();
       reader.onload = function(event){
         let preview;
-        if (inputElem.hasClass('form__horizontal-img')) {
+        if (inputElem.hasClass('form__horizontal-img') ) {
              preview = $(`<img class="card__preview card__preview_horizontal" src="${event.target.result}"/>`)
         }else{
              preview = $(`<img class="card__preview card__preview_vertical" src="${event.target.result}"/>`)
 
         }
-         inputElem.prev().replaceWith(preview)
+         inputElem.siblings('.card__btn_add').replaceWith(preview)
       }
       reader.readAsDataURL(file);
 
 })
+var addPicBtn;
+$('.card__preview').each(function () {
+    if ($(this).attr('src') ==='/media/None') {
+        addPicBtn = $(`<button type=\'button\' class=\'card__btn card__btn_add btn-primary\'> Выбрать картинку </button>`)
+        $(this).replaceWith(addPicBtn)
+    }
+});

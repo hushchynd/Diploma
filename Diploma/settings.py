@@ -107,7 +107,7 @@ TEMPLATES = [
     },
 ]
 
-#LOGIN_REDIRECT_URL = 'main'
+# LOGIN_REDIRECT_URL = 'main'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 WSGI_APPLICATION = 'Diploma.wsgi.application'

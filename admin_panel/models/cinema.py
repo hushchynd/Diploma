@@ -228,9 +228,12 @@ class Stock(models.Model):
     creation_date = models.DateField(verbose_name="Дата создания", auto_now_add=True, null=True)
     turn_on = models.BooleanField(verbose_name="ВКЛ/ВЫКЛ", default=False)
     video_link = models.URLField(verbose_name="Ссылка на видео",
-                                 validators=[validators.URLValidator(),
-                                             validators.RegexValidator(
-                                                 '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)', )],
+                                 validators=[
+                                     validators.URLValidator(
+                                         regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
+                                         message='XYZ'),
+
+                                 ],
                                  )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
                                null=True,
@@ -284,9 +287,12 @@ class News(models.Model):
     creation_date = models.DateField(verbose_name="Дата создания", auto_now_add=True, null=True)
     turn_on = models.BooleanField(verbose_name="ВКЛ/ВЫКЛ", default=False)
     video_link = models.URLField(verbose_name="Ссылка на видео",
-                                 validators=[validators.URLValidator(),
-                                             validators.RegexValidator(
-                                                 '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)', )],
+                                 validators=[
+                                     validators.URLValidator(
+                                         regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
+                                         message='XYZ'),
+
+                                 ],
                                  )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
                                null=True,

@@ -81,11 +81,9 @@ class Film(models.Model):
                                  verbose_name="Картинка карточки",
                                  validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     released = models.DateField(verbose_name="Дата выхода")
-    trailer_link = models.URLField(max_length=100, verbose_name="Ссылка на трейлер",
-                                   validators=[validators.URLValidator(),
-                                               validators.RegexValidator(
-                                                   '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)',
-                                                   message='Неверный url адресс')
+    trailer_link = models.URLField(verbose_name="Ссылка на трейлер",
+                                   validators=[
+                                               validators.URLValidator(regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',message='XYZ'),
                                                ],
                                    )
     banner = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
@@ -148,10 +146,10 @@ class FilmImg(models.Model):
 class SeoBlock(models.Model):
     url = models.URLField(verbose_name='Ссылка',
                           validators=[
-                              validators.URLValidator(),
-                              validators.RegexValidator(
-                                  '\w*:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)',
-                                  message='Неверный url')
+                              validators.URLValidator(
+                                  regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
+                                  message='XYZ'),
+
                           ],
                           )
     title = models.CharField(max_length=50, verbose_name='Название',

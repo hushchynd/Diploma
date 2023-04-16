@@ -40,8 +40,10 @@ def update_client(request, id):
         if client_form.is_valid():
             client_form.save()
             return redirect('clients')
+        else:
+            data = {'client_form': client_form, 'client_id': id}
+            return render(request, 'admin_panel/update_client.html', context=data)
     client_form = user_forms.AdminUserForm(instance=client, )
-
     data = {'client_form': client_form, 'client_id': id}
     return render(request, 'admin_panel/update_client.html', context=data)
 
@@ -96,16 +98,18 @@ def cinemas(request):
         hall_form = my_forms.HallForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
         hall_gallery_form = my_forms.HallImgForm(request.POST, request.FILES)
-        if seo_form.is_valid():
+        if seo_form.is_valid() and hall_form.is_valid() and hall_gallery_form.is_valid():
             seo_obj = seo_form.save()
-            if hall_form.is_valid() and hall_gallery_form.is_valid():
-                hall_obj = hall_form.save()
-                hall_obj.seo_block_id = seo_obj.id
-                hall_obj.cinema_id = 1
-                hall_obj.save()
-                for file in request.FILES.getlist('img'):
-                    if file:
-                        HallImg.objects.create(img=file, hall_id=hall_obj.id)
+            hall_obj = hall_form.save()
+            hall_obj.seo_block_id = seo_obj.id
+            hall_obj.cinema_id = 1
+            hall_obj.save()
+            for file in request.FILES.getlist('img'):
+                if file:
+                    HallImg.objects.create(img=file, hall_id=hall_obj.id)
+        else:
+            data = {'hall_form': hall_form, 'hallImgs_form': hall_gallery_form, 'seo_form': seo_form}
+            return render(request, 'admin_panel/hall_form.html', context=data)
 
     cinemas = Cinema.objects.all()
     data = {'cinemas': cinemas}
@@ -139,6 +143,13 @@ def mailing(request):
             form = my_forms.TemplateHtmlForm(request.POST, request.FILES)
             if form.is_valid():
                 obj = form.save()
+            else:
+                templates_html = TemplateHtml.objects.all()[:5]
+                data = {
+                    'file_form': form,
+                    'templates_html': templates_html,
+                }
+                return render(request, 'admin_panel/mailing.html', context=data)
 
         with open(f'media/{obj.template_html}', 'r') as file:
             html_content = file.read()
@@ -172,15 +183,17 @@ def stocks(request):
         stock_form = my_forms.StockForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
         gallery_stock_form = my_forms.StockImgForm(request.POST, request.FILES)
-        if seo_form.is_valid():
+        if seo_form.is_valid() and stock_form.is_valid() and gallery_stock_form.is_valid():
             seo_obj = seo_form.save()
-            if stock_form.is_valid() and gallery_stock_form.is_valid():
-                stock_obj = stock_form.save()
-                stock_obj.seo_block_id = seo_obj.id
-                stock_obj.save()
-                for file in request.FILES.getlist('img'):
-                    if file:
-                        StockImg.objects.create(img=file, stock_id=stock_obj.id)
+            stock_obj = stock_form.save()
+            stock_obj.seo_block_id = seo_obj.id
+            stock_obj.save()
+            for file in request.FILES.getlist('img'):
+                if file:
+                    StockImg.objects.create(img=file, stock_id=stock_obj.id)
+        else:
+            data = {'stock_form': stock_form, 'stockImgs_form': gallery_stock_form, 'seo_form': seo_form}
+            return render(request, 'admin_panel/stock_form.html', context=data)
 
     stocks = Stock.objects.all()
     data = {'stocks': stocks}
@@ -210,6 +223,10 @@ def update_stock(request, id):
             stock_form.save()
             seo_form.save()
             return redirect('stocks_table')
+        else:
+
+            data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form}
+            return render(request, 'admin_panel/stock_update2.html', context=data)
 
     stock_form = my_forms.StockForm(instance=stock)
     seo_obj = SeoBlock.objects.get(id=stock.seo_block.id)
@@ -236,17 +253,17 @@ def news(request):
         news_form = my_forms.NewsForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
         gallery_news_form = my_forms.NewsImgForm(request.POST, request.FILES)
-
-        if seo_form.is_valid():
-
+        if seo_form.is_valid() and news_form.is_valid() and gallery_news_form.is_valid():
             seo_obj = seo_form.save()
-            if news_form.is_valid() and gallery_news_form.is_valid():
-                news_obj = news_form.save()
-                news_obj.seo_block_id = seo_obj.id
-                news_obj.save()
-                for file in request.FILES.getlist('img'):
-                    if file:
-                        NewsImg.objects.create(img=file, news_id=news_obj.id)
+            news_obj = news_form.save()
+            news_obj.seo_block_id = seo_obj.id
+            news_obj.save()
+            for file in request.FILES.getlist('img'):
+                if file:
+                    NewsImg.objects.create(img=file, news_id=news_obj.id)
+        else:
+            data = {'news_form': news_form, 'newsImgs_form': gallery_news_form, 'seo_form': seo_form}
+            return render(request, 'admin_panel/news_form.html', context=data)
 
     news_list = News.objects.all()
     data = {'news_list': news_list}
@@ -276,6 +293,8 @@ def update_news(request, id):
             news_form.save()
             seo_form.save()
             return redirect('news_table')
+        data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form}
+        return render(request, 'admin_panel/news_update2.html', context=data)
 
     news_form = my_forms.NewsForm(instance=news)
     seo_obj = SeoBlock.objects.get(id=news.seo_block.id)
@@ -334,11 +353,11 @@ def cinema_card(request, name):
             seo_form.save()
             return redirect('admin_cinemas')
         else:
-            cinema_form = my_forms.CinemaForm(instance=cinema)
-            seo_obj = SeoBlock(id=cinema.seo_block.id)
-            seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-            data = {'form': cinema_form, 'cinema_name': cinema.name, 'seo_form': seo_form}
-            return render(request, 'admin_panel/cinema_card.html', context=data)
+            halls = Hall.objects.filter(cinema_id=cinema.id)
+
+            data = {'form': cinema_form, 'cinema_name': cinema.name, 'seo_form': seo_form, 'halls': halls}
+            return render(request, 'admin_panel/cinema_update.html', context=data)
+
     seo_obj = SeoBlock.objects.get(id=cinema.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
     halls = Hall.objects.filter(cinema_id=cinema.id)
@@ -363,23 +382,18 @@ def get_hall_form(request):
 def banners_sliders(request):
     TopCarouselFormset = modelformset_factory(TopCarousel, form=my_forms.TopCarouselForm, extra=0, can_delete=True)
     top_carousel_formset = TopCarouselFormset(queryset=TopCarousel.objects.all(), prefix='top_carousel')
-    top_carousel_model = TopCarousel.objects.all()
 
     BottomCarouselFormset = modelformset_factory(BottomCarousel, form=my_forms.BottomCarouselForm, extra=0,
                                                  can_delete=True)
     bottom_carousel_formset = BottomCarouselFormset(queryset=BottomCarousel.objects.all(), prefix='bottom_carousel')
-    bottom_carousel_model = BottomCarousel.objects.all()
 
     interval = my_forms.FormInterval()
 
     back_img_form = my_forms.BackImgForm()
     data = {
-        'top_carousel': zip(top_carousel_model, top_carousel_formset),
-        'bottom_carousel': zip(bottom_carousel_model, bottom_carousel_formset),
 
         'top_carousel_formset': top_carousel_formset,
         'bottom_carousel_formset': bottom_carousel_formset,
-
         'back_img_form': back_img_form,
         'interval': interval,
     }
@@ -392,11 +406,24 @@ def top_carousel(request):
     TopCarouselFormSet = modelformset_factory(TopCarousel, form=my_forms.TopCarouselForm, extra=0, can_delete=True)
     top_carousel_formset = TopCarouselFormSet(request.POST, request.FILES, prefix='top_carousel')
 
+    BottomCarouselFormset = modelformset_factory(BottomCarousel, form=my_forms.BottomCarouselForm, extra=0,
+                                                 can_delete=True)
+    bottom_carousel_formset = BottomCarouselFormset(queryset=BottomCarousel.objects.all(), prefix='bottom_carousel')
+
     interval = my_forms.FormInterval(request.POST)
 
+    back_img_form = my_forms.BackImgForm()
     if top_carousel_formset.is_valid() and interval.is_valid():
         TopCarousel.interval = interval.cleaned_data['interval']
         top_carousel_formset.save()
+    else:
+        data = {
+            'top_carousel_formset': top_carousel_formset,
+            'bottom_carousel_formset': bottom_carousel_formset,
+            'back_img_form': back_img_form,
+            'interval': interval,
+        }
+        return render(request, 'admin_panel/banners_sliders2.html', context=data)
 
     return redirect('banners_sliders')
 
@@ -408,11 +435,24 @@ def bottom_carousel(request):
                                                  can_delete=True)
     bottom_carousel_formset = BottomCarouselFormSet(request.POST, request.FILES, prefix='bottom_carousel')
 
+    TopCarouselFormset = modelformset_factory(TopCarousel, form=my_forms.TopCarouselForm, extra=0, can_delete=True)
+    top_carousel_formset = TopCarouselFormset(queryset=TopCarousel.objects.all(), prefix='top_carousel')
+
     interval = my_forms.FormInterval(request.POST)
+    back_img_form = my_forms.BackImgForm()
 
     if bottom_carousel_formset.is_valid() and interval.is_valid():
         BottomCarousel.interval = interval.cleaned_data['interval']
         bottom_carousel_formset.save()
+
+    else:
+        data = {
+            'top_carousel_formset': top_carousel_formset,
+            'bottom_carousel_formset': bottom_carousel_formset,
+            'back_img_form': back_img_form,
+            'interval': interval,
+        }
+        return render(request, 'admin_panel/banners_sliders2.html', context=data)
 
     return redirect('banners_sliders')
 
@@ -436,17 +476,17 @@ def pages(request):
         seo_form = my_forms.SeoBlockForm(request.POST)
         pageImgForm = my_forms.PageImgForm(request.POST, request.FILES)
 
-        if seo_form.is_valid():
-
+        if seo_form.is_valid() and page_form.is_valid() and pageImgForm.is_valid():
             seo_obj = seo_form.save()
-            if page_form.is_valid() and pageImgForm.is_valid():
-
-                page_obj = page_form.save()
-                page_obj.seo_block_id = seo_obj.id
-                page_obj.save()
-                for file in request.FILES.getlist('img'):
-                    if file:
-                        PageImg.objects.create(img=file, page_id=page_obj.id)
+            page_obj = page_form.save()
+            page_obj.seo_block_id = seo_obj.id
+            page_obj.save()
+            for file in request.FILES.getlist('img'):
+                if file:
+                    PageImg.objects.create(img=file, page_id=page_obj.id)
+        else:
+            data = {'page_form': page_form, 'pageImgs_form': pageImgForm, 'seo_form': seo_form}
+            return render(request, 'admin_panel/page_form.html', context=data)
 
     page_list = Page.objects.all()
     data = {'page_list': page_list}
@@ -474,8 +514,24 @@ def update_page(request, id):
     if request.method == 'POST':
         if page.name == 'Кафе-Бар':
             menu_formset = menuFormset(request.POST)
-            if menu_formset.is_valid():
+            page_form = my_forms.PageUpdateForm(request.POST, request.FILES, instance=page)
+            seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
+            seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
+            if menu_formset.is_valid() and page_form.is_valid() and seo_form.is_valid():
                 menu_formset.save()
+                page_form.save()
+                seo_form.save()
+                return redirect('pages')
+            else:
+                data = {
+                    'page_form': page_form,
+                    'page_id': page.id,
+                    'seo_form': seo_form,
+                    'menu_formset': menu_formset,
+                    'labels': my_forms.CafeBarMenuForm
+                        }
+                return render(request, 'admin_panel/update_cafe-bar.html', context=data)
+
         page_form = my_forms.PageUpdateForm(request.POST, request.FILES, instance=page)
         seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
@@ -483,6 +539,9 @@ def update_page(request, id):
             page_form.save()
             seo_form.save()
             return redirect('pages')
+        else:
+            data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form}
+            return render(request, 'admin_panel/page_update2.html', context=data)
 
     page_form = my_forms.PageUpdateForm(instance=page)
     seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
@@ -521,6 +580,9 @@ def update_film(request, name):
             film_form.save()
             seo_form.save()
             return redirect('films')
+        else:
+            data = {'form': film_form, 'film_name': film.name, 'seo_form': seo_form}
+            return render(request, 'admin_panel/film_update.html', context=data)
 
     film_form = my_forms.FilmForm(instance=film)
     film_form.fields['banner'].src = film.banner
@@ -543,6 +605,9 @@ def update_hall(request, number):
             hall_form.save()
             seo_form.save()
             return redirect('admin_cinemas')
+        else:
+            data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form}
+            return render(request, 'admin_panel/hall_update2.html', context=data)
 
     hall_form = my_forms.HallForm(instance=hall)
     seo_obj = SeoBlock.objects.get(id=hall.seo_block.id)
@@ -667,6 +732,9 @@ def get_seance_form(request):
         if seance_form.is_valid():
             seance_form.save()
             return redirect('seances')
+        else:
+            data = {'seance_form': seance_form, }
+            return render(request, 'admin_panel/seance_form.html', context=data)
 
     seance_form = my_forms.SeanceForm()
     seo_form = my_forms.SeoBlockForm()
