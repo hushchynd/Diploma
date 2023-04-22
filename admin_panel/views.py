@@ -19,6 +19,12 @@ from datetime import date, timedelta
 
 @login_required
 @staff_member_required
+def example(request):
+    return render(request, 'admin_panel/example.html')
+
+
+@login_required
+@staff_member_required
 def statistic(request):
     data = {'users_count': Account.objects.count()}
     return render(request, 'admin_panel/statistic.html', context=data)
@@ -488,7 +494,7 @@ def pages(request):
             data = {'page_form': page_form, 'pageImgs_form': pageImgForm, 'seo_form': seo_form}
             return render(request, 'admin_panel/page_form.html', context=data)
 
-    page_list = Page.objects.all()
+    page_list = Page.objects.order_by('creation_date')
     data = {'page_list': page_list}
     return render(request, 'admin_panel/pages2.html', context=data)
 
@@ -630,16 +636,22 @@ def delete_hall(request, number):
 @login_required
 @staff_member_required
 def update_main_page(request):
+
     main_page_obj = MainPage.objects.first()
 
     if request.method == 'POST':
+
         main_page_form = my_forms.MainPageForm(request.POST, instance=main_page_obj)
         seo_obj = SeoBlock.objects.get(id=main_page_obj.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
         if main_page_form.is_valid() and seo_form.is_valid():
-            main_page_form.save()
             seo_form.save()
+            main_page_form.save()
             return redirect('pages')
+        else:
+            data = {'main_page_form': main_page_form, 'seo_form': seo_form}
+            return render(request, 'admin_panel/main_page.html', context=data)
+
     main_page_form = my_forms.MainPageForm(instance=main_page_obj)
     seo_obj = SeoBlock.objects.get(id=main_page_obj.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
@@ -650,12 +662,15 @@ def update_main_page(request):
 @login_required
 @staff_member_required
 def update_contacts(request):
-    contactFormset = modelformset_factory(can_delete=True, model=Contact, form=my_forms.ContactForm, extra=1)
+    contactFormset = modelformset_factory(can_delete=True, model=Contact, form=my_forms.ContactForm, extra=0)
     if request.method == 'POST':
         contacts_formset = contactFormset(request.POST, request.FILES)
         if contacts_formset.is_valid():
             contacts_formset.save()
             redirect("pages")
+        else:
+            data = {'contacts_formset': contacts_formset}
+            return render(request, 'admin_panel/update_contacts.html', context=data)
     contacts_formset = contactFormset(queryset=Contact.objects.all())
     data = {'contacts_formset': contacts_formset}
     return render(request, 'admin_panel/update_contacts.html', context=data)

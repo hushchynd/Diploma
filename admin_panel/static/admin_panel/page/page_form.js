@@ -20,3 +20,16 @@ upload('.form__input-file-multi',{
     multiple: true,
     accept: ['.png','.jpg','.jpeg','.svg']
 })
+$('.on_off').parent().hide()
+
+$('input[role=\'switch\']').on('click',function () {
+    if ($(this).is(':checked')){
+        $('.on_off').attr('checked',true)
+
+    }else{
+        $('.on_off').attr('checked',false)
+
+
+    }
+
+})

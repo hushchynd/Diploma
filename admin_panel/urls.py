@@ -4,6 +4,7 @@ import admin_panel.views
 
 # делать на главной странице проэкта список фильмов только для главного кинотеатра чтобы не усложнять себе жизнь
 urlpatterns = [
+    path("example", admin_panel.views.example, name='example'),
     path("statistic", admin_panel.views.statistic, name='statistic'),
     path("film_form", admin_panel.views.FilmForm.as_view(), name='film_form'),
     path("update_film/<str:name>", admin_panel.views.update_film, name='update_film'),
@@ -50,6 +51,7 @@ urlpatterns = [
     path("top_carousel", admin_panel.views.top_carousel, name='top_carousel'),
     path("background", admin_panel.views.back_img, name='background'),
     path("bottom_carousel", admin_panel.views.bottom_carousel, name='bottom_carousel'),
+
     path("update_contacts", admin_panel.views.update_contacts, name='update_contacts'),
 
 ]

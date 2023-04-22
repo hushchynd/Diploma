@@ -3,24 +3,8 @@ upload('.file-html',{
     multiple: false,
     accept: ['.html']
 })
-$('.form__elem_radio').each(function () {
-    if ($(this).attr('checked')){
-        $(this).parent().parent().css({
-        background:'#00B894'
-        })
-    }
-})
-$('.form__elem_radio').on('mousedown','div',function (event) {
+$('.card__list').hide()
 
-    $(this).find('input').click();
-
-    $(this).parent().children().css({
-        background:'#6C5CE7'
-    })
-    $(this).css({
-        background:'#00B894'
-    })
-})
 $('#selected_clients').on('change',function () {
     if ($(this).attr('checked',true)){
         $('.card__btn').css({

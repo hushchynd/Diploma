@@ -1,48 +1,106 @@
+{#{% extends 'admin_panel/page_update2.html' %}#}
+{#{% load static %}#}
+{#{% block head %}#}
+{#       <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">#}
+{#        <link rel="stylesheet" href="{% static 'upload.css' %}">#}
+{#        <link rel="stylesheet" href="{% static 'admin_panel/cafe-bar/cafe.css' %}">#}
+{#{% endblock %}#}
+{#{% block content3 %}#}
+{#    <div class="form__title">Меню Кафе-Бара</div>#}
+{##}
+{##}
+{#    <table class="form__table table">#}
+{#          <thead>#}
+{##}
+{#              <tr>#}
+{#                <th>Название</th>#}
+{#                <th>Вес</th>#}
+{#                <th>Цена</th>#}
+{#                <th>Удалить</th>#}
+{#              </tr>#}
+{#          </thead>#}
+{#          <tbody>#}
+{#              {{ menu_formset.management_form }}#}
+{#              {% for menu_form in menu_formset %}#}
+{#                  <tr class="menu-form" data-widget="expandable-table" aria-expanded="true">#}
+{#                  {% for row in menu_form %}#}
+{#                      {% if row == menu_form.id %}#}
+{#                          {{ row }}#}
+{#                      {% elif  row == menu_form.DELETE %}#}
+{#                          <td> {{ row }} <img class="table__icon btn-remove"  src="{% static 'admin_panel/imgs/delete.png' %}" alt=""></td>#}
+{##}
+{#                      {% else %}#}
+{#                          <td>{{ row }}</td>#}
+{#                      {% endif %}#}
+{##}
+{##}
+{#                  {% endfor %}#}
+{#                  </tr>#}
+{#              {% endfor %}#}
+{#          </tbody>#}
+{#    </table>#}
+{#    <button type="button" class="btn-add form__btn btn-primary btn-primary_corner">Добавить запись</button>#}
+{##}
+{#{% endblock %}#}
+{#{% block script %}#}
+{#    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>#}
+{#    <script type="module" src="{% static 'admin_panel/cafe-bar/cafe.js' %}"></script>#}
+{#{% endblock %}#}
+
+
+
+
 {% extends 'admin_panel/page_update2.html' %}
 {% load static %}
-{% block head %}
-       <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">
-        <link rel="stylesheet" href="{% static 'upload.css' %}">
-        <link rel="stylesheet" href="{% static 'admin_panel/cafe-bar/cafe.css' %}">
-{% endblock %}
+{% load django_bootstrap5 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
 {% block content3 %}
-    <div class="form__title">Меню Кафе-Бара</div>
 
-
-    <table class="form__table table">
+    <h4 class="text-center">Меню Кафе-Бара</h4>
+    <div class="table-responsive">
+        <table class="table">
           <thead>
-
-              <tr>
-                <th>Название</th>
-                <th>Вес</th>
-                <th>Цена</th>
-                <th>Удалить</th>
-              </tr>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Вес</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Удалить</th>
+            </tr>
           </thead>
           <tbody>
-              {{ menu_formset.management_form }}
-              {% for menu_form in menu_formset %}
-                  <tr class="menu-form" data-widget="expandable-table" aria-expanded="true">
-                  {% for row in menu_form %}
-                      {% if row == menu_form.id %}
-                          {{ row }}
-                      {% elif  row == menu_form.DELETE %}
-                          <td> {{ row }} <img class="table__icon btn-remove"  src="{% static 'admin_panel/imgs/delete.png' %}" alt=""></td>
+           {{ menu_formset.management_form }}
+          {% for menu_form in menu_formset %}
+          <tr class="menu-form" data-widget="expandable-table" aria-expanded="true">
+          {% for row in menu_form %}
+              {% if row == menu_form.id %}
+                {{ row }}
+              {% elif  row == menu_form.DELETE %}
+                  <td>
+                      {{ row }}
+                      <a class="btn-remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                      </a>
+                  </td>
+              {% else %}
+                  <td>{{ row }}</td>
+              {% endif %}
 
-                      {% else %}
-                          <td>{{ row }}</td>
-                      {% endif %}
 
-
-                  {% endfor %}
-                  </tr>
-              {% endfor %}
+          {% endfor %}
+          </tr>
+          {% endfor %}
           </tbody>
-    </table>
-    <button type="button" class="btn-add form__btn btn-primary btn-primary_corner">Добавить запись</button>
+        </table>
+        <button type="button" class="btn-add btn btn-primary">Добавить запись</button>
 
+    </div>
 {% endblock %}
 {% block script %}
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-    <script type="module" src="{% static 'admin_panel/cafe-bar/cafe.js' %}"></script>
+        <script type="module" src="{% static 'admin_panel/page/page_form_update.js' %}"></script>
+        <script type="module" src="{% static 'admin_panel/cafe-bar/cafe.js' %}"></script>
 {% endblock %}

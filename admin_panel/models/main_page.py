@@ -58,25 +58,25 @@ class BottomCarousel(models.Model):
 
 
 class MainPage(models.Model):
-    number = models.CharField(max_length=19, unique=True,
+    number = models.CharField(verbose_name='Телефон 1',max_length=19, unique=True,
                               validators=[
                                   validators.MaxLengthValidator(19),
                                   validators.MinLengthValidator(19),
                                   validators.ProhibitNullCharactersValidator(),
-                                  validators.RegexValidator('^\(\d{3}\) \d{3}-?\d{2}-?\d{2}$',
-                                                            message='Неверно введён номер телефона.Пример ввода: (098) 567-81-23')
+                                  validators.RegexValidator('^\+38 \(\d{3}\) \d{3}-?\d{2}-?\d{2}$',
+                                                            message='Неверно введён номер телефона.Пример ввода: +38 (098) 567-81-23')
                               ]
                               )
-    number2 = models.CharField(max_length=19, unique=True,
+    number2 = models.CharField(verbose_name='Телефон 2',max_length=19, unique=True,
                                validators=[
                                    validators.MaxLengthValidator(19),
                                    validators.MinLengthValidator(19),
                                    validators.ProhibitNullCharactersValidator(),
-                                   validators.RegexValidator('^\(\d{3}\) \d{3}-?\d{2}-?\d{2}$',
-                                                             message='Неверно введён номер телефона.Пример ввода: (098) 567-81-23')
+                                   validators.RegexValidator('^\+38 \(\d{3}\) \d{3}-?\d{2}-?\d{2}$',
+                                                             message='Неверно введён номер телефона.Пример ввода: +38 (098) 567-81-23')
                                ]
                                )
-    seo_text = models.TextField(max_length=500,
+    seo_text = models.TextField(verbose_name='SEO текст',max_length=500,
                                 validators=[
                                     validators.MaxLengthValidator(500),
                                     validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -89,3 +89,5 @@ class MainPage(models.Model):
 
     class Meta:
         db_table = 'main_page'
+
+

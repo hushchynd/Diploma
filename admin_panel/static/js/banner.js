@@ -7,13 +7,13 @@ $('.card__item_add').on('click',function () {
     if ($(this).attr('name') === 'top'){
 
         newForm = $(`
-       <div class='card__item'> 
-           <button type='button' class='card__btn card__btn_add btn-primary'> Выбрать картинку </button>
-           <input type="file" name="top_carousel-${topCarouselTotal.val()}-img" class="form__horizontal-img" accept="image/*" id="id_top_carousel-${topCarouselTotal.val()}-img">
-           <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem" placeholder="Ссылка" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
-           <input type="text" name="top_carousel-${topCarouselTotal.val()}-title" class="form__elem" placeholder="Заголовок" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title">
+       <div class='card__item mr-5 mb-5'> 
+           <button type='button' class='card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+            <input type="file" name="top_carousel-${topCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_top_carousel-${topCarouselTotal.val()}-img">
+            <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem mb-3" placeholder="Ссылка" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
+            <input type="text" name="top_carousel-${topCarouselTotal.val()}-title" class="form__elem mb-3" placeholder="Заголовок" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title">
            <input type="hidden" name="top_carousel-${topCarouselTotal.val()}-id"  id="id_top_carousel-${topCarouselTotal.val()}-id">
-           <button type='button' class="card__btn card__btn_remove">Удалить</button>
+           <button type='button' class="card__btn card__btn_remove bg-danger">Удалить</button>
 
        </div>
 
@@ -23,12 +23,12 @@ $('.card__item_add').on('click',function () {
     }else{
 
     newForm =  $(`
-       <div class='card__item'> 
-           <button type='button' class='card__btn card__btn_add btn-primary'> Выбрать картинку </button>
-           <input type="file" name="bottom_carousel-${bottomCarouselTotal.val()}-img" class="form__horizontal-img" accept="image/*" id="id_bottom_carousel-${bottomCarouselTotal.val()}-img">
-           <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem" placeholder="Ссылка" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
+       <div class='card__item  mr-5 mb-5'> 
+           <button type='button' class='card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+           <input type="file" name="bottom_carousel-${bottomCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_bottom_carousel-${bottomCarouselTotal.val()}-img">
+           <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem mb-3 " placeholder="Ссылка" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
            <input type="hidden" name="bottom_carousel-${bottomCarouselTotal.val()}-id"  id="id_bottom_carousel-${bottomCarouselTotal.val()}-id">
-           <button type='button' class="card__btn card__btn_remove">Удалить</button>
+           <button type='button' class="card__btn card__btn_remove bg-danger">Удалить</button>
 
        </div>
     `)
@@ -42,27 +42,28 @@ $('.card__item_add').on('click',function () {
 
 
 $("[name$='DELETE'], [for$='DELETE']").hide()
-$('.main__blocks').on('click','.card__btn_remove',function () {
-    $(this).siblings('[name$=\'DELETE\']').attr('checked','checked')
+$('body').on('click','.card__btn_remove',function () {
+    $(this).parent().find('[name$=\'DELETE\']').attr('checked','checked')
     $(this).parent().fadeOut("slow", function() {
     // Animation complete.
   })
 
 })
 
-$('.main__blocks').on('click','.card__btn_add',function () {
+$('body').on('click','.card__btn_add',function () {
+    // $(this).next().find('[name$=\'img\']').click()
     $(this).siblings('[name$=\'img\']').click()
 })
-$('.main__blocks').on('change','.form__horizontal-img, .form__vertical-img',function () {
+$('body').on('change','.form__horizontal-img, .form__vertical-img',function () {
       let inputElem = $(this)
       const file = this.files[0];
       let reader = new FileReader();
       reader.onload = function(event){
         let preview;
         if (inputElem.hasClass('form__horizontal-img') ) {
-             preview = $(`<img class="card__preview card__preview_horizontal" src="${event.target.result}"/>`)
+             preview = $(`<img class=" card__preview card__preview_horizontal mb-3 img-fluid" src="${event.target.result}"/>`)
         }else{
-             preview = $(`<img class="card__preview card__preview_vertical" src="${event.target.result}"/>`)
+             preview = $(`<img class="card__preview card__preview_vertical mb-3 img-fluid" src="${event.target.result}"/>`)
 
         }
          inputElem.siblings('.card__btn_add').replaceWith(preview)

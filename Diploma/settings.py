@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'rest_framework',
     "corsheaders",
+    "django_bootstrap5",
 ]
 AUTH_USER_MODEL = 'admin_panel.Account'
 

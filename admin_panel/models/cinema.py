@@ -1,4 +1,5 @@
 import datetime
+import os
 import uuid
 
 import django.utils.timezone
@@ -10,7 +11,7 @@ from admin_panel.models.user import Account
 
 
 class Contact(models.Model):
-    name = models.CharField(max_length=100, unique=True,
+    name = models.CharField(verbose_name='Название', max_length=100, unique=True,
                             validators=[
                                 validators.MaxLengthValidator(100,
                                                               'Длина названия должна быть не более 100 символов.'),
@@ -19,12 +20,15 @@ class Contact(models.Model):
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
-    address = models.TextField()
-    coordinate = models.TextField(max_length=10000)
-    logo = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
+    address = models.TextField(verbose_name='Адрес', )
+    coordinate = models.TextField(verbose_name='Координаты', max_length=10000)
+    logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
+                             null=True,
                              validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     cinema = models.ForeignKey("Cinema", on_delete=models.CASCADE, default=1)
 
+    def filename(self):
+        return os.path.basename(self.logo.name)
     class Meta:
         db_table = 'contacts'
 

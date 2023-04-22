@@ -1,6 +1,3 @@
-@import '../../atributes'
-@import '../../buttons'
-@import '../../zeroing.css'
 .hall
   display: grid
   justify-content: center
@@ -15,13 +12,17 @@
     grid-gap: 3px
 
   &__item
+
     padding: 10px
-    background: $gray-soft-color
+    background: gray
     &:hover
-      background: $purple-light-color
+      background: green
   &__seat
+    display: flex
+    justify-content: center
+    align-items: center
     padding: 10px
-    background: $purple-dark-color
+    background: green
 .btn-row
   display: flex
   margin-bottom: 50px

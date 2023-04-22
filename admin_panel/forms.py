@@ -67,7 +67,8 @@ class FilmForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem form__elem_textarea', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'class': 'form__vertical-img', }),
-            'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'}),
+            'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'},
+                                        format=('%Y-%m-%d')),
             'trailer_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
             'year': forms.TextInput(
@@ -75,7 +76,8 @@ class FilmForm(forms.ModelForm):
                        'max': 2100}, ),
             'budget': forms.NumberInput(attrs={'size': 20, 'class': 'form__elem form__elem_number', }),
             'legal_age': forms.NumberInput(attrs={'size': 20, 'class': 'form__elem form__elem_number', }),
-            'duration': forms.NumberInput(attrs={'size': 10, 'class': 'form__elem form__elem_number','placeholder': 'В минутах' }),
+            'duration': forms.NumberInput(
+                attrs={'size': 10, 'class': 'form__elem form__elem_number', 'placeholder': 'В минутах'}),
             'genres': forms.SelectMultiple(attrs={'class': 'form__elem'}),
             'editors': forms.SelectMultiple(attrs={'class': 'form__elem'}),
             'producers': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
@@ -145,7 +147,7 @@ class PageForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'description2': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
-            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem form__elem_switcher', }),
+            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'type': 'checkbox', 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img_2', }),
             'second_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img_3', }),
@@ -162,7 +164,7 @@ class PageUpdateForm(forms.ModelForm):
 
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'description2': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
-            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem form__elem_switcher', }),
+            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__first-img form__horizontal-img_2', }),
             'second_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__second-img form__horizontal-img_3', }),
@@ -209,6 +211,9 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ('name', 'address', 'coordinate', 'logo',)
+        widgets = {
+            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img',})
+        }
 
 
 class NewsImgForm(forms.ModelForm):
@@ -289,10 +294,11 @@ class CinemaForm(forms.ModelForm):
 class CafeBarMenuForm(forms.ModelForm):
     class Meta:
         model = CafeBarMenu
-        fields = ['name',
-                  'weight',
-                  'price',
-                  ]
+        fields = [
+            'name',
+            'weight',
+            'price',
+        ]
 
 
 class TopCarouselForm(forms.ModelForm):
@@ -390,7 +396,7 @@ class SeanceForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'class': 'form__elem'}),
             'film': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio'}),
             'time': forms.TimeInput(attrs={'class': 'form__elem'}),
-            'tech_type': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'hidden': True}),
+            'tech_type': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', }),
         }
 
 

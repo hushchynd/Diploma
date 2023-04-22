@@ -1,68 +1,100 @@
 {% extends 'admin_panel/base3.html' %}
-{% load static %}
+{% load static %}{# Load the tag library #}
+{% load django_bootstrap5 %}
 
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'upload.css' %}">
+
+{% endblock %}
 {% block content %}
-    <head>
-        <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">
-        <link rel="stylesheet" href="{% static 'upload.css' %}">
-    </head>
-    <form action="{% url 'cinema_card' cinema_name %}" method="post" enctype="multipart/form-data" style="margin-bottom: 150px;">
-         {% csrf_token %}
-         <div class="form">
-             {% for row in form %}
-                  <div class="form__row">
-                      <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>
-                      {{ row }}
-                      {{ row.errors }}
-                  </div>
-             {% endfor %}
-         </div>
-         <div class="form">
-                 <div class="form__title">SEO блок </div>
-
-                 {% for seo in seo_form %}
-                      <div class="form__row">
-                          <label class="form__label" for="{{ seo.id_for_label }}" class="">{{ seo.label }}:</label>
-                          {{ seo }}
-                          {{ seo.errors }}
-                      </div>
-                 {% endfor %}
-         </div>
-         <div class="form__bottom">
-              <button class="form__btn btn-primary btn-primary_corner">Сохранить</button>
-         </div>
-    </form>
-    <div class="form">
-          <div class="form__title">Список залов</div>
-             <table class="form__table table">
-                  <thead>
-                   <tr>
-                      <th>Дата Создания</th>
-                      <th>Название</th>
-                      <th>Изменить</th>
-                      <th>Удалить</th>
-                   </tr>
-                  <thead>
-                  <tbody>
-                  {% for hall in halls %}
-                    <tr data-widget="expandable-table" aria-expanded="true">
-                      <td>{{ hall.creation_date }}</td>
-                      <td>Зал {{ hall.number }}</td>
-                      <td><a href="{% url 'update_hall' hall.number %}"><img class="table__icon" src="{% static 'admin_panel/imgs/edit.png' %}" alt=""></a></td>
-                      <td><a href="{% url 'delete_hall' hall.number %}"><img class="table__icon" src="{% static 'admin_panel/imgs/delete.png' %}" alt=""></a></td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-             </table>
-             <div class="form__bottom">
-                <a href="{% url 'hall_form' %}"> <button type="button" class="form__btn form__btn_w300 btn-primary ">
-                    Создать зал </button></a>
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Форма для обновления кинотеатра</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-tools mt-1">
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </button>
+          </div>
+        </div>
+        <form  action="{% url 'cinema_card' cinema_name %}"  method="post"  id="film_form"  runat="server" enctype="multipart/form-data">
+            <div class="card-body mb-5 ">
+                {% csrf_token %}
+                {% bootstrap_form form  layout='horizontal' show_help=True size='sm'%}
+              <div class="card-header mb-5">
+                    <h3 class="card-title text-center">Seo блок</h3>
+                </div>
+                {% bootstrap_form seo_form  layout='horizontal' show_help=True size='sm'%}
             </div>
-    </div>
 
-
-     <script>
-           let urlImgRemove = "{% static 'imgs/remove.png' %}";
-     </script>
+            <div class="card-footer">
+                 {% bootstrap_button button_type="submit" content="Сохранить" %}
+                 {% bootstrap_button button_type="reset" content="Сбросить" %}
+            </div>
+        </form>
+        <div class="card-header ">
+            <h3 class="card-title text-center">Список залов кинотеатра</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Дата Создания</th>
+                    <th scope="col">Изменить</th>
+                    <th scope="col">Удалить</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for hall in halls %}
+                  <tr>
+                    <td>Зал {{ hall.number }}</td>
+                    <td>{{ hall.creation_date }}</td>
+                    <td>
+                        <a href="{% url 'update_hall' hall.number %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                            </svg>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete_hall' hall.number %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                        </a>
+                    </td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center mb-3">
+            <a class="text-decoration-none" href="{% url 'hall_form' %}"><button type="button" class="btn btn-success btn-md">Добавить зал</button></a>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+{% block script %}
     <script type="module" src="{% static 'admin_panel/cinema/cinema_update.js' %}"></script>
 {% endblock %}
