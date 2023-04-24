@@ -1,6 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
 {% load django_bootstrap5 %}
+{% load file_filters %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -46,10 +47,24 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form page_form  layout='horizontal'   size='sm'%}
+                <div class="d-none" id="pic1-data" data-size = '{{ page_form.instance.first_pic.path | filesize}}' data-name = '{{ page_form.first_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.first_pic.value }}'></div>
+                <div class="d-none" id="pic2-data" data-size = '{{ page_form.instance.second_pic.path | filesize}}' data-name = '{{ page_form.second_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.second_pic.value }}'></div>
+                <div class="d-none" id="pic3-data" data-size = '{{ page_form.instance.third_pic.path | filesize}}' data-name = '{{ page_form.third_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.third_pic.value }}'></div>
+                <div class="d-none" id="banner-img-data" data-size = '{{ page_form.instance.banner.path | filesize}}' data-name = '{{ page_form.banner.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.banner.value }}'></div>
+
                 {% block content3 %}
 
 
                 {% endblock %}
+
+                <div class="card-header mb-5">
+                    <h3 class="card-title text-center">Галерея</h3>
+                </div>
+                {% bootstrap_form page_imgsForm  layout='horizontal' show_help=True size='sm'%}
+                {% for page_img in page_imgsForm.page_imgs_list %}
+                    <div  class="d-none gallery-data"  data-size = '{{ page_img.path | filesize}}' data-name = '{{ page_img | filename }}' data-path = '{% get_media_prefix %}{{ page_img }}'></div>
+                {% endfor %}
+
                 <div class="card-header mb-5">
                     <h3 class="card-title text-center">Seo блок</h3>
                 </div>
@@ -66,5 +81,7 @@
   </div>
 {% endblock %}
 {% block script %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script type="module" src="{% static 'admin_panel/page/page_form_update.js' %}"></script>
 {% endblock %}

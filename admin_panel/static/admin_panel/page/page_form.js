@@ -1,25 +1,23 @@
-import {upload} from "../../js/upload.js";
+import {upload} from "../../js/upload_new.js";
 
-upload('.form__horizontal-img',{
-    multiple: false,
+upload('#pic1',{
     accept: ['.png','.jpg','.jpeg','.svg']
 })
-upload('.form__horizontal-img_2',{
-    multiple: false,
+upload('#pic2',{
     accept: ['.png','.jpg','.jpeg','.svg']
 })
-upload('.form__horizontal-img_3',{
-    multiple: false,
+upload('#pic3',{
     accept: ['.png','.jpg','.jpeg','.svg']
 })
-upload('.form__horizontal-img_4',{
-    multiple: false,
+upload('#banner-img',{
     accept: ['.png','.jpg','.jpeg','.svg']
 })
-upload('.form__input-file-multi',{
-    multiple: true,
+upload('.gallery',{
     accept: ['.png','.jpg','.jpeg','.svg']
 })
+
+
+
 $('.on_off').parent().hide()
 
 $('input[role=\'switch\']').on('click',function () {

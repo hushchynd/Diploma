@@ -1,9 +1,10 @@
 {%  load static %}
 {# Load the tag library #}
 {% load django_bootstrap5 %}
-
+{% load file_filters %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
+
 {% bootstrap_javascript %}
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
@@ -193,6 +194,8 @@
 
 </div>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
   <script src="{% static 'AdminLTE/dist/js/adminlte.min.js' %}"></script>
 
   {% block script %}

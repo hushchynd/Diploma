@@ -4,7 +4,6 @@ import admin_panel.views
 
 # делать на главной странице проэкта список фильмов только для главного кинотеатра чтобы не усложнять себе жизнь
 urlpatterns = [
-    path("example", admin_panel.views.example, name='example'),
     path("statistic", admin_panel.views.statistic, name='statistic'),
     path("film_form", admin_panel.views.FilmForm.as_view(), name='film_form'),
     path("update_film/<str:name>", admin_panel.views.update_film, name='update_film'),

@@ -1,14 +1,12 @@
-import {upload} from "../../js/upload.js";
+import {upload} from "../../js/upload_new.js";
+upload('#banner-img',{
+   accept: ['.png','.jpg','.jpeg','.svg'],
+})
 
-upload('.form__horizontal-img',{
-    multiple: false,
-    accept: ['.png','.jpg','.jpeg','.svg']
+upload('#card-img',{
+   accept: ['.png','.jpg','.jpeg','.svg'],
 })
-upload('.form__vertical-img',{
-    multiple: false,
-    accept: ['.png','.jpg','.jpeg','.svg']
-})
-upload('.form__input-file-multi',{
-    multiple: true,
-    accept: ['.png','.jpg','.jpeg','.svg']
+
+upload('.gallery', {
+    accept: ['.png', '.jpg', '.jpeg', '.svg'],
 })

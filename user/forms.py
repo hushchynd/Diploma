@@ -35,7 +35,7 @@ class AdminUserForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ['first_name', 'last_name', 'address', 'email', 'sex', 'lang', 'date_of_birth',
-                  'phone']
+                  'phone',]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
             'last_name': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),

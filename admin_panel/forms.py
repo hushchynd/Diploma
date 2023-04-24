@@ -1,6 +1,8 @@
 from datetime import date
 
 import django.forms as forms
+from django.contrib.admin.widgets import AdminFileWidget
+
 from admin_panel.models import *
 
 
@@ -66,11 +68,11 @@ class FilmForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem form__elem_textarea', }),
-            'card_img': forms.FileInput(attrs={'size': 20, 'class': 'form__vertical-img', }),
+            'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', }),
             'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'},
                                         format=('%Y-%m-%d')),
             'trailer_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
+            'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', }),
             'year': forms.TextInput(
                 attrs={'size': 20, 'class': 'form__elem form__elem_number', 'type': 'number', 'min': 1900,
                        'max': 2100}, ),
@@ -120,8 +122,8 @@ class StockForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 50, 'class': 'form__elem form__elem_switcher', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
-            'card_img': forms.FileInput(attrs={'size': 20, 'class': 'form__vertical-img', }),
+            'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
+            'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', 'class': 'form__vertical-img', }),
 
         }
 
@@ -132,7 +134,7 @@ class StockImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'form__input-file-multi',
+                'class': 'gallery',
                 'multiple': True,
             })
         }
@@ -148,10 +150,10 @@ class PageForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'description2': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'type': 'checkbox', 'class': 'on_off', }),
-            'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
-            'first_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img_2', }),
-            'second_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img_3', }),
-            'third_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img_4', }),
+            'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
+            'first_pic': forms.FileInput(attrs={'size': 20, 'id': 'pic1', 'class': 'form__horizontal-img_2', }),
+            'second_pic': forms.FileInput(attrs={'size': 20, 'id': 'pic2', 'class': 'form__horizontal-img_3', }),
+            'third_pic': forms.FileInput(attrs={'size': 20, 'id': 'pic3', 'class': 'form__horizontal-img_4', }),
 
         }
 
@@ -165,10 +167,13 @@ class PageUpdateForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'description2': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'on_off', }),
-            'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
-            'first_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__first-img form__horizontal-img_2', }),
-            'second_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__second-img form__horizontal-img_3', }),
-            'third_pic': forms.FileInput(attrs={'size': 20, 'class': 'form__third-img form__horizontal-img_4', }),
+            'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
+            'first_pic': forms.FileInput(
+                attrs={'size': 20, 'id': 'pic1', 'class': 'form__first-img form__horizontal-img_2', }),
+            'second_pic': forms.FileInput(
+                attrs={'size': 20, 'id': 'pic2', 'class': 'form__second-img form__horizontal-img_3', }),
+            'third_pic': forms.FileInput(
+                attrs={'size': 20, 'id': 'pic3', 'class': 'form__third-img form__horizontal-img_4', }),
 
         }
 
@@ -179,7 +184,7 @@ class PageImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'form__input-file-multi',
+                'class': 'gallery',
                 'multiple': True,
             })
         }
@@ -200,9 +205,9 @@ class NewsForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'short_description': forms.Textarea(attrs={'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem form__elem_switcher', }),
-            'banner': forms.FileInput(attrs={'size': 20, 'class': 'form__horizontal-img', }),
+            'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
-            'card_img': forms.FileInput(attrs={'size': 20, 'class': 'form__vertical-img', }),
+            'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', 'class': 'form__vertical-img', }),
 
         }
 
@@ -212,7 +217,7 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ('name', 'address', 'coordinate', 'logo',)
         widgets = {
-            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img',})
+            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img', })
         }
 
 
@@ -222,7 +227,7 @@ class NewsImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'form__input-file-multi',
+                'class': 'gallery',
                 'multiple': True,
             })
         }
@@ -235,9 +240,9 @@ class HallForm(forms.ModelForm):
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form__elem'}),
             'description': forms.Textarea(attrs={'class': 'form__elem'}),
-            'banner': forms.FileInput(attrs={'class': 'form__horizontal-img'}),
+            'banner': forms.FileInput(attrs={'id': 'banner-img', 'class': 'form__horizontal-img'}),
             'num_tickets': forms.NumberInput(attrs={'class': 'form__elem'}),
-            'scheme': forms.FileInput(attrs={'class': 'form__horizontal-img_2'}),
+            'scheme': forms.FileInput(attrs={'id': 'scheme-img', 'class': 'form__horizontal-img_2'}),
             'scheme_html': forms.Textarea(attrs={'class': 'form__elem scheme_html'}),
         }
 
@@ -248,7 +253,7 @@ class HallImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'form__input-file-multi',
+                'class': 'gallery',
                 'multiple': True,
             }),
         }
@@ -259,7 +264,7 @@ class FilmImgForm(forms.ModelForm):
         model = FilmImg
         fields = ('img',)
         widgets = {
-            'img': forms.FileInput(attrs={'multiple': True, 'class': 'form__input-file-multi', })
+            'img': forms.FileInput(attrs={'multiple': True, 'class': 'gallery', })
         }
 
 
@@ -269,9 +274,9 @@ class CinemaImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'form__input-file-multi',
+                'class': 'gallery',
                 'multiple': True,
-            })
+            }),
         }
 
 
@@ -286,8 +291,8 @@ class CinemaForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form__elem'}),
             'description': forms.Textarea(attrs={'class': 'form__elem'}),
-            'banner': forms.FileInput(attrs={'class': 'form__horizontal-img'}),
-            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img_2'}),
+            'banner': forms.FileInput(attrs={'class': 'banner-img','multiple':True}),
+            'logo': forms.FileInput(attrs={'size': 20, 'class': 'logo-img'}),
         }
 
 

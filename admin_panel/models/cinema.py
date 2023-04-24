@@ -29,6 +29,7 @@ class Contact(models.Model):
 
     def filename(self):
         return os.path.basename(self.logo.name)
+
     class Meta:
         db_table = 'contacts'
 
@@ -54,7 +55,7 @@ class Cinema(models.Model):
     banner = models.ImageField(verbose_name='Баннер', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
                                null=True,
                                validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
-    logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
+    logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", unique=True,
                              null=True,
                              validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     seo_block = models.OneToOneField(SeoBlock, on_delete=models.CASCADE, null=True)
@@ -64,7 +65,7 @@ class Cinema(models.Model):
 
 
 class CinemaImg(models.Model):
-    img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
+    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
                             validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, null=False)
 

@@ -1,7 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
 {% load django_bootstrap5 %}
-
+{% load file_filters %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
@@ -47,8 +47,7 @@
                 </div>
                 <div class="card-body">
                     {% bootstrap_form form  layout='horizontal'   size='sm'%}
-                    {{ form.logo.filename }}
-                    <div class="common-data" data-logo-path = '{% get_media_prefix %}{{ form.logo.value }}'></div>
+                    <div class="logo-data" data-size = '{{ form.instance.logo.path | filesize}}' data-name = '{{ form.logo.value | filename }}' data-path = '{% get_media_prefix %}{{ form.logo.value }}'></div>
     {#                <div class="card-header mb-5">#}
     {#                    <h3 class="card-title text-center">Seo блок</h3>#}
     {#                </div>#}
@@ -71,5 +70,6 @@
   </div>
 {% endblock %}
 {% block script %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="{% static 'admin_panel/contacts/contacts_update.js' %}"></script>
 {% endblock %}

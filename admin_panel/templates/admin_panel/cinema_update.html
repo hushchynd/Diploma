@@ -1,7 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
 {% load django_bootstrap5 %}
-
+{% load file_filters %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
@@ -36,10 +36,21 @@
             </button>
           </div>
         </div>
-        <form  action="{% url 'cinema_card' cinema_name %}"  method="post"  id="film_form"  runat="server" enctype="multipart/form-data">
+        <form  action="{% url 'cinema_card' cinema_name %}"  method="post"  id="cinema_form"  runat="server" enctype="multipart/form-data">
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form form  layout='horizontal' show_help=True size='sm'%}
+                 <div  class="d-none logo-img-data" data-size = '{{ form.instance.logo.path | filesize}}' data-name = '{{ form.logo.value | filename }}' data-path = '{% get_media_prefix %}{{ form.logo.value }}'></div>
+                 <div  class="d-none banner-img-data" data-size = '{{ form.instance.banner.path | filesize}}' data-name = '{{ form.banner.value | filename }}' data-path = '{% get_media_prefix %}{{ form.banner.value }}'></div>
+
+
+                <div class="card-header mb-5">
+                    <h3 class="card-title text-center">Галерея</h3>
+                </div>
+                {% bootstrap_form cinema_imgsForm  layout='horizontal'  show_help=True size='sm'%}
+                {% for cinema_img in cinema_imgsForm.cinema_imgs_list %}
+                    <div  class="d-none gallery-data"  data-size = '{{ cinema_img.path | filesize}}' data-name = '{{ cinema_img | filename }}' data-path = '{% get_media_prefix %}{{ cinema_img }}'></div>
+                {% endfor %}
               <div class="card-header mb-5">
                     <h3 class="card-title text-center">Seo блок</h3>
                 </div>
@@ -96,5 +107,6 @@
   </div>
 {% endblock %}
 {% block script %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="{% static 'admin_panel/cinema/cinema_update.js' %}"></script>
 {% endblock %}

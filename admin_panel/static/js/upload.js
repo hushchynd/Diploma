@@ -5,6 +5,7 @@ export function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
 }
 export function upload(selector,options){
+
     let preview = document.createElement('div');
     preview.classList.add('preview','d-flex' ,'flex-wrap' ,'justify-content-center');
     let inputFile = document.querySelector(selector);

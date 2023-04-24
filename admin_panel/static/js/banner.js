@@ -8,12 +8,12 @@ $('.card__item_add').on('click',function () {
 
         newForm = $(`
        <div class='card__item mr-5 mb-5'> 
-           <button type='button' class='card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
             <input type="file" name="top_carousel-${topCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_top_carousel-${topCarouselTotal.val()}-img">
             <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem mb-3" placeholder="Ссылка" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
             <input type="text" name="top_carousel-${topCarouselTotal.val()}-title" class="form__elem mb-3" placeholder="Заголовок" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title">
            <input type="hidden" name="top_carousel-${topCarouselTotal.val()}-id"  id="id_top_carousel-${topCarouselTotal.val()}-id">
-           <button type='button' class="card__btn card__btn_remove bg-danger">Удалить</button>
+           <button type='button' class="btn card__btn card__btn_remove bg-danger">Удалить</button>
 
        </div>
 
@@ -24,11 +24,11 @@ $('.card__item_add').on('click',function () {
 
     newForm =  $(`
        <div class='card__item  mr-5 mb-5'> 
-           <button type='button' class='card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
            <input type="file" name="bottom_carousel-${bottomCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_bottom_carousel-${bottomCarouselTotal.val()}-img">
            <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem mb-3 " placeholder="Ссылка" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
            <input type="hidden" name="bottom_carousel-${bottomCarouselTotal.val()}-id"  id="id_bottom_carousel-${bottomCarouselTotal.val()}-id">
-           <button type='button' class="card__btn card__btn_remove bg-danger">Удалить</button>
+           <button type='button' class="btn card__btn card__btn_remove bg-danger">Удалить</button>
 
        </div>
     `)
@@ -74,7 +74,21 @@ $('body').on('change','.form__horizontal-img, .form__vertical-img',function () {
 var addPicBtn;
 $('.card__preview').each(function () {
     if ($(this).attr('src') ==='/media/None') {
-        addPicBtn = $(`<button type=\'button\' class=\'card__btn card__btn_add btn-primary\'> Выбрать картинку </button>`)
+        addPicBtn = $(`<button type=\'button\' class=\'btn card__btn card__btn_add btn-primary\'> Выбрать картинку </button>`)
         $(this).replaceWith(addPicBtn)
     }
 });
+
+
+$('.card__btn_change').on('click',function () {
+    let preview = $(this).parent().find('.card__preview_horizontal')
+    let inputChangedFile = $(this).parent().find('input[type=\'file\']').click()
+    $(inputChangedFile).on('change',function () {
+        const file = this.files[0];
+        let reader = new FileReader();
+          reader.onload = function(event){
+              preview.attr('src',event.target.result)
+          }
+          reader.readAsDataURL(file);
+    })
+})
