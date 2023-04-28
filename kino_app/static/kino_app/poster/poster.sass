@@ -1,18 +1,14 @@
-@import '../atributes'
-@import '../buttons'
-@import '../zeroing.css'
-
 .content
   display: grid
   grid-template-columns: 100px minmax(400px,1fr)
   grid-template-areas: 'sidebar main'
   &__main
-    background: $gray-dark-color
+    background: gray
     grid-area: main
   &__ads
     text-align: center
-    color: $white-color
-    background: $red-dark-color
+    color: white
+    background: red
     grid-area: sidebar
   &__menu
     margin-bottom: 50px
@@ -24,13 +20,7 @@
     margin-bottom: 150px
     padding-right: 50px
     padding-left: 50px
-  &__btn
-    padding: 10px 30px
-    border-radius: 0px
-    background: $yellow-dark-color
-    color: $white-color
-    &:hover
-      background: $yellow-light-color
+
 .film
   &__item
       width: 300px
@@ -45,17 +35,11 @@
   &__text
     flex-grow: 1
     text-decoration: none
-    color: $white-color
-    font-size: 28px
+    color: white
     text-align: center
-    font-family: $font-family
-    font-weight: bold
     margin-bottom: 30px
     &_yellow
-      color: $yellow-dark-color
-  &__btn
-    padding: 10px 30px
-    border-radius: 0px
-    background: $yellow-dark-color
+      color: yellow
+
     &:hover
-      background-color: $yellow-light-color
+      background-color: yellow

@@ -40,6 +40,8 @@ urlpatterns = [
 
 
     path("mailing", admin_panel.views.mailing, name='mailing'),
+    path("get_task_info", admin_panel.views.get_task_info, name='get_task_info'),
+
     path("cinema_card/<str:name>", admin_panel.views.cinema_card, name='cinema_card'),
 
     path("hall_form", admin_panel.views.get_hall_form, name='hall_form'),

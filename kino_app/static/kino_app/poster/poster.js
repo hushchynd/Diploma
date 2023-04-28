@@ -1,6 +1,5 @@
 
 $('.content__btn_soon').on('click',function () {
-
      $(".film").fadeToggle('slow',function () {
          $.ajax({
              url: 'poster_soon_ajax',         /* Куда отправить запрос */
@@ -19,6 +18,7 @@ $('.content__btn_soon').on('click',function () {
 
  })
 $('.content__btn_afisha').on('click',function () {
+
     $(".film").fadeToggle('slow',function () {
         $.ajax({
             url: 'poster_soon_ajax',

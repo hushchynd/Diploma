@@ -4,47 +4,48 @@
     {{type}}
 {% endblock %}
 {% block head %}
-     <link  rel="stylesheet" href="{% static 'kino_app/poster/poster.css' %} " />
+{#     <link  rel="stylesheet" href="{% static 'kino_app/poster/poster.css' %} " />#}
 {% endblock %}
 
 {% block content %}
-         <div class="content">
-             <div class="content__ads ">
-                 Контекстная реклама
+         <div class="content d-flex flex-row">
+             <div style="width: 100px" class="fs-6 d-none d-sm-block  pr-3 bg-danger">
+                 <span class="text-wrap text-white">Контекстная реклама</span>
              </div>
-             <div class="content__main" id="wizard">
-                <div class="content__menu">
-                     <button class="content__btn content__btn_afisha btn-primary">Афиша</button>
-                     <button class="content__btn content__btn_soon btn-primary">Скоро</button>
+             <div class="content__main flex-grow-1 bg-dark" id="wizard">
+                <div class="content__menu p-2">
+                     <button class="btn btn-warning text-white content__btn content__btn_afisha ">Афиша</button>
+                     <button class="btn btn-warning text-white content__btn content__btn_soon ">Скоро</button>
                 </div>
-                <div class="content__grid film">
+                 <div class="film px-2 mb-5 d-flex flex-row justify-content-center flex-wrap gap-3">
                     {% if type == "Афиша" %}
                         {% for film in films %}
-                             <div class="film__item">
-                                <a href="{% url 'film_card' film.name %}">
-                                    <img class="film__img" src="../../../media/{{ film.card_img }}" alt="">
-                                </a>
-                                <div class="film__text">{{ film.name}}</div>
-                                <button class="film__btn btn-primary">
-                                        Купить билет
-                                </button>
+                            <div class="card mr-3 bg-transparent" style=" width: 11.5rem;; border: 0px">
+                              <a class="text-decoration-none" href="{% url 'film_card' film.name %}">
+                                  <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px;"alt="...">
+                                  <div class="card-body  d-flex flex-column align-items-center">
+                                      <p class="card-text text-white">{{ film.name }}</p>
+                                    <button class="btn btn-primary card-text text-uppercase text-white text-info mb-3">Купить</button>
+                                  </div>
+                              </a>
                             </div>
-
                         {% endfor %}
                     {% elif type == "Скоро" %}
                         {% for film in films %}
-                                 <div class="film__item">
-                                    <a href="{% url 'film_card' film.name %}">
-                                        <img class="film__img" src="../../../media/{{ film.card_img }}" alt="">
-                                    </a>
-                                    <div class="film__text">{{ film.name}}</div>
-                                    <div class="film__text film__text_yellow">
-                                            C {{ film.released }}
-                                    </div>
-                                </div>
+                            <div class="card mr-3 bg-transparent" style=" width: 11.5rem;; border: 0px">
+                              <a class="text-decoration-none" href="{% url 'film_card' film.name %}">
+                                  <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px;"alt="...">
+                                  <div class="card-body  d-flex flex-column align-items-center">
+                                      <p class="card-text text-white">{{ film.name }}</p>
+                                      <p class="card-text text-primary">C {{ film.released }}</p>
+                                  </div>
+                              </a>
+                            </div>
                         {% endfor %}
                     {% endif %}
                 </div>
+
+
              </div>
          </div>
 {% endblock %}

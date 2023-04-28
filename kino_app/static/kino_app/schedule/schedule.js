@@ -2,6 +2,10 @@ $('.info__time').hover(function () {
     $(this).find('.info__descr').fadeToggle('slow')
 
 })
+$('.info__time').each(function () {
+    $(this).find('.info__descr').hide()
+
+})
 
 
 $('#form-filter').on('change',function () {

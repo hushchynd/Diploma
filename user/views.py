@@ -81,10 +81,18 @@ def loginView(request):
             user_obj = authenticate(email=email, password=password)
             if user_obj:
                 login(request, user_obj)
+                if user_obj.is_staff:
+                    return redirect('statistic')
                 if request.GET.get('next', None) is None:
                     return redirect('main')
                 else:
                     return redirect(request.GET.get('next', None))
+        else:
+            data = {
+                'form': form,
+            }
+            return render(request, '../templates/user/signin.html', context=data)
+
     else:
         form = SignInForm()
     data = {

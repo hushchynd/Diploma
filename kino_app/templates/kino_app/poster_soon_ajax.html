@@ -1,26 +1,26 @@
+{% load static %}
 {% if type == "poster" %}
     {% for film in films %}
-         <div class="film__item">
-            <a href="{% url 'film_card' film.name %}">
-                <img class="film__img" src="../../../media/{{ film.card_img }}" alt="">
-            </a>
-            <div class="film__text">{{ film.name}}</div>
-            <button class="film__btn btn-primary">
-                    Купить билет
-            </button>
+        <div class="card mr-3 bg-transparent" style=" width: 11.5rem;; border: 0px">
+          <a class="text-decoration-none" href="{% url 'film_card' film.name %}">
+              <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px;"alt="...">
+              <div class="card-body  d-flex flex-column align-items-center">
+                  <p class="card-text text-white">{{ film.name }}</p>
+                <button class="btn btn-primary card-text text-uppercase text-white text-info mb-3">Купить</button>
+              </div>
+          </a>
         </div>
-
     {% endfor %}
 {% elif type == "soon" %}
-    {% for film in films %}
-             <div class="film__item">
-                <a href="{% url 'film_card' film.name %}">
-                    <img class="film__img" src="../../../media/{{ film.card_img }}" alt="">
-                </a>
-                <div class="film__text">{{ film.name}}</div>
-                <div class="film__text film__text_yellow">
-                        C {{ film.released }}
-                </div>
-            </div>
-    {% endfor %}
+   {% for film in films %}
+        <div class="card mr-3 bg-transparent" style=" width: 11.5rem;; border: 0px">
+          <a class="text-decoration-none" href="{% url 'film_card' film.name %}">
+              <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px;"alt="...">
+              <div class="card-body  d-flex flex-column align-items-center">
+                  <p class="card-text text-white">{{ film.name }}</p>
+                  <p class="card-text text-primary">C {{ film.released }}</p>
+              </div>
+          </a>
+        </div>
+   {% endfor %}
 {% endif %}

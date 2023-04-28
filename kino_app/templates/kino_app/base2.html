@@ -1,19 +1,27 @@
 {% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+
+{% bootstrap_javascript %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'kino_app/base.css' %}">
     {% block head %}
     {% endblock %}
 </head>
-<body data-background = "../../../media/{{banner.img}}">
+<body data-background = "{% get_media_prefix %}{{banner.img}}">
     <div class="wrapper">
         <header class="header">
             <div class="container">
                 <div class="header__grid">
-                    <a href="{% url 'main' %}"><img class="header__logo" src="{% static 'admin_panel/imgs/home_alone.jpg' %}"></a>
+                    <a style="background: transparent" href="{% url 'main' %}"><img class="header__logo" src="{% static 'admin_panel/imgs/home_alone.jpg' %}"></a>
                     <div class="header__socials socials">
                         <img src="{% static 'kino_app/imgs/premium-icon-discord-4494732.png' %}" alt="">
                         <img src="{% static 'kino_app/imgs/premium-icon-twitter-4494477.png' %}" alt="">
@@ -26,54 +34,128 @@
                     <input class="header__search" type="text">
 
                     <div class="header__contacts">
-                        <span>098 512 64 21</span>
-                        <span>068 512 64 11</span>
+                        <span>{{ number1 }}</span>
+                        <span>{{ number2 }}</span>
                     </div>
+                    <nav class="navbar header__navbar navbar-expand">
+                      <div class="container d-inline">
+                          <ul class="navbar-nav d-flex justify-content-around">
+                            <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'poster' %}">Афиша</a>
+                            </li>
+                             <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'schedule' %}">Расписание</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'kino_app_cinemas' %}">Кинотеатры</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'soon' %}">Скоро</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                О кинотеатре
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                              </ul>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'stocks' %}">Акции</a>
+                            </li>
+                          </ul>
+                      </div>
+                    </nav>
 
-                    <ul class="header__navbar">
-                        <li class="header__link">
-                            <a  href="{% url 'poster' %}">Афиша</a>
-                        </li>
-                        <li class="header__link">
-                            <a href="{% url 'schedule' %}">Расписание</a>
-                        </li>
-                        <li class="header__link">
-                            <a href="{% url 'kino_app_cinemas' %}">Кинотеатры</a>
-                        </li>
-                        <li class="header__link">
-                            <a href="{% url 'soon' %}">Скоро</a>
-                        </li>
-                        <li class="header__link">
-                            <select class="dropdown" name="" id="">
-                                 <option><a class="dropdown-item text-black" href="{% url 'news' %}">Новости</a></option>
-                                 <option><a class="dropdown-item text-black" href="{% url 'contacts' %}">Контакты</a></option>
-                                 <option><a class="dropdown-item text-black" href="{% url 'mobile_apps' %}">Мобильные приложения</a></option>
-                            </select>
-                        </li>
-                        <li class="header__link">
-                            <a href="{% url 'stocks' %}">Акции</a>
-                        </li>
-                    </ul>
-                    <ul class="header__sign-in-up">
+                    <div class="header__sign-in-up">
                             {% if request.user.is_authenticated %}
-                                <li class="header__link header__link_green">
+                                <div class="header__link header__link_green">
                                     <a  href="{% url 'register' %}">{{ request.user.first_name }}</a>
-                                </li>
-                                <li class="header__link header__link_green">
+                                </div>
+                                <div class="header__link header__link_green">
                                     <a href="{% url 'logout' %}">Выйти</a>
-                                </li>
+                                </div>
                             {% else %}
-                                <li class="header__link header__link_green">
+                                <div class="header__link header__link_green">
                                     <a  href="{% url 'register' %}">Регистрация</a>
-                                </li>
-                                <li class="header__link header__link_green">
+                                </div>
+                                <div class="header__link header__link_green">
                                     <a href="{% url 'signin' %}">Войти</a>
-                                </li>
+                                </div>
                             {% endif %}
 
-
-                    </ul>
+                    </div>
                 </div>
+
+                <nav class="navbar navbar-expand-lg bg-white d-lg-none">
+                  <div class="container-fluid">
+                    <a style="background: transparent" href="{% url 'main' %}"><img class="img-fluid" style="width: 50px; height: 30px" src="{% static 'admin_panel/imgs/home_alone.jpg' %}"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <div class="header__sign-in-up p-3 justify-content-start">
+                            <div class="btn-group">
+                                {% if request.user.is_authenticated %}
+                                  <a href="{% url 'register' %}" class="btn btn-primary">{{ request.user.first_name }}</a>
+                                  <a href="{% url 'logout' %}" class="btn btn-primary">Выйти</a>
+                                {% else %}
+                                    <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+                                    <a href="{% url 'signin' %}" class="btn btn-primary">Вход</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="header__contacts">
+                            <span>{{ number1 }}</span>
+                            <span>{{ number2 }}</span>
+                        </div>
+                        <div class="header__socials socials d-none d-sm-flex mb-5">
+                            <img src="{% static 'kino_app/imgs/premium-icon-discord-4494732.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-twitter-4494477.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-facebook-4494475.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-instagram-4494488.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-youtube-4494485.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-git-4494740.png' %}" alt="">
+                            <img src="{% static 'kino_app/imgs/premium-icon-skype-4494482.png' %}" alt="">
+                        </div>
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="{% url 'poster' %}">Афиша</a>
+                        </li>
+                         <li class="nav-item">
+                          <a class="nav-link active" href="{% url 'schedule' %}">Расписание</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="{% url 'kino_app_cinemas' %}">Кинотеатры</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="{% url 'soon' %}">Скоро</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            О кинотеатре
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          </ul>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="{% url 'stocks' %}">Акции</a>
+                        </li>
+                      </ul>
+                      <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </div>
+                </nav>
             </div>
         </header>
         <main class="main">
@@ -82,61 +164,49 @@
              {% endblock %}
             </div>
         </main>
-        <footer class="footer">
-            <div class="container">
-                <div class="footer__grid">
-                    <div class="footer__mobile">
-                        <div class="footer__title">
-                            Мобильные приложения
-                        </div>
-                        <div class="footer__row">
-                            <img src="{% static 'kino_app/imgs/GooglePlay.png' %}" alt="">
-                            <img src="{% static 'kino_app/imgs/app_store_badge_en_0609.png' %}" alt="">
-                        </div>
-                        <div class="footer__text">
-                            Разработка сайтов: Home Alone
-                        </div>
-                    </div>
-                    <div class="footer__afisha">
-                        <div class="footer__title">
-                            Афиша
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Расписание</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Кинотеатры</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Акции</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Залы</a>
-                        </div>
-                    </div>
-                    <div class="footer__cinema">
-                        <div class="footer__title">
-                            О Кинотеатре
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Реклама</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Кафе-Бар</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Контакты</a>
-                        </div>
-                        <div class="footer__link">
-                            <a href="">Новости</a>
-                        </div>
-                    </div>
-                    <div class="footer__socials socials">
-                        <img src="{% static 'kino_app/imgs/premium-icon-instagram-4494488.png' %}" alt="">
-                        <img src="{% static 'kino_app/imgs/premium-icon-youtube-4494485.png' %}" alt="">
-                        <img src="{% static 'kino_app/imgs/premium-icon-git-4494740.png' %}" alt="">
-                        <img src="{% static 'kino_app/imgs/premium-icon-skype-4494482.png' %}" alt="">
-                    </div>
+        <footer class="footer bg-white">
+            <div class="container ">
+                <div class="row p-3">
+                    <div class="col-md-5 mb-3">
+                        <form>
+                          <h5>Мобильные приложения</h5>
+                          <div class="d-flex flex-row flex-wrap w-100 gap-2">
+                                <img class="img-fluid" style="width: 10rem;height: 100%" src="{% static 'kino_app/imgs/GooglePlay.png' %}" alt="">
+                                <img class="img-fluid" style="width: 10rem;height: 100%" src="{% static 'kino_app/imgs/app_store_badge_en_0609.png' %}" alt="">
+                          </div>
+                        </form>
+                      </div>
+                   <div class="col-6 col-md-2 offset-md-1 mr-3 mb-3">
+                    <h6>О кинотеатре</h6>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="{% url 'news' %}" class="nav-link p-0 text-body-secondary">Новости</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'news' %}" class="nav-link p-0 text-body-secondary">Реклама</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'news' %}" class="nav-link p-0 text-body-secondary">Кафе-Бар</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'contacts' %}" class="nav-link p-0 text-body-secondary">Контакты</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-6 col-md-2 mb-3">
+                    <h6>Афиша</h6>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="{% url 'schedule' %}" class="nav-link p-0 text-body-secondary">Расписание</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'soon' %}" class="nav-link p-0 text-body-secondary">Скоро в прокате</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'kino_app_cinemas' %}" class="nav-link p-0 text-body-secondary">Кинотеатры</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'stocks' %}" class="nav-link p-0 text-body-secondary">Акции</a></li>
+                    </ul>
+                  </div>
+
+
+
+
+
+                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                  <p>&copy; 2023 AVADA-MEDIA, Inc. All rights reserved.</p>
+                  <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-instagram-4494488.png' %}" alt=""></li>
+                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-youtube-4494485.png' %}" alt=""></li>
+                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-git-4494740.png' %}" alt=""></li>
+                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-skype-4494482.png' %}" alt=""></li>
+                  </ul>
                 </div>
             </div>
         </footer>

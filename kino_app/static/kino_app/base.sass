@@ -1,9 +1,4 @@
-@import 'atributes'
-@import 'buttons'
-@import 'zeroing.css'
 body
-  font-family: $font-family
-  color: $gray-dark-color
   min-height: 100%
 
 .wrapper
@@ -16,20 +11,19 @@ body
   margin: 0 auto
 
 .header
-  padding: 50px 50px 0px
+  padding: 20px
   margin-bottom: 25px
   &__grid
     display: grid
-    grid-template-columns: minmax(0px,200px)  minmax(0px,250px) minmax(210px,1fr) 250px minmax(10px,50px) 300px minmax(10px,50px) 290px
-    grid-template-rows: 100px 25px 100px
+    grid-template-columns: minmax(0px,150px)  minmax(0px,300px) minmax(160px,1fr) 250px minmax(10px,50px) 300px minmax(10px,150px) 190px
+    grid-template-rows: 100px 25px 80px
     grid-template-areas: 'logo logo . search . socials . contacts' 'logo logo . . . . . .' '. navbar navbar navbar navbar navbar . sign-in-up'
     & *
-      background: $white-color
-
+      background: white
   &__logo
     grid-area: logo
-    height: 100px
-    width: 200px
+    height: 80px
+    width: 150px
   &__search
     grid-area: search
     width: 100%
@@ -44,7 +38,6 @@ body
     flex-direction: row
     justify-content: space-between
     align-items: center
-    padding: 15px
     width: 100%
     height: 50px
     & img
@@ -53,61 +46,55 @@ body
       cursor: pointer
 
   &__contacts
+
     grid-area: contacts
-    width: 100%
     display: flex
+    justify-self: end
     flex-direction: column
-    justify-content: space-between
+    justify-content: center
+    align-self: start
     padding: 10px 20px
 
-    & span
-      font-weight: bold
-      color: $gray-dark-color
-      font-size: 30px
-      letter-spacing: 5px
 
 
 
   &__navbar
     grid-area: navbar
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: center
+    display: inline-flex
 
   &__sign-in-up
-    grid-area: sign-in-up
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: center
 
+    grid-area: sign-in-up
+    width: 100%
+    display:  flex
+    flex-direction: row
+    justify-content: center
+    justify-self: end
+    align-items: center
 
   &__link
     width: 100%
-    padding-right: 20px
-    padding-left:  20px
+    padding-right: 5px
+    padding-left:  5px
     height: 100%
-    font-size: 18px
-    font-weight: bold
     text-align: center
-    display: flex
+    display: inline-flex
     align-items: center
     justify-content: center
     & a
       color: inherit
       background: inherit
-    &:hover
-      color: $white-color
-      transition: background-color ease 0.3s
-      background: $yellow-dark-color
+
     &_green
       &:hover
         transition: background-color ease 0.3s
-        background: $green-dark-color
-        color: $white-color
+        background: green
+        color: white
 
-
+@media (max-width: 991px)
+  .header
+    &__grid
+      display: none
 .socials
     display: flex
     flex-direction: row
@@ -122,25 +109,29 @@ body
       cursor: pointer
 .main
   flex-grow: 1
-  padding: 50px 50px 0
-
+  padding-right: 10px
+  padding-left: 10px
+  margin-bottom: 0
 
 
 
 .footer
+  margin-bottom: 20px
+  margin-left: 20px
+  margin-right: 20px
+
   &__grid
     margin: 0 auto
-    color: $white-color
+    color: white
     padding: 50px
-    background: $black-color
+    background: black
+
     width: 100%
     display: grid
     grid-template-columns: repeat(auto-fill, 300px minmax(50px,1fr) 120px minmax(50px,100px) 170px minmax(50px,200px) 200px)
     grid-template-areas: 'mobile . afisha . cinema . socials'
     justify-content: center
     flex-shrink: 1
-    font-family: $font-family
-    font-size: 18px
   &__mobile
     grid-area: mobile
     & img
@@ -153,8 +144,6 @@ body
   &__socials
     grid-area: socials
   &__title
-    font-weight: bold
-    font-size: 24px
     margin-bottom: 20px
 
   &__text
@@ -164,7 +153,7 @@ body
     & a
       color: inherit
     &:hover
-      color: $gray-light-color
+      color: gray
 
   &__row
     margin-bottom: 60px

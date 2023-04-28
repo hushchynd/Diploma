@@ -18,10 +18,10 @@ class UserForm(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form__elem', 'size': '10'}),
             'sex': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'size': '10'}),
             'lang': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'size': '10'}),
-            'date_of_birth': forms.SelectDateWidget(attrs={'class': 'form__elem form__elem_date', },
-                                                    years=range(1940, date.today().year), ),
+            'date_of_birth': forms.DateInput(attrs={'class': 'form__elem form__elem_date','type': 'date' },
+                                                    format=('%Y-%m-%d'), ),
             'address': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
-            'phone': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
+            'phone': forms.TextInput(attrs={'class': 'form__elem', 'size': '10','placeholder':'Телефон: +38 (098) 567-81-23'}),
         }
 
     password1 = forms.CharField(label=("Пароль"),
@@ -43,10 +43,16 @@ class AdminUserForm(forms.ModelForm):
             'sex': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'size': '10'}),
             'lang': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', 'size': '10'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form__elem form__elem_date', 'type':'date'},
-                                                    ),
+                                                    format=('%Y-%m-%d')),
             'address': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
             'phone': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
         }
+
+    password1 = forms.CharField(label=("Пароль"),
+                                widget=forms.PasswordInput(attrs={'class': 'form__elem'}))
+    password2 = forms.CharField(label=("Повторите пароль"),
+                                widget=forms.PasswordInput(attrs={'class': 'form__elem'}),
+                                help_text=("Введите пароль повторно"))
 
 
 class SignInForm(forms.Form):

@@ -1,6 +1,5 @@
 import datetime
 import json
-
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -23,6 +22,10 @@ from admin_panel.forms import BookingForm
 
 def is_ajax(request):
     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
+
+def base(request):
+    data = {}
+    return render(request, '../templates/kino_app/base2.html', context=data)
 
 
 # Create your views here.

@@ -3,11 +3,10 @@ export function upload(selector,options){
     let preview = document.createElement('div');
     preview.classList.add('preview');
     let inputFile = document.querySelector(selector);
-    console.log('options.accept', options.accept);
-    console.log('Array.isArray', Array.isArray(options.accept));
-    if (options.accept && Array.isArray(options.accept)){
-        inputFile.setAttribute('accept',options.accept.join(','))
-    }
+
+
+    inputFile.setAttribute('accept','.html')
+
 
 
     inputFile.addEventListener('change',(event)=>{
@@ -40,7 +39,7 @@ export function upload(selector,options){
 
     let btnOpen = document.createElement('button');
     btnOpen.innerHTML = 'Загрузить шаблон';
-    btnOpen.classList.add('btn-primary','form__btn');
+    btnOpen.classList.add('btn','btn-primary','form__btn');
     btnOpen.type = 'button';
     inputFile.before(btnOpen);
     /**

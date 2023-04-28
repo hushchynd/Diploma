@@ -3,6 +3,9 @@ from django.urls import path
 import kino_app.views
 
 urlpatterns = [
+    path("base", kino_app.views.base, name='base'),
+
+
     path("main", kino_app.views.main, name='main'),
     path("profile", kino_app.views.profile, name='profile'),
 

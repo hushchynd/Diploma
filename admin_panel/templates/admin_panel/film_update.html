@@ -68,6 +68,16 @@
   </div>
 {% endblock %}
 {% block script %}
+    <script>
+        $(function() {
+            $("textarea[maxlength]").bind('input propertychange', function() {
+                var maxLength = $(this).attr('maxlength');
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substring(0, maxLength));
+                }
+            })
+        });
+    </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="{% static 'admin_panel/film/film_form_update.js' %}"></script>
 {% endblock %}

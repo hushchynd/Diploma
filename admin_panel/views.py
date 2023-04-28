@@ -1,8 +1,12 @@
+import json
+
+from celery.result import AsyncResult
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.admin.widgets import AdminFileWidget
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -16,7 +20,6 @@ from django.forms import inlineformset_factory, modelformset_factory
 # Create your views here.
 from admin_panel.models import *
 from datetime import date, timedelta
-
 
 
 @login_required
@@ -159,7 +162,15 @@ def mailing(request):
         for i in users:
             to.append(i.email)
 
+        to = ['dg.junior19@gmail.com', 'dhushchyn@gmail.com', 'danilgusin17@gmail.com']
+
         task = send_email.delay(html_content, to)
+        total_time = len(to)
+        data = {
+            'task_id': task.id,
+            'total_time': total_time
+        }
+        return render(request, 'admin_panel/mailing.html', context=data)
 
     templates_html = TemplateHtml.objects.all()[:5]
     file_form = my_forms.TemplateHtmlForm()
@@ -168,6 +179,23 @@ def mailing(request):
         'templates_html': templates_html,
     }
     return render(request, 'admin_panel/mailing.html', context=data)
+
+
+@login_required
+@staff_member_required
+def get_task_info(request):
+    task_id = request.GET.get('task_id', None)
+    if task_id is not None:
+        task = AsyncResult(task_id)
+        data = {
+            'state': task.state,
+            'result': task.result,
+        }
+        # data = task.state or task.result
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    else:
+        return HttpResponse('No job id given.')
 
 
 @login_required
@@ -225,13 +253,14 @@ def update_stock(request, id):
         if stock_form.is_valid() and seo_form.is_valid() and stockImgForm.is_valid():
             stock_obj = stock_form.save()
             seo_form.save()
-            StockImg.objects.filter(stock_id = stock_obj.id ).delete()
+            StockImg.objects.filter(stock_id=stock_obj.id).delete()
             for file in request.FILES.getlist('img'):
-                StockImg.objects.create(img= file,stock_id=stock_obj.id)
+                StockImg.objects.create(img=file, stock_id=stock_obj.id)
             return redirect('stocks_table')
         else:
 
-            data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form,'stock_imgsForm':stockImgForm}
+            data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form,
+                    'stock_imgsForm': stockImgForm}
             return render(request, 'admin_panel/stock_update2.html', context=data)
 
     stock_imgs = StockImg.objects.filter(stock_id=stock.id)
@@ -244,7 +273,7 @@ def update_stock(request, id):
     stock_form = my_forms.StockForm(instance=stock)
     seo_obj = SeoBlock.objects.get(id=stock.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form,'stock_imgsForm':stock_imgsForm}
+    data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form, 'stock_imgsForm': stock_imgsForm}
     return render(request, 'admin_panel/stock_update2.html', context=data)
 
 
@@ -308,9 +337,9 @@ def update_news(request, id):
             seo_form.save()
             NewsImg.objects.filter(news_id=news_obj.id).delete()
             for file in request.FILES.getlist('img'):
-                NewsImg.objects.create(img=file,news_id=news_obj.id)
+                NewsImg.objects.create(img=file, news_id=news_obj.id)
             return redirect('news_table')
-        data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form,'news_imgsForm':newsImgForm}
+        data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_imgsForm': newsImgForm}
         return render(request, 'admin_panel/news_update2.html', context=data)
 
     news_imgs = NewsImg.objects.filter(news_id=news.id)
@@ -323,7 +352,7 @@ def update_news(request, id):
     news_form = my_forms.NewsForm(instance=news)
     seo_obj = SeoBlock.objects.get(id=news.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form,'news_imgsForm':news_imgsForm}
+    data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_imgsForm': news_imgsForm}
     return render(request, 'admin_panel/news_update2.html', context=data)
 
 
@@ -670,7 +699,8 @@ def update_hall(request, number):
                 HallImg.objects.create(img=file, hall_id=hall_obj.id)
             return redirect('admin_cinemas')
         else:
-            data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form,'hall_imgsForm':hallImgForm}
+            data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form,
+                    'hall_imgsForm': hallImgForm}
             return render(request, 'admin_panel/hall_update2.html', context=data)
 
     hall_imgs = HallImg.objects.filter(hall_id=hall.id)
