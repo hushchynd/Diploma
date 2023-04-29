@@ -71,15 +71,14 @@ class Film(models.Model):
     ])
     description = models.TextField(verbose_name="Описание",
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
 
                                    ])
     card_img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                                 verbose_name="Картинка карточки",
-                                 validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                                 verbose_name="Картинка карточки",)
     released = models.DateField(verbose_name="Дата выхода")
     trailer_link = models.URLField(verbose_name="Ссылка на трейлер",
                                    validators=[
@@ -87,8 +86,7 @@ class Film(models.Model):
                                                ],
                                    )
     banner = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                               verbose_name="Баннер",
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               verbose_name="Баннер",)
     year = models.PositiveSmallIntegerField(verbose_name="Год",
                                             validators=[
                                                 validators.MaxValueValidator(2100),
@@ -132,11 +130,7 @@ class TechnologyType(models.Model):
 
 
 class FilmImg(models.Model):
-    img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True, verbose_name='',
-                            validators=[
-                                validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])
-                            ]
-                            )
+    img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True, verbose_name='',)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
 
     class Meta:

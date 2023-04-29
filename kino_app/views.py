@@ -23,6 +23,7 @@ from admin_panel.forms import BookingForm
 def is_ajax(request):
     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
+
 def base(request):
     data = {}
     return render(request, '../templates/kino_app/base2.html', context=data)
@@ -34,8 +35,15 @@ def page(request, page_id):
     page_imgs = PageImg.objects.filter(page_id=page_id)
 
     data = {"page": page, 'page_imgs': page_imgs}
+    print(1)
+    if page.name == 'Кафе-Бар':
+        print(2)
 
-    return render(request, '../templates/kino_app/page2.html', context=data)
+        data['menu'] = CafeBarMenu.objects.all()
+        return render(request, '../templates/kino_app/cafe_bar_page.html', context=data)
+
+    print(3)
+    return render(request, '../templates/kino_app/page.html', context=data)
 
 
 @method_decorator([login_required], name='dispatch')
@@ -394,7 +402,7 @@ def contacts(request):
         'contacts': contact,
         'cinema': cinema,
     }
-    return render(request, '../templates/kino_app/contacts2.html', context=data)
+    return render(request, '../templates/kino_app/contacts.html', context=data)
 
 
 def news(request):

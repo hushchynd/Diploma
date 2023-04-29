@@ -21,10 +21,9 @@ class Contact(models.Model):
                             ]
                             )
     address = models.TextField(verbose_name='Адрес', )
-    coordinate = models.TextField(verbose_name='Координаты', max_length=10000)
+    coordinate = models.TextField(verbose_name='Координаты')
     logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                             null=True,
-                             validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                             null=True,)
     cinema = models.ForeignKey("Cinema", on_delete=models.CASCADE, default=1)
 
     def filename(self):
@@ -43,9 +42,9 @@ class Cinema(models.Model):
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
-    description = models.TextField(verbose_name='Описание', max_length=500,
+    description = models.TextField(verbose_name='Описание', max_length=10_000,
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
@@ -53,11 +52,9 @@ class Cinema(models.Model):
                                    ]
                                    )
     banner = models.ImageField(verbose_name='Баннер', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               null=True,)
     logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", unique=True,
-                             null=True,
-                             validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                             null=True,)
     seo_block = models.OneToOneField(SeoBlock, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -65,8 +62,7 @@ class Cinema(models.Model):
 
 
 class CinemaImg(models.Model):
-    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,)
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, null=False)
 
     class Meta:
@@ -84,9 +80,9 @@ class Page(models.Model):
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
-    description = models.TextField(verbose_name="Описание", max_length=500,
+    description = models.TextField(verbose_name="Описание", max_length=10_000,
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
@@ -94,20 +90,16 @@ class Page(models.Model):
                                    ]
                                    )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               null=True,)
     first_pic = models.ImageField(verbose_name="Первая картинка", upload_to="photos/%Y/%m/%d/", max_length=100,
-                                  unique=True, null=True,
-                                  validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                                  unique=True, null=True,)
     second_pic = models.ImageField(verbose_name="Вторая картинка", upload_to="photos/%Y/%m/%d/", max_length=100,
-                                   unique=True, null=True,
-                                   validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                                   unique=True, null=True,)
     third_pic = models.ImageField(verbose_name="Третья картинка", upload_to="photos/%Y/%m/%d/", max_length=100,
-                                  unique=True, null=True,
-                                  validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
-    description2 = models.TextField(verbose_name="Второе описание", max_length=500,
+                                  unique=True, null=True,)
+    description2 = models.TextField(verbose_name="Второе описание", max_length=10_000,
                                     validators=[
-                                        validators.MaxLengthValidator(500),
+                                        validators.MaxLengthValidator(10_000),
                                         validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                   message='Описание должно начинаться с заглавной буквы.'),
                                         validators.ProhibitNullCharactersValidator(),
@@ -121,12 +113,12 @@ class Page(models.Model):
 
     class Meta:
         db_table = 'pages'
+        ordering = ['id']
 
 
 class PageImg(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE)
-    img = models.ImageField(verbose_name="", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name="", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,)
 
     class Meta:
         db_table = 'pages_imgs'
@@ -139,11 +131,10 @@ class Hall(models.Model):
                                               ]
                                               )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
-    description = models.TextField(verbose_name="Описание", max_length=500,
+                               null=True,)
+    description = models.TextField(verbose_name="Описание", max_length=10_000,
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
@@ -152,8 +143,7 @@ class Hall(models.Model):
                                    )
     num_tickets = models.PositiveSmallIntegerField(verbose_name="Кол-во биллетов", )
     scheme = models.ImageField(verbose_name="Cхема зала", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               null=True,)
     creation_date = models.DateField(verbose_name="Дата создания", auto_now_add=True)
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, default=1)
     scheme_html = models.TextField(blank=True, null=True)
@@ -169,8 +159,7 @@ class Hall(models.Model):
 
 class HallImg(models.Model):
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
-    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,)
 
     class Meta:
         db_table = 'halls_imgs'
@@ -212,18 +201,18 @@ class Stock(models.Model):
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
-    short_description = models.TextField(verbose_name="Краткое описание", max_length=50,
+    short_description = models.TextField(verbose_name="Краткое описание", max_length=250,
                                          validators=[
-                                             validators.MaxLengthValidator(50),
+                                             validators.MaxLengthValidator(250),
                                              validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                        message='Описание должно начинаться с заглавной буквы.'),
                                              validators.ProhibitNullCharactersValidator(),
 
                                          ]
                                          )
-    description = models.TextField(verbose_name="Описание", max_length=500,
+    description = models.TextField(verbose_name="Описание", max_length=10_000,
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
@@ -241,11 +230,9 @@ class Stock(models.Model):
                                  ],
                                  )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               null=True,)
     card_img = models.ImageField(verbose_name="Картинка карточки", upload_to="photos/%Y/%m/%d/", max_length=100,
-                                 unique=True, null=True,
-                                 validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                                 unique=True, null=True,)
     seo_block = models.OneToOneField(SeoBlock, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -254,8 +241,7 @@ class Stock(models.Model):
 
 class StockImg(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
-    img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,)
 
     class Meta:
         db_table = 'stock_imgs'
@@ -271,18 +257,18 @@ class News(models.Model):
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
-    short_description = models.TextField(verbose_name="Краткое описание", max_length=50,
+    short_description = models.TextField(verbose_name="Краткое описание", max_length=250,
                                          validators=[
-                                             validators.MaxLengthValidator(50),
+                                             validators.MaxLengthValidator(250),
                                              validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                        message='Описание должно начинаться с заглавной буквы.'),
                                              validators.ProhibitNullCharactersValidator(),
 
                                          ]
                                          )
-    description = models.TextField(verbose_name="Описание", max_length=500,
+    description = models.TextField(verbose_name="Описание", max_length=10_000,
                                    validators=[
-                                       validators.MaxLengthValidator(500),
+                                       validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                  message='Описание должно начинаться с заглавной буквы.'),
                                        validators.ProhibitNullCharactersValidator(),
@@ -300,11 +286,9 @@ class News(models.Model):
                                  ],
                                  )
     banner = models.ImageField(verbose_name="Баннер", upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
-                               null=True,
-                               validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                               null=True,)
     card_img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                                 verbose_name="Картинка карточки",
-                                 validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+                                 verbose_name="Картинка карточки",)
     seo_block = models.OneToOneField(SeoBlock, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -313,8 +297,7 @@ class News(models.Model):
 
 class NewsImg(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
-    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,)
 
     class Meta:
         db_table = 'news_imgs'

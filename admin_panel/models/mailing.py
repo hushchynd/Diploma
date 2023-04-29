@@ -5,8 +5,7 @@ from django.db import models
 
 
 class TemplateHtml(models.Model):
-    template_html = models.FileField(verbose_name="Html шаблон",upload_to='templates_html',
-                                     validators=[validators.FileExtensionValidator(['html',])])
+    template_html = models.FileField(verbose_name="Html шаблон",upload_to='templates_html',)
     date_uploaded = models.DateTimeField(verbose_name="Дата создания",auto_now_add=True,)
 
     def filename(self):

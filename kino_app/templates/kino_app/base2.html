@@ -1,7 +1,6 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% bootstrap_css %}
-
 {% bootstrap_javascript %}
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
@@ -57,10 +56,13 @@
                                 О кинотеатре
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                  {% for page in pages %}
+                                      {% if page.turn_on %}
+                                          <li><a class="dropdown-item" href="{% url 'page' page.id %}">{{ page.name }}</a></li>
+                                      {% endif %}
+                                  {% endfor %}
+                                  <li><a class="dropdown-item" href="{% url 'contacts' %}">Контакты</a></li>
+                                  <li><a class="dropdown-item" href="{% url 'mobile_apps' %}">Мобильное приложение</a></li>
                               </ul>
                             </li>
                             <li class="nav-item">
@@ -69,7 +71,6 @@
                           </ul>
                       </div>
                     </nav>
-
                     <div class="header__sign-in-up">
                             {% if request.user.is_authenticated %}
                                 <div class="header__link header__link_green">
@@ -86,10 +87,8 @@
                                     <a href="{% url 'signin' %}">Войти</a>
                                 </div>
                             {% endif %}
-
                     </div>
                 </div>
-
                 <nav class="navbar navbar-expand-lg bg-white d-lg-none">
                   <div class="container-fluid">
                     <a style="background: transparent" href="{% url 'main' %}"><img class="img-fluid" style="width: 50px; height: 30px" src="{% static 'admin_panel/imgs/home_alone.jpg' %}"></a>
@@ -139,10 +138,14 @@
                             О кинотеатре
                           </a>
                           <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            {% for page in pages %}
+                              {% if page.turn_on %}
+                                  <li><a class="dropdown-item" href="{% url 'page' page.id %}">{{ page.name }}</a></li>
+                              {% endif %}
+                            {% endfor %}
+                            <li><a class="dropdown-item" href="{% url 'contacts' %}">Контакты</a></li>
+                            <li><a class="dropdown-item" href="{% url 'mobile_apps' %}">Мобильное приложение</a></li>
+
                           </ul>
                         </li>
                         <li class="nav-item">
@@ -199,14 +202,15 @@
 
 
 
-                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-                  <p>&copy; 2023 AVADA-MEDIA, Inc. All rights reserved.</p>
-                  <ul class="list-unstyled d-flex">
-                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-instagram-4494488.png' %}" alt=""></li>
-                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-youtube-4494485.png' %}" alt=""></li>
-                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-git-4494740.png' %}" alt=""></li>
-                    <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-skype-4494482.png' %}" alt=""></li>
-                  </ul>
+                    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                      <p>&copy; 2023 AVADA-MEDIA, Inc. All rights reserved.</p>
+                      <ul class="list-unstyled d-flex">
+                        <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-instagram-4494488.png' %}" alt=""></li>
+                        <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-youtube-4494485.png' %}" alt=""></li>
+                        <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-git-4494740.png' %}" alt=""></li>
+                        <li class="ms-3"><img style="width: 30px; height: 30px" src="{% static 'kino_app/imgs/premium-icon-skype-4494482.png' %}" alt=""></li>
+                      </ul>
+                    </div>
                 </div>
             </div>
         </footer>

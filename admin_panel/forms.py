@@ -68,7 +68,7 @@ class FilmForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(
-                attrs={'maxlength': 500, 'size': 20, 'class': 'form__elem form__elem_textarea', }),
+                attrs={'maxlength': 10_000, 'size': 20, 'class': 'form__elem form__elem_textarea', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', }),
             'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'},
                                         format=('%Y-%m-%d')),
@@ -107,7 +107,7 @@ class SeoBlockForm(forms.ModelForm):
         widgets = {
             'url': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
             'title': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
-            'seo_description': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
+            'seo_description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'keywords': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
         }
 
@@ -120,7 +120,7 @@ class StockForm(forms.ModelForm):
 
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
-            'description': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 50, 'class': 'form__elem form__elem_switcher', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
@@ -148,8 +148,8 @@ class PageForm(forms.ModelForm):
         widgets = {
 
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'description': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
-            'description2': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'type': 'checkbox', 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(attrs={'size': 20, 'id': 'pic1', 'class': 'form__horizontal-img_2', }),
@@ -165,8 +165,8 @@ class PageUpdateForm(forms.ModelForm):
         fields = ('banner', 'description', 'first_pic', 'second_pic', 'third_pic', 'description2', 'turn_on',)
         widgets = {
 
-            'description': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
-            'description2': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(
@@ -203,7 +203,7 @@ class NewsForm(forms.ModelForm):
         fields = ('name', 'short_description', 'description', 'turn_on', 'video_link', 'banner', 'card_img')
         widgets = {
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'description': forms.Textarea(attrs={"maxlength": 500, 'size': 20, 'class': 'form__elem', }),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem form__elem_switcher', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
@@ -240,7 +240,7 @@ class HallForm(forms.ModelForm):
         fields = ('number', 'description', 'banner', 'num_tickets', 'scheme', 'scheme_html')
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form__elem'}),
-            'description': forms.Textarea(attrs={"maxlength": 500, 'class': 'form__elem'}),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
             'banner': forms.FileInput(attrs={'id': 'banner-img', 'class': 'form__horizontal-img'}),
             'num_tickets': forms.NumberInput(attrs={'class': 'form__elem'}),
             'scheme': forms.FileInput(attrs={'id': 'scheme-img', 'class': 'form__horizontal-img_2'}),
@@ -291,7 +291,7 @@ class CinemaForm(forms.ModelForm):
                   ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form__elem'}),
-            'description': forms.Textarea(attrs={"maxlength": 500, 'class': 'form__elem'}),
+            'description': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
             'banner': forms.FileInput(attrs={'class': 'banner-img', 'multiple': True}),
             'logo': forms.FileInput(attrs={'size': 20, 'class': 'logo-img'}),
         }

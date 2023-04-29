@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

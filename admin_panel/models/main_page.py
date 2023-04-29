@@ -6,8 +6,7 @@ from admin_panel.models import SeoBlock
 
 
 class TopCarousel(models.Model):
-    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,)
     link = models.URLField(verbose_name='', default='',
                            validators=[
                                validators.URLValidator(
@@ -32,16 +31,14 @@ class TopCarousel(models.Model):
 
 
 class BackImg(models.Model):
-    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,)
 
     class Meta:
         db_table = 'back_img'
 
 
 class BottomCarousel(models.Model):
-    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,
-                            validators=[validators.FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    img = models.ImageField(verbose_name='', upload_to='photos/%Y/%m/%d/', max_length=100, unique=True, null=True,)
     link = models.URLField(verbose_name='', default='',
                            validators=[
                                validators.URLValidator(
