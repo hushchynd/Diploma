@@ -1,21 +1,4 @@
-$('.content__banner').each(function (index,elem) {
-    $(elem).css({
-        'background-repeat': 'no-repeat',
-        'background-image': `url(${$(elem).data('background')}) `,
-        'background-position': `center`,
-        'background-size': `cover`,
-        'opacity': '1'
-    })
-});
-$('.content__card').each(function (index,elem) {
-    $(elem).css({
-        'background-repeat': 'no-repeat',
-        'background-image': `url(${$(elem).data('background')}) `,
-        'background-position': `center`,
-        'background-size': `cover`,
-        'opacity': '1'
-    })
-});
+
 
 function getBookedTickets() {
     let elementRow = 0;
@@ -76,6 +59,8 @@ $('.main-card__btn').on('click',function () {
             },     /* Данные передаваемые в массиве */
 
             success: function(data){
+                ticketsCount.html(Number(0))
+                totalPrice.html(Number(0))
                 $('.hall__seat_choosed').toggleClass('hall__seat_choosed')
                 getBookedTickets()
             }

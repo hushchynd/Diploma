@@ -15,10 +15,13 @@
                          <div class="info__text fs-6 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>
                          <div class="d-inline-flex flex-row flex-wrap justify-content-start gap-1"  style="width:15rem; padding-left: 6rem;">
                              {% for seance in seances %}
-                                 <div class="info__time fs-5 mb-2 " data-seance_id={{ seance.id  }} >
-                                     <button type="button" class="btn btn-primary ">
-                                         {{ seance.time }}
-                                     </button>
+                                 <div class="info__time position-relative fs-5 mb-2 " data-seance_id={{ seance.id  }} >
+                                     <a href="{% url 'seance' seance.id %}">
+                                         <button type="button" class="btn btn-primary ">
+                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >Купить билет</div>
+                                             {{ seance.time }}
+                                         </button>
+                                     </a>
                                  </div>
                              {% endfor %}
 

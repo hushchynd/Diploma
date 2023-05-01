@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
     "django_bootstrap5",
+    "django_google_maps",
 ]
 AUTH_USER_MODEL = 'admin_panel.Account'
 

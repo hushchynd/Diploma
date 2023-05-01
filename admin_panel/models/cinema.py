@@ -1,7 +1,7 @@
 import datetime
 import os
 import uuid
-
+from django_google_maps import fields as map_fields
 import django.utils.timezone
 from django.core import validators
 from django.db import models
@@ -13,15 +13,13 @@ from admin_panel.models.user import Account
 class Contact(models.Model):
     name = models.CharField(verbose_name='Название', max_length=100, unique=True,
                             validators=[
-                                validators.MaxLengthValidator(100,
-                                                              'Длина названия должна быть не более 100 символов.'),
-                                validators.RegexValidator('^[A-ZА-Я]{1}.*',
-                                                          'Название должно начинаться с заглавной буквы'),
+                                validators.MaxLengthValidator(100, 'Длина названия должна быть не более 100 символов.'),
+                                validators.RegexValidator('^[A-ZА-Я]{1}.*', 'Название должно начинаться с заглавной буквы'),
                                 validators.ProhibitNullCharactersValidator(),
                             ]
                             )
     address = models.TextField(verbose_name='Адрес', )
-    coordinate = models.TextField(verbose_name='Координаты')
+    coordinate = models.TextField()
     logo = models.ImageField(verbose_name='Логотип', upload_to="photos/%Y/%m/%d/", max_length=100, unique=True,
                              null=True,)
     cinema = models.ForeignKey("Cinema", on_delete=models.CASCADE, default=1)

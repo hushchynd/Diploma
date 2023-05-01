@@ -12,12 +12,18 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, DetailView
 
+from Diploma import settings
 from admin_panel.models.film import *
 from admin_panel.models.cinema import *
 from admin_panel.models.main_page import *
+from user.forms import *
 from datetime import date, timedelta
 
 from admin_panel.forms import BookingForm
+
+
+def aboutCinema(request):
+    return render(request, '../templates/kino_app/about_cinema.html')
 
 
 def is_ajax(request):
@@ -29,21 +35,30 @@ def base(request):
     return render(request, '../templates/kino_app/base2.html', context=data)
 
 
-# Create your views here.
 def page(request, page_id):
     page = Page.objects.get(pk=page_id)
     page_imgs = PageImg.objects.filter(page_id=page_id)
-
     data = {"page": page, 'page_imgs': page_imgs}
-    print(1)
     if page.name == 'Кафе-Бар':
-        print(2)
-
         data['menu'] = CafeBarMenu.objects.all()
         return render(request, '../templates/kino_app/cafe_bar_page.html', context=data)
-
-    print(3)
     return render(request, '../templates/kino_app/page.html', context=data)
+
+@login_required
+def cabinet(request):
+    user = Account.objects.get(id=request.user.id)
+    data = {}
+
+    if request.POST:
+        form = UserForm(request.POST, request.FILES)
+        if form.is_valid():
+            return redirect('main')
+        else:
+            data['form'] = form
+            return render(request, '../templates/kino_app/cabinet.html',context=data)
+    form = UserForm(instance=user)
+    data['form'] = form
+    return render(request, '../templates/kino_app/cabinet.html',context=data)
 
 
 @method_decorator([login_required], name='dispatch')
@@ -70,14 +85,10 @@ def getBookedTickets(request, seance_id):
 
 
 def booking(request):
-    print('hwllo')
     if request.POST:
-        print('Hello world')
         data = json.loads(request.POST.get('choosedTickets'))
-        print(data)
         seance_id = request.POST.get('seance_id')
         user_id = request.POST.get('user_id')
-        print(seance_id, user_id)
         for key, value in data.items():
             for row, seat in value.items():
                 Ticket(row=row, seat=seat, seance_id=seance_id, user_id=user_id).save()
@@ -398,9 +409,12 @@ def mobile_apps(request):
 def contacts(request):
     contact = Contact.objects.all()
     cinema = Cinema.objects.get(id=1)
+
     data = {
         'contacts': contact,
         'cinema': cinema,
+        'coordinate': '<div class="mapouter"><div class="gmap_canvas"><iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=2880 Broadway, New York&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a href="https://embed-googlemap.com">embed-googlemap.com</a></div><style>.mapouter{position:relative;text-align:right;width:600px;height:400px;}.gmap_canvas {overflow:hidden;background:none!important;width:600px;height:400px;}.gmap_iframe {width:600px!important;height:400px!important;}</style></div>',
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY
     }
     return render(request, '../templates/kino_app/contacts.html', context=data)
 
@@ -429,11 +443,17 @@ def stocks(request):
         page_num = 1
     page = paginator.get_page(page_num)
     data = {'stocks': page.object_list, 'page': page, }
-    return render(request, '../templates/kino_app/stocks2.html', context=data)
+    return render(request, '../templates/kino_app/stocks.html', context=data)
 
 
-def page_stock(request):
-    return render(request, '../templates/kino_app/page_stock.html')
+def page_stock(request, id):
+    stock = Stock.objects.get(id=id)
+    stock_imgs = StockImg.objects.filter(stock_id=id)
+    data = {
+        'stock': stock,
+        'stock_imgs': stock_imgs,
+    }
+    return render(request, '../templates/kino_app/stock_news_page.html', context=data)
 
 
 def page_news(request):

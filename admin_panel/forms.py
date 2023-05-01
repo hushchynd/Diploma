@@ -1,7 +1,9 @@
 from datetime import date
 
 import django.forms as forms
-from django.contrib.admin.widgets import AdminFileWidget
+
+from django_google_maps import widgets as map_widgets
+from django_google_maps import fields as map_fields
 
 from admin_panel.models import *
 
@@ -218,8 +220,9 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ('name', 'address', 'coordinate', 'logo',)
         widgets = {
-            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img', })
+            'logo': forms.FileInput(attrs={'class': 'form__horizontal-img', }),
         }
+
 
 
 class NewsImgForm(forms.ModelForm):

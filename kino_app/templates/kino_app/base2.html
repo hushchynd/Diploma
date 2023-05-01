@@ -52,7 +52,7 @@
                               <a class="nav-link active" href="{% url 'soon' %}">Скоро</a>
                             </li>
                             <li class="nav-item dropdown">
-                              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link active dropdown-toggle" href="{% url 'about_cinema' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 О кинотеатре
                               </a>
                               <ul class="dropdown-menu">
@@ -74,7 +74,7 @@
                     <div class="header__sign-in-up">
                             {% if request.user.is_authenticated %}
                                 <div class="header__link header__link_green">
-                                    <a  href="{% url 'register' %}">{{ request.user.first_name }}</a>
+                                    <a  href="{% url 'cabinet' %}">{{ request.user.first_name }}</a>
                                 </div>
                                 <div class="header__link header__link_green">
                                     <a href="{% url 'logout' %}">Выйти</a>
@@ -99,7 +99,7 @@
                         <div class="header__sign-in-up p-3 justify-content-start">
                             <div class="btn-group">
                                 {% if request.user.is_authenticated %}
-                                  <a href="{% url 'register' %}" class="btn btn-primary">{{ request.user.first_name }}</a>
+                                  <a href="{% url 'cabinet' %}" class="btn btn-primary">{{ request.user.first_name }}</a>
                                   <a href="{% url 'logout' %}" class="btn btn-primary">Выйти</a>
                                 {% else %}
                                     <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
@@ -134,7 +134,7 @@
                           <a class="nav-link active" href="{% url 'soon' %}">Скоро</a>
                         </li>
                         <li class="nav-item dropdown">
-                          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <a class="nav-link active dropdown-toggle" href="{% url 'about_cinema' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             О кинотеатре
                           </a>
                           <ul class="dropdown-menu">

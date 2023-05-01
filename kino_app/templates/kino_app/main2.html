@@ -4,22 +4,35 @@
     Главная
 {% endblock %}
 {% block head %}
-        <link  rel="stylesheet" href="{% static 'kino_app/node_modules/lightslider/src/css/lightslider.css' %} " />
-        <link  rel="stylesheet" href="{% static 'kino_app/carousel.css' %} " />
         <link  rel="stylesheet" href="{% static 'kino_app/main/main.css' %} " />
 {% endblock %}
 {% block content %}
      <div class="main__content">
-         <div  class= "carousel main__carousel" data-number=1>
-             {% for item in banners_sliders.top_carousel %}
-                     <div class="carousel__item" data-link="{{ item.link }}" data-background = ../../../media/{{ item.img }} >
-                         <h3 class="carousel__title">
-                             {{ item.title }}
-                         </h3>
-                     </div>
-             {% endfor %}
-
+         <div id="carouselExampleCaptions" class="carousel slide">
+              <div class="carousel-inner">
+                  {% for item in banners_sliders.top_carousel %}
+                      {% if forloop.first %}
+                          <div class="carousel-item active">
+                      {% else %}
+                          <div class="carousel-item">
+                      {% endif %}
+                              <img src="{% get_media_prefix %}{{ item.img }}" class="d-block w-100" alt="...">
+                              <div class="carousel-caption d-none d-md-block">
+                                <h3 class="p-4 w-100" style="background:  RGBA(96, 96, 96,0.7)">{{ item.title }}</h3>
+                              </div>
+                          </div>
+                  {% endfor %}
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
          </div>
+
+
 
          <h2 class="main__title">Смотрите сегодня:  {{ today_date }}</h2>
          <div class="main__grid film">
@@ -55,14 +68,25 @@
 
             </div>
          <h2 class="main__title">Новости и Акции</h2>
-         <div  class= "carousel cinema__carousel" data-number="2">
-             {% for item in banners_sliders.bottom_carousel %}
-                     <div class="carousel__item" data-link="{{ item.link }}" data-background ={% get_media_prefix %}{{ item.img }} >
-                         <div class="carousel__title">
-                             {{ item.title }}
-                         </div>
-                     </div>
-             {% endfor %}
+          <div id="carouselExampleCaptions2" class="carousel slide">
+              <div class="carousel-inner">
+                  {% for item in banners_sliders.bottom_carousel %}
+                      {% if forloop.first %}
+                          <div class="carousel-item active">
+                      {% else %}
+                          <div class="carousel-item">
+                      {% endif %}
+                              <img src="{% get_media_prefix %}{{ item.img }}" class="d-block w-100" alt="...">
+                          </div>
+                  {% endfor %}
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
          </div>
         <h6 class="text-center mt-3">
             {{ seo_text }}
@@ -74,6 +98,5 @@
 {% endblock %}
 {% block script %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="{% static 'kino_app/node_modules/lightslider/src/js/lightslider.js' %}"></script>
     <script type="module" src="{% static 'kino_app/main/main.js' %}"></script>
 {% endblock %}

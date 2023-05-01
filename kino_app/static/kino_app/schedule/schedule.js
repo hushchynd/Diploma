@@ -18,6 +18,10 @@ $('#form-filter').on('change',function () {
         success: function(data){   /* функция которая будет выполнена после успешного запроса.  */
              //alert(data); /* В переменной data содержится ответ от index.php. */
             $('.film').html(data)
+            $('.info__time').each(function () {
+                $(this).find('.info__descr').hide()
+
+            })
             $('.info__time').hover(function () {
                 $(this).find('.info__descr').fadeToggle('slow')
             })
