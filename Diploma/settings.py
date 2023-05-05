@@ -33,11 +33,11 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.outlook.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'danilgusin17@gmail.com'
-EMAIL_HOST_PASSWORD = 'hdbfokyujlwegcxd'
-DEFAULT_FROM_EMAIL = 'danilgusin17@gmail.com'
+EMAIL_HOST_USER = 'danilservices@outlook.com'
+EMAIL_HOST_PASSWORD = 'bubuta4114'
+DEFAULT_FROM_EMAIL = 'danilservices@outlook.com'
 DEFAULT_TO_EMAIL = 'Your email'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -52,6 +52,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 являются приложения rest framework и corsheaders соответственно. Их необходимо
 добавить в список зарегистрированных в проекте """
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -69,12 +70,18 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_bootstrap5",
     "django_google_maps",
+    "rosetta",
+    "django_lang_switch",
+
+
+
 ]
 AUTH_USER_MODEL = 'admin_panel.Account'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -163,9 +170,16 @@ LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
-
+from django.utils.translation import gettext_lazy as _
+LANGUAGES = [
+    ('ru', _('Английский')),
+    ('en', _('Русский')),
+]
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 

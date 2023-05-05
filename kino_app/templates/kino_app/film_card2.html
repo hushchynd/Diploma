@@ -1,66 +1,72 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
     {{ film.name }}
 {% endblock %}
 {% block head %}
+        <link  rel="stylesheet" href="{% static 'kino_app/responsive_imgs.css' %} " />
 
 {% endblock %}
 
 {% block content %}
      <div class="content bg-white">
-          <div class="ratio ratio-21x9">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/Pa87ZZy8igQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
+{#          <div class="ratio ratio-21x9">#}
+{#                <iframe width="560" height="315" src="https://www.youtube.com/embed/Pa87ZZy8igQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>#}
+{#          </div>#}
+       <picture class="d-block position-relative">
+              <img src="{% get_media_prefix %}{{ film.banner }}" class="img-fluid h-auto w-100" alt="...">
+        </picture>
           <div class="content__grid d-flex flex-md-row flex-column mb-5" id="schedule" >
              <div class="sidebar flex-shrink-1" >
                  <div class="card-body px-4 pt-2 pb-2" >
                      <div class="card-header mb-5">
-                        <h3 class="card-title text-center">Фильтр</h3>
+                        <h3 class="card-title text-center">{% trans 'Фильтр' %}</h3>
                      </div>
                     <form class="column g-3" id="form-filter" action="#" >
                       <div class="col mr-3 mb-3">
-                          <label class="form-label">Дата</label>
+                          <label class="form-label">{% trans 'Дата' %}</label>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="today" value="today">
                               <label class="form-check-label" for="today">
-                                Сегодня
+                                {% trans 'Сегодня' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="tomorrow" value="tomorrow" >
                               <label class="form-check-label" for="tomorrow">
-                                Завтра
+                                {% trans 'Завтра' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="week" value="week">
                               <label class="form-check-label" for="week">
-                                На неделе
+                                {% trans 'На неделе' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="month" value="month">
                               <label class="form-check-label" for="month">
-                                В этом месяце
+                                {% trans 'В этом месяце' %}
                               </label>
                           </div>
                       </div>
                       <div class="col mb-3">
-                        <label class="form-label">Залы</label>
+                        <label class="form-label">{% trans 'Залы' %}</label>
                          <div class="form-check row">
                              {% for  hall in hall_list %}
                                  <div class="col">
                                     <input name="halls_filter"  class="form-check-input" type="checkbox" {% if checked == 'checked' %}  checked {% endif %} value="{{ hall.number }}">
                                     <label class="form-check-label"  for="halls_filter">
-                                        Зал {{ hall.number }}
+                                        {% trans 'Зал' %} {{ hall.number }}
                                     </label>
                                  </div>
                             {% endfor %}
                         </div>
                       </div>
                       <div class="col">
-                        <label class="form-label">Технологии</label>
+                        <label class="form-label">{% trans 'Технологии' %}</label>
                          <div class="form-check row">
                              {% for tech in tech_list %}
                                  <div class="col">
@@ -94,7 +100,7 @@
         {#                                            {{ hall.scheme_html | safe }}#}
         {#                                         </div>#}
         {#                                     </div>#}
-                                                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">Зал №{{ hall.number }}</div>
+                                                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">{% trans 'Зал' %} №{{ hall.number }}</div>
                                                  {% for tech,seances in tech_film %}
                                                      <div class="info__tech">
                                                          <div class="info__text fs-6 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>
@@ -103,7 +109,7 @@
                                                                  <div class="info__time position-relative fs-5 mb-2 " data-seance_id={{ seance.id  }} >
                                                                      <a href="{% url 'seance' seance.id %}">
                                                                          <button type="button" class="btn btn-primary ">
-                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >Купить билет</div>
+                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >{% trans 'Купить билет' %}</div>
                                                                              {{ seance.time }}
                                                                          </button>
                                                                      </a>
@@ -126,8 +132,8 @@
           </div>
          <div class="row mb-5">
                <div class="col-md-6 col-lg-4 col-xl-3 col-12 mb-3 mb-md-0">
-                 <picture class="d-block position-relative">
-                    <img src="{% get_media_prefix %}{{ film.card_img }}" style="height: 550px; width: 100%" class="img-fluid" alt="...">
+                 <picture class="d-block position-relative text-center">
+                    <img src="{% get_media_prefix %}{{ film.card_img }}"  class="card-img" alt="...">
                 </picture>
              </div>
              <div class="col-md-6 col-lg-8 col-xl-9  col-12" >
@@ -142,11 +148,11 @@
              <div class="content__sidebar col-md-4 col-12">
                 <dl class="column">
                     <div class="p-1 bg-secondary">
-                        <dt class="text-white " name="year">Год</dt>
+                        <dt class="text-white " name="year">{% trans 'Год' %}</dt>
                         <dd class="mb-0"> <span> {{ film.year }}</span></dd>
                     </div>
                     <div class="p-1 bg-dark">
-                        <dt class="text-white" name="countries">Страны</dt>
+                        <dt class="text-white" name="countries">{% trans 'Страны' %}</dt>
                         <dd class="mb-0 text-info">
                             {% for i in countries %}
                                 <span>{{ i.name }}, </span>
@@ -154,7 +160,7 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-secondary">
-                        <dt class="text-white" name="genres">Жанры</dt>
+                        <dt class="text-white" name="genres">{% trans 'Жанры' %}</dt>
                         <dd class="mb-0">
                             {% for i in genres %}
                                 <span>{{ i.name }}, </span>
@@ -162,7 +168,7 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-dark">
-                        <dt class="text-white" name="genres">Операторы</dt>
+                        <dt class="text-white" name="genres">{% trans 'Операторы' %}</dt>
                         <dd class="text-info mb-0">
                             {% for i in operators %}
                                 <span>{{ i.name }}, </span>
@@ -170,7 +176,7 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-secondary">
-                        <dt class="text-white" name="producers">Продюсеры</dt>
+                        <dt class="text-white" name="producers">{% trans 'Продюсеры' %}</dt>
                         <dd class="mb-0">
                             {% for i in producers %}
                                 <span>{{ i.name }}, </span>
@@ -178,7 +184,7 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-dark">
-                        <dt class="text-white" name="editors">Режиссёры</dt>
+                        <dt class="text-white" name="editors">{% trans 'Режиссёры' %}</dt>
                         <dd class="text-info mb-0">
                             {% for i in editors %}
                                 <span>{{ i.name }}, </span>
@@ -186,7 +192,7 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-secondary">
-                        <dt class="text-white" name="scriptwriters">Сценаристы</dt>
+                        <dt class="text-white" name="scriptwriters">{% trans 'Сценаристы' %}</dt>
                         <dd class="mb-0">
                             {% for i in scriptwriters %}
                                 <span>{{ i.name }}, </span>
@@ -194,19 +200,19 @@
                         </dd>
                     </div>
                     <div class="p-1 bg-dark">
-                        <dt class="text-white" name="duration">Бюджет</dt>
+                        <dt class="text-white" name="duration">{% trans 'Бюджет' %}</dt>
                         <dd class="text-info mb-0">
                             <span> {{ film.budget}} </span>
                         </dd>
                     </div>
                     <div class="p-1 bg-secondary">
-                        <dt class="text-white" name="duration">Время</dt>
+                        <dt class="text-white" name="duration">{% trans 'Время' %}</dt>
                         <dd class="mb-0">
-                            <span> {{ film.duration }} минут</span>
+                            <span> {{ film.duration }} {% trans 'минут' %}</span>
                         </dd>
                     </div>
                     <div class="p-1 bg-dark">
-                        <dt class="text-white" name="age_limit">Возраст</dt>
+                        <dt class="text-white" name="age_limit">{% trans 'Возраст' %}</dt>
                         <dd class="text-info mb-0">
                             <span>+{{ film.legal_age}}</span>
                         </dd>
@@ -214,7 +220,7 @@
                 </dl>
              </div>
              <div class="col-md-8 col-12" >
-                 <h3 class="content__subtitle text-center">Кадры и постеры</h3>
+                 <h3 class="content__subtitle text-center">{% trans 'Кадры и постеры' %}</h3>
                  <div id="carouselExample" class="carousel slide">
                       <div class="carousel-inner">
                           {% for item in film_imgs %}
@@ -241,7 +247,7 @@
              </div>
          </div>
         <div style="height: 100px" class="fs-6 d-block  pr-3 bg-danger">
-             <span class="text-wrap text-white">Контекстная реклама</span>
+             <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
         </div>
     </div>
 {% endblock %}

@@ -13,18 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import path, include
 
 import admin_panel.views
 from Diploma import settings
 
-urlpatterns = [
-    path('', include('kino_app.urls')),
+urlpatterns = i18n_patterns(
     path('admin/', include('admin_panel.urls')),
     path('accounts/', include('user.urls')),
+    path('rosetta/', include('rosetta.urls')),
+    path('', include('kino_app.urls')),
+    path('django_lang_switch/', include('django_lang_switch.urls')),
 
-]
+)
+
 
 if settings.DEBUG:
     import debug_toolbar

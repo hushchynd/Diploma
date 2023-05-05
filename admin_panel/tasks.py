@@ -10,9 +10,8 @@ from Diploma.celery import app
 
 @app.task(bind=True)
 def send_email(self, html_content="<p>This is an <strong>important</strong> message.</p>",
-               to=['dg.junior19@gmail.com', 'dhushchyn@gmail.com', 'danilgusin17@gmail.com']):
-    subject, from_email, = "hello", "danilgusin17@gmail.com"
-    to = ['dg.junior19@gmail.com', 'dhushchyn@gmail.com', 'danilgusin17@gmail.com']
+               to=['dhushchyn@gmail.com',]):
+    subject, from_email, = "hello", "danilservices@outlook.com"
     text_content = "This is an important message."
     for i, v in enumerate(to):
         html_content = html_content
@@ -21,5 +20,4 @@ def send_email(self, html_content="<p>This is an <strong>important</strong> mess
         msg.send()
         current_task.update_state(state='PROGRESS',
                                   meta={'current': i, 'total': len(to)})
-        time.sleep(1)
 

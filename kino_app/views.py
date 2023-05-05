@@ -166,7 +166,7 @@ def posterSoonAjax(request):
 
 def schedule(request):
     template = '../templates/kino_app/schedule2.html'
-    seances = Seance.objects.all()
+    seances = Seance.objects.filter(date__gte=date.today())
     if is_ajax(request):
         template = '../templates/kino_app/schedule_items.html'
         date_filter = request.GET.get('period')
@@ -235,7 +235,8 @@ def schedule(request):
 
 
 def schedule_for_film(request):
-    seances = Seance.objects.all()
+    seances = Seance.objects.filter(date__gte=date.today())
+
     date_filter = request.GET.get('period')
     halls_filter = request.GET.getlist('halls_filter')
     films_filter = request.GET.getlist('films_filter')
@@ -300,11 +301,12 @@ def card_cinema(request, name):
     cinema_imgs = CinemaImg.objects.filter(cinema_id=cinema.id)
     halls = Hall.objects.filter(cinema_id=cinema.id)
     seances = Seance.objects.filter(date=date.today())
-
+    pages = Page.objects.all()
     data = {
         'cinema': cinema, "cinema_imgs": cinema_imgs,
         "halls": halls, "halls_num": halls.__len__(),
         'seances': seances,
+        'pages': pages,
     }
     return render(request, '../templates/kino_app/cinema_card2.html', context=data)
 
@@ -429,8 +431,8 @@ def news(request):
         page_num = 1
     page = paginator.get_page(page_num)
 
-    data = {'news_list': page.object_list, 'page': page, }
-    return render(request, '../templates/kino_app/news2.html', context=data)
+    data = {'news': page.object_list, 'page': page, }
+    return render(request, '../templates/kino_app/news.html', context=data)
 
 
 def stocks(request):
@@ -453,11 +455,17 @@ def page_stock(request, id):
         'stock': stock,
         'stock_imgs': stock_imgs,
     }
-    return render(request, '../templates/kino_app/stock_news_page.html', context=data)
+    return render(request, '../templates/kino_app/page_stock.html', context=data)
 
 
-def page_news(request):
-    return render(request, '../templates/kino_app/page_news.html')
+def page_news(request,id):
+    news = News.objects.get(id=id)
+    news_imgs = NewsImg.objects.filter(news_id=id)
+    data = {
+        'news': news,
+        'news_imgs': news_imgs,
+    }
+    return render(request, '../templates/kino_app/page_news.html',context=data)
 
 
 def search(request):

@@ -1,7 +1,7 @@
 from django.core import validators
 from django.db import models
 import django.forms as forms
-
+from django.utils.translation import gettext_lazy as _
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
@@ -138,7 +138,7 @@ class FilmImg(models.Model):
 
 
 class SeoBlock(models.Model):
-    url = models.URLField(verbose_name='Ссылка',
+    url = models.URLField(verbose_name=_('Ссылка'),
                           validators=[
                               validators.URLValidator(
                                   regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',
@@ -146,7 +146,7 @@ class SeoBlock(models.Model):
 
                           ],
                           )
-    title = models.CharField(max_length=50, verbose_name='Название',
+    title = models.CharField(verbose_name=_('Название'),max_length=50,
                              validators=[
                                  validators.MaxLengthValidator(50, 'Название не более 20ти символов.'),
                                  validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -154,14 +154,14 @@ class SeoBlock(models.Model):
                                  validators.ProhibitNullCharactersValidator(),
                              ]
                              )
-    seo_description = models.TextField(verbose_name='Описание', null=True,
+    seo_description = models.TextField(verbose_name=_('Описание'), null=True,
                                        validators=[
                                            validators.RegexValidator('^[A-ZА-Я]{1}.*',
                                                                      message='Описание должно начинаться с заглавной буквы'),
                                            validators.ProhibitNullCharactersValidator(),
                                        ]
                                        )
-    keywords = models.CharField(verbose_name='Ключевые слова', max_length=255,
+    keywords = models.CharField(verbose_name=_('Ключевые слова'), max_length=255,
                                 validators=[
                                     validators.MaxLengthValidator(255),
                                     validators.ProhibitNullCharactersValidator(),

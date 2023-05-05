@@ -1,5 +1,7 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% load django_bootstrap5 %}
 {% load file_filters %}
 {# Load CSS and JavaScript #}
@@ -19,7 +21,7 @@
      <div class="content bg-white">
         <div class="row">
              <div class="col-md-9 col-lg-10 col-xl-10 pt-4 col-12 p-5" >
-                 <h3 class="text-center mb-5">Страница клиента</h3>
+                 <h3 class="text-center mb-5">{% trans 'Страница клиента' %}</h3>
                  <form action="{% url 'cabinet' %}" method="post" enctype="multipart/form-data">
                     <div class="card-body mb-5">
                         {% csrf_token %}

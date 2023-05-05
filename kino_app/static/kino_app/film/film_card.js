@@ -43,6 +43,13 @@ $('#form-filter').on('change',function () {
         context: $('.film__info'),     /* Данные передаваемые в массиве */
         success: function(data){
             $(this).html(data)
+            $('.info__time').each(function () {
+                $(this).find('.info__descr').hide()
+
+            })
+            $('.info__time').hover(function () {
+                $(this).find('.info__descr').fadeToggle('slow')
+            })
         }
     });
  })

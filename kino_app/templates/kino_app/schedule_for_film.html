@@ -1,4 +1,6 @@
 {% load static %}
+ {% load i18n %}
+
   {% for date,hall_film in result %}
      <div class="info__date">
          <div class="info__text fs-4  mb-2" style="padding-left: 1.5rem;">{{ date }}</div>
@@ -9,7 +11,7 @@
 {#                        {{ hall.scheme_html | safe }}#}
 {#                     </div>#}
 {#                 </div>#}
-                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">Зал №{{ hall.number }}</div>
+                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">{% trans 'Зал' %} №{{ hall.number }}</div>
                  {% for tech,seances in tech_film %}
                      <div class="info__tech">
                          <div class="info__text fs-6 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>

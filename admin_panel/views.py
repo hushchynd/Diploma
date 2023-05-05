@@ -25,7 +25,43 @@ from datetime import date, timedelta
 @login_required
 @staff_member_required
 def statistic(request):
-    data = {'users_count': Account.objects.count()}
+    mans_woman = [Account.objects.filter(sex='Мужской').count(), Account.objects.filter(sex='Женский').count()]
+
+    tickets = Ticket.objects.all()
+    films = Film.objects.all()
+    top_films = []
+    popular_films = []
+    for film in films:
+        top_films.append([tickets.filter(seance__film=film).count(), f'{film.name}'])
+        popular_films.append([tickets.filter(seance__film=film).count(), film.id])
+    top_films = (sorted(top_films)[-1:-4:-1])
+
+
+    film_seances = []
+    for count, film_id in sorted(popular_films)[-1:-6:-1]:
+        seances_list = []
+        for i in range(7):
+            seances_list.append(Seance.objects.filter(film=film_id, date=(date.today() + timedelta(days=i))).count())
+
+        film_seances.append([Film.objects.get(id=film_id), seances_list])
+
+
+
+
+    seances_for_week = []
+    week = []
+    for i in range(7):
+        seances_for_week.append(Seance.objects.filter(date=date.today() + timedelta(days=i)).count())
+        week.append(date.today() + timedelta(days=i))
+
+    data = {
+        'users_count': Account.objects.count(),
+        'mans_woman': mans_woman,
+        'top_films': top_films,
+        'seances_for_week': seances_for_week,
+        'week': week,
+        'film_seances': film_seances,
+    }
     return render(request, 'admin_panel/statistic.html', context=data)
 
 
@@ -73,23 +109,26 @@ def films(request):
         'title': 'Фильмы'
     }
     if request.method == 'POST':
-        filmImgForm = my_forms.FilmImgForm(request.POST, request.FILES)
+        FilmFormsetFactory = modelformset_factory(can_delete=True, model=FilmImg, form=my_forms.FilmImgForm,
+                                                  extra=0)
+        film_gallery = FilmFormsetFactory(request.POST, request.FILES)
         film_form = my_forms.FilmForm(request.POST, request.FILES)
         seo_block = my_forms.SeoBlockForm(request.POST)
 
-        if seo_block.is_valid() and film_form.is_valid() and filmImgForm.is_valid():
+        if seo_block.is_valid() and film_form.is_valid() and film_gallery.is_valid():
             seo_obj = seo_block.save()
             film_obj = film_form.save()
             film_obj.seo_block_id = seo_obj.id
             film_obj.save()
-            for file in request.FILES.getlist('img'):
-                FilmImg.objects.create(img=file, film_id=film_obj.id)
-
+            instances = film_gallery.save(commit=False)
+            for instance in instances:
+                instance.film_id = film_obj.id
+                instance.save()
         else:
             data = {
                 'seo_form': seo_block,
                 'form': film_form,
-                'filmImg_form': filmImgForm,
+                'film_gallery': film_gallery,
             }
             return render(request, 'admin_panel/film_form.html', context=data)
 
@@ -162,7 +201,6 @@ def mailing(request):
         for i in users:
             to.append(i.email)
 
-        to = ['dg.junior19@gmail.com', 'dhushchyn@gmail.com', 'danilgusin17@gmail.com']
 
         task = send_email.delay(html_content, to)
         total_time = len(to)
@@ -212,17 +250,20 @@ def stocks(request):
     if request.method == "POST":
         stock_form = my_forms.StockForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
-        gallery_stock_form = my_forms.StockImgForm(request.POST, request.FILES)
-        if seo_form.is_valid() and stock_form.is_valid() and gallery_stock_form.is_valid():
+        StockFormsetFactory = modelformset_factory(can_delete=True, extra=0, model=StockImg, form=my_forms.StockImgForm)
+        stock_gallery = StockFormsetFactory(request.POST, request.FILES)
+        if seo_form.is_valid() and stock_form.is_valid() and stock_gallery.is_valid():
             seo_obj = seo_form.save()
             stock_obj = stock_form.save()
             stock_obj.seo_block_id = seo_obj.id
             stock_obj.save()
-            for file in request.FILES.getlist('img'):
-                if file:
-                    StockImg.objects.create(img=file, stock_id=stock_obj.id)
+            instances = stock_gallery.save(commit=False)
+            for instance in instances:
+                instance.stock_id = stock_obj.id
+                instance.save()
+
         else:
-            data = {'stock_form': stock_form, 'stockImgs_form': gallery_stock_form, 'seo_form': seo_form}
+            data = {'stock_form': stock_form, 'stock_gallery': stock_gallery, 'seo_form': seo_form}
             return render(request, 'admin_panel/stock_form.html', context=data)
 
     stocks = Stock.objects.all()
@@ -233,11 +274,13 @@ def stocks(request):
 @login_required
 @staff_member_required
 def get_stock_form(request):
-    stockImgs_form = my_forms.StockImgForm()
+    StockFormsetFactory = modelformset_factory(can_delete=True, model=StockImg, form=my_forms.StockImgForm, extra=0)
+    stock_gallery = StockFormsetFactory(queryset=StockImg.objects.none())
+    # stockImgs_form = my_forms.StockImgForm()
     stock_form = my_forms.StockForm()
     seo_form = my_forms.SeoBlockForm()
 
-    data = {'stock_form': stock_form, 'stockImgs_form': stockImgs_form, 'seo_form': seo_form}
+    data = {'stock_form': stock_form, 'stock_gallery': stock_gallery, 'seo_form': seo_form}
     return render(request, 'admin_panel/stock_form.html', context=data)
 
 
@@ -245,35 +288,35 @@ def get_stock_form(request):
 @staff_member_required
 def update_stock(request, id):
     stock = Stock.objects.get(id=id)
+    StockFormsetFactory = modelformset_factory(can_delete=True, model=StockImg, form=my_forms.StockImgForm,
+                                               extra=0)
     if request.method == 'POST':
-        stockImgForm = my_forms.StockImgForm(request.POST, request.FILES)
+        stock_gallery = StockFormsetFactory(request.POST, request.FILES)
         stock_form = my_forms.StockForm(request.POST, request.FILES, instance=stock)
         seo_obj = SeoBlock.objects.get(id=stock.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if stock_form.is_valid() and seo_form.is_valid() and stockImgForm.is_valid():
+        if stock_form.is_valid() and seo_form.is_valid() and stock_gallery.is_valid():
             stock_obj = stock_form.save()
             seo_form.save()
-            StockImg.objects.filter(stock_id=stock_obj.id).delete()
-            for file in request.FILES.getlist('img'):
-                StockImg.objects.create(img=file, stock_id=stock_obj.id)
+            instances = stock_gallery.save(commit=False)
+            for object in stock_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.stock_id = stock_obj.id
+                instance.save()
             return redirect('stocks_table')
         else:
 
             data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form,
-                    'stock_imgsForm': stockImgForm}
+                    'stock_gallery': stock_gallery}
             return render(request, 'admin_panel/stock_update2.html', context=data)
 
-    stock_imgs = StockImg.objects.filter(stock_id=stock.id)
-    stock_imgsForm = my_forms.StockImgForm()
-    stock_imgs_list = []
-    for stock_img in stock_imgs:
-        stock_imgs_list.append(stock_img.img)
-    stock_imgsForm.stock_imgs_list = stock_imgs_list
+    stock_gallery = StockFormsetFactory(queryset=StockImg.objects.filter(stock_id=stock.id))
 
     stock_form = my_forms.StockForm(instance=stock)
     seo_obj = SeoBlock.objects.get(id=stock.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form, 'stock_imgsForm': stock_imgsForm}
+    data = {'stock_form': stock_form, 'stock_id': stock.id, 'seo_form': seo_form, 'stock_gallery': stock_gallery}
     return render(request, 'admin_panel/stock_update2.html', context=data)
 
 
@@ -294,17 +337,20 @@ def news(request):
     if request.method == "POST":
         news_form = my_forms.NewsForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
-        gallery_news_form = my_forms.NewsImgForm(request.POST, request.FILES)
-        if seo_form.is_valid() and news_form.is_valid() and gallery_news_form.is_valid():
+        NewsFormsetFactory = modelformset_factory(can_delete=True, model=NewsImg, form=my_forms.NewsImgForm,
+                                                  extra=0)
+        news_gallery = NewsFormsetFactory(request.POST, request.FILES)
+        if seo_form.is_valid() and news_form.is_valid() and news_gallery.is_valid():
             seo_obj = seo_form.save()
             news_obj = news_form.save()
             news_obj.seo_block_id = seo_obj.id
             news_obj.save()
-            for file in request.FILES.getlist('img'):
-                if file:
-                    NewsImg.objects.create(img=file, news_id=news_obj.id)
+            instances = news_gallery.save(commit=False)
+            for instance in instances:
+                instance.news_id = news_obj.id
+                instance.save()
         else:
-            data = {'news_form': news_form, 'newsImgs_form': gallery_news_form, 'seo_form': seo_form}
+            data = {'news_form': news_form, 'news_gallery': news_gallery, 'seo_form': seo_form}
             return render(request, 'admin_panel/news_form.html', context=data)
 
     news_list = News.objects.all()
@@ -315,44 +361,46 @@ def news(request):
 @login_required
 @staff_member_required
 def get_news_form(request):
-    newsImgs_form = my_forms.NewsImgForm()
+    NewsFormsetFactory = modelformset_factory(can_delete=True, model=NewsImg, form=my_forms.NewsImgForm, extra=0)
+    news_gallery = NewsFormsetFactory(queryset=NewsImg.objects.none())
+    # newsImgs_form = my_forms.NewsImgForm()
     news_form = my_forms.NewsForm()
     seo_form = my_forms.SeoBlockForm()
 
-    data = {'news_form': news_form, 'newsImgs_form': newsImgs_form, 'seo_form': seo_form}
+    data = {'news_form': news_form, 'news_gallery': news_gallery, 'seo_form': seo_form}
     return render(request, 'admin_panel/news_form.html', context=data)
 
 
 @login_required
 @staff_member_required
 def update_news(request, id):
+    PageFormsetFactory = modelformset_factory(can_delete=True, model=NewsImg, form=my_forms.NewsImgForm,
+                                              extra=0)
     news = News.objects.get(id=id)
     if request.method == 'POST':
-        newsImgForm = my_forms.NewsImgForm(request.POST, request.FILES)
+        news_gallery = PageFormsetFactory(request.POST, request.FILES)
         news_form = my_forms.NewsForm(request.POST, request.FILES, instance=news)
         seo_obj = SeoBlock.objects.get(id=news.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if news_form.is_valid() and seo_form.is_valid() and newsImgForm.is_valid():
+        if news_form.is_valid() and seo_form.is_valid() and news_gallery.is_valid():
             news_obj = news_form.save()
             seo_form.save()
-            NewsImg.objects.filter(news_id=news_obj.id).delete()
-            for file in request.FILES.getlist('img'):
-                NewsImg.objects.create(img=file, news_id=news_obj.id)
+            instances = news_gallery.save(commit=False)
+            for object in news_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.news_id = news_obj.id
+                instance.save()
             return redirect('news_table')
-        data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_imgsForm': newsImgForm}
+        data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_gallery': news_gallery}
         return render(request, 'admin_panel/news_update2.html', context=data)
 
-    news_imgs = NewsImg.objects.filter(news_id=news.id)
-    news_imgsForm = my_forms.NewsImgForm()
-    news_imgs_list = []
-    for news_img in news_imgs:
-        news_imgs_list.append(news_img.img)
-    news_imgsForm.news_imgs_list = news_imgs_list
+    news_gallery = PageFormsetFactory(queryset=NewsImg.objects.filter(news_id=news.id))
 
     news_form = my_forms.NewsForm(instance=news)
     seo_obj = SeoBlock.objects.get(id=news.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_imgsForm': news_imgsForm}
+    data = {'news_form': news_form, 'news_id': news.id, 'seo_form': seo_form, 'news_gallery': news_gallery}
     return render(request, 'admin_panel/news_update2.html', context=data)
 
 
@@ -385,8 +433,10 @@ class FilmForm(FormView):
         context = super().get_context_data(**kwargs)
         seo = my_forms.SeoBlockForm()
         context['seo_form'] = seo
-        filmImgForm = my_forms.FilmImgForm()
-        context['filmImg_form'] = filmImgForm
+        # filmImgForm = my_forms.FilmImgForm()
+        FilmFormsetFactory = modelformset_factory(can_delete=True, model=FilmImg, form=my_forms.FilmImgForm, extra=0)
+        film_gallery = FilmFormsetFactory(queryset=FilmImg.objects.none())
+        context['film_gallery'] = film_gallery
         return context
 
     def get_success_url(self):
@@ -397,47 +447,52 @@ class FilmForm(FormView):
 @staff_member_required
 def cinema_card(request, name):
     cinema = Cinema.objects.get(name=name)
+    CinemaFormsetFactory = modelformset_factory(can_delete=True, model=CinemaImg, form=my_forms.CinemaImgForm,
+                                                extra=0)
     if request.method == 'POST':
-        cinemaImgForm = my_forms.CinemaImgForm(request.POST, request.FILES)
+
+        cinema_gallery = CinemaFormsetFactory(request.POST, request.FILES)
         cinema_form = my_forms.CinemaForm(request.POST, request.FILES, instance=cinema)
         seo_obj = SeoBlock.objects.get(id=cinema.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if cinema_form.is_valid() and seo_form.is_valid() and cinemaImgForm.is_valid():
+        if cinema_form.is_valid() and seo_form.is_valid() and cinema_gallery.is_valid():
             seo_form.save()
             cinema_form.save()
-            CinemaImg.objects.all().delete()
-            for file in request.FILES.getlist('img'):
-                CinemaImg.objects.create(img=file, cinema_id=1)
+            instances = cinema_gallery.save(commit=False)
+            for object in cinema_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.cinema_id = cinema.id
+                instance.save()
             return redirect('admin_cinemas')
         else:
             halls = Hall.objects.filter(cinema_id=cinema.id)
             data = {'form': cinema_form, 'cinema_name': cinema.name, 'seo_form': seo_form, 'halls': halls,
-                    'cinema_imgsForm': cinemaImgForm}
+                    'cinema_gallery': cinema_gallery}
             return render(request, 'admin_panel/cinema_update.html', context=data)
 
     cinema_form = my_forms.CinemaForm(instance=cinema)
-    cinema_imgs = CinemaImg.objects.filter(cinema_id=1)
-    cinema_imgsForm = my_forms.CinemaImgForm()
-    cinema_imgs_list = []
-    for cinema_img in cinema_imgs:
-        cinema_imgs_list.append(cinema_img.img)
-    cinema_imgsForm.cinema_imgs_list = cinema_imgs_list
+    cinema_gallery = CinemaFormsetFactory(queryset=CinemaImg.objects.filter(cinema_id=1))
+
     seo_obj = SeoBlock.objects.get(id=cinema.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
     halls = Hall.objects.filter(cinema_id=cinema.id)
     data = {'form': cinema_form, 'cinema_name': cinema.name, 'seo_form': seo_form, 'halls': halls,
-            'cinema_imgsForm': cinema_imgsForm}
+            'cinema_gallery': cinema_gallery}
     return render(request, 'admin_panel/cinema_update.html', context=data)
 
 
 @login_required
 @staff_member_required
 def get_hall_form(request):
-    hallImgs_form = my_forms.HallImgForm()
+    # hallImgs_form = my_forms.HallImgForm()
+    HallFormsetFactory = modelformset_factory(can_delete=True, model=HallImg, form=my_forms.HallImgForm, extra=0)
+    hall_gallery = HallFormsetFactory(queryset=HallImg.objects.none())
+
     hall_form = my_forms.HallForm()
     seo_form = my_forms.SeoBlockForm()
 
-    data = {'hall_form': hall_form, 'hallImgs_form': hallImgs_form, 'seo_form': seo_form}
+    data = {'hall_form': hall_form, 'hall_gallery': hall_gallery, 'seo_form': seo_form}
     return render(request, 'admin_panel/hall_form.html', context=data)
 
 
@@ -538,18 +593,19 @@ def pages(request):
     if request.method == "POST":
         page_form = my_forms.PageForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
-        pageImgForm = my_forms.PageImgForm(request.POST, request.FILES)
-
-        if seo_form.is_valid() and page_form.is_valid() and pageImgForm.is_valid():
+        PageFormsetFactory = modelformset_factory(can_delete=True, model=PageImg, form=my_forms.PageImgForm, extra=0)
+        page_gallery = PageFormsetFactory(request.POST, request.FILES)
+        if seo_form.is_valid() and page_form.is_valid() and page_gallery.is_valid():
             seo_obj = seo_form.save()
             page_obj = page_form.save()
             page_obj.seo_block_id = seo_obj.id
             page_obj.save()
-            for file in request.FILES.getlist('img'):
-                if file:
-                    PageImg.objects.create(img=file, page_id=page_obj.id)
+            instances = page_gallery.save(commit=False)
+            for instance in instances:
+                instance.page_id = page_obj.id
+                instance.save()
         else:
-            data = {'page_form': page_form, 'pageImgs_form': pageImgForm, 'seo_form': seo_form}
+            data = {'page_form': page_form, 'page_gallery': page_gallery, 'seo_form': seo_form}
             return render(request, 'admin_panel/page_form.html', context=data)
 
     page_list = Page.objects.order_by('creation_date')
@@ -560,11 +616,13 @@ def pages(request):
 @login_required
 @staff_member_required
 def get_page_form(request):
-    pageImgs_form = my_forms.PageImgForm()
+    # pageImgs_form = my_forms.PageImgForm()
+    PageFormsetFactory = modelformset_factory(can_delete=True, model=PageImg, form=my_forms.PageImgForm, extra=0)
+    page_gallery = PageFormsetFactory(queryset=PageImg.objects.none())
     page_form = my_forms.PageForm()
     seo_form = my_forms.SeoBlockForm()
 
-    data = {'page_form': page_form, 'pageImgs_form': pageImgs_form, 'seo_form': seo_form}
+    data = {'page_form': page_form, 'page_gallery': page_gallery, 'seo_form': seo_form}
     return render(request, 'admin_panel/page_form.html', context=data)
 
 
@@ -572,64 +630,60 @@ def get_page_form(request):
 @staff_member_required
 def update_page(request, id):
     menuFormset = modelformset_factory(can_delete=True, model=CafeBarMenu, form=my_forms.CafeBarMenuForm, extra=0)
-
+    PageFormsetFactory = modelformset_factory(can_delete=True, model=PageImg, form=my_forms.PageImgForm,
+                                              extra=0)
     page = Page.objects.get(id=id)
 
     if request.method == 'POST':
         if page.name == 'Кафе-Бар':
             menu_formset = menuFormset(request.POST)
-            pageImgForm = my_forms.PageImgForm(request.POST, request.FILES)
+            page_gallery = PageFormsetFactory(request.POST, request.FILES)
 
             page_form = my_forms.PageUpdateForm(request.POST, request.FILES, instance=page)
             seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
             seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
 
-            if menu_formset.is_valid() and page_form.is_valid() and seo_form.is_valid() and pageImgForm.is_valid():
+            if menu_formset.is_valid() and page_form.is_valid() and seo_form.is_valid() and page_gallery.is_valid():
                 menu_formset.save()
                 page_obj = page_form.save()
                 seo_form.save()
-                PageImg.objects.filter(page_id=page_obj.id).delete()
-                for file in request.FILES.getlist('img'):
-                    PageImg.objects.create(img=file, page_id=page_obj.id)
+                instances = page_gallery.save(commit=False)
+                for object in page_gallery.deleted_objects:
+                    object.delete()
+                for instance in instances:
+                    instance.page_id = page_obj.id
+                    instance.save()
                 return redirect('pages')
             else:
                 data = {
                     'page_form': page_form,
-                    'page_imgsForm': pageImgForm,
+                    'page_gallery': page_gallery,
                     'page_id': page.id,
                     'seo_form': seo_form,
                     'menu_formset': menu_formset,
                     'labels': my_forms.CafeBarMenuForm
                 }
                 return render(request, 'admin_panel/update_cafe-bar.html', context=data)
-        pageImgForm = my_forms.PageImgForm(request.POST, request.FILES)
+        page_gallery = PageFormsetFactory(request.POST, request.FILES)
+
         page_form = my_forms.PageUpdateForm(request.POST, request.FILES, instance=page)
         seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if page_form.is_valid() and seo_form.is_valid() and pageImgForm.is_valid():
+        if page_form.is_valid() and seo_form.is_valid() and page_gallery.is_valid():
             page_obj = page_form.save()
             seo_form.save()
-            PageImg.objects.filter(page_id=page_obj.id).delete()
-            for file in request.FILES.getlist('img'):
-                PageImg.objects.create(img=file, page_id=page_obj.id)
+            page_gallery.save()
             return redirect('pages')
         else:
             data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form,
-                    'page_imgsForm': pageImgForm, }
+                    'page_gallery': page_gallery, }
             return render(request, 'admin_panel/page_update2.html', context=data)
 
     page_form = my_forms.PageUpdateForm(instance=page)
     seo_obj = SeoBlock.objects.get(id=page.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-
-    page_imgs = PageImg.objects.filter(page_id=page.id)
-    page_imgsForm = my_forms.PageImgForm()
-    page_imgs_list = []
-    for page_img in page_imgs:
-        page_imgs_list.append(page_img.img)
-    page_imgsForm.page_imgs_list = page_imgs_list
-
-    data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form, 'page_imgsForm': page_imgsForm}
+    page_gallery = PageFormsetFactory(queryset=PageImg.objects.filter(page_id=page.id))
+    data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form, 'page_gallery': page_gallery}
     if page.name == 'Кафе-Бар':
         menu_formset = menuFormset(queryset=CafeBarMenu.objects.all())
         data['menu_formset'] = menu_formset
@@ -653,32 +707,35 @@ def delete_page(request, id):
 @staff_member_required
 def update_film(request, name):
     film = Film.objects.get(name=name)
+    FilmFormsetFactory = modelformset_factory(can_delete=True, model=FilmImg, form=my_forms.FilmImgForm,
+                                              extra=0)
     if request.method == 'POST':
-        filmImgForm = my_forms.FilmImgForm(request.POST, request.FILES)
+        film_gallery = FilmFormsetFactory(request.POST, request.FILES)
+
         film_form = my_forms.FilmForm(request.POST, request.FILES, instance=film)
         seo_obj = SeoBlock.objects.get(id=film.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if film_form.is_valid() and seo_form.is_valid() and filmImgForm.is_valid():
+        if film_form.is_valid() and seo_form.is_valid() and film_gallery.is_valid():
             seo_form.save()
             film_obj = film_form.save()
-            FilmImg.objects.filter(film_id=film_obj.id).delete()
-            for file in request.FILES.getlist('img'):
-                FilmImg.objects.create(img=file, film_id=film_obj.id)
+            instances = film_gallery.save(commit=False)
+            for object in film_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.film_id = film_obj.id
+                instance.save()
             return redirect('films')
         else:
-            data = {'form': film_form, 'film_name': film.name, 'film_imgsForm': filmImgForm, 'seo_form': seo_form}
+            data = {'form': film_form, 'film_name': film.name, 'film_gallery': film_gallery, 'seo_form': seo_form}
             return render(request, 'admin_panel/film_update.html', context=data)
 
     film_form = my_forms.FilmForm(instance=film)
-    film_imgs = FilmImg.objects.filter(film_id=film.id)
-    film_imgsForm = my_forms.FilmImgForm()
-    film_imgs_list = []
-    for film_img in film_imgs:
-        film_imgs_list.append(film_img.img)
-    film_imgsForm.film_imgs_list = film_imgs_list
+
+    film_gallery = FilmFormsetFactory(queryset=FilmImg.objects.filter(film_id=film.id))
+
     seo_obj = SeoBlock.objects.get(id=film.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'form': film_form, 'film_name': film.name, 'film_imgsForm': film_imgsForm, 'seo_form': seo_form}
+    data = {'form': film_form, 'film_name': film.name, 'film_gallery': film_gallery, 'seo_form': seo_form}
     return render(request, 'admin_panel/film_update.html', context=data)
 
 
@@ -686,33 +743,34 @@ def update_film(request, name):
 @staff_member_required
 def update_hall(request, number):
     hall = Hall.objects.get(number=number)
+    HallFormsetFactory = modelformset_factory(can_delete=True, model=HallImg, form=my_forms.HallImgForm,
+                                              extra=0)
     if request.method == 'POST':
-        hallImgForm = my_forms.HallImgForm(request.POST, request.FILES, )
+        hall_gallery = HallFormsetFactory(request.POST, request.FILES, )
         hall_form = my_forms.HallForm(request.POST, request.FILES, instance=hall)
         seo_obj = SeoBlock.objects.get(id=hall.seo_block.id)
         seo_form = my_forms.SeoBlockForm(request.POST, instance=seo_obj)
-        if hall_form.is_valid() and seo_form.is_valid() and hallImgForm.is_valid():
+        if hall_form.is_valid() and seo_form.is_valid() and hall_gallery.is_valid():
             hall_obj = hall_form.save()
             seo_form.save()
-            HallImg.objects.filter(hall_id=hall_obj.id).delete()
-            for file in request.FILES.getlist('img'):
-                HallImg.objects.create(img=file, hall_id=hall_obj.id)
+            instances = hall_gallery.save(commit=False)
+            for object in hall_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.hall_id = hall_gallery.id
+                instance.save()
             return redirect('admin_cinemas')
         else:
             data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form,
-                    'hall_imgsForm': hallImgForm}
+                    'hall_gallery': hall_gallery}
             return render(request, 'admin_panel/hall_update2.html', context=data)
 
-    hall_imgs = HallImg.objects.filter(hall_id=hall.id)
-    hall_imgsForm = my_forms.HallImgForm()
-    hall_imgs_list = []
-    for hall_img in hall_imgs:
-        hall_imgs_list.append(hall_img.img)
-    hall_imgsForm.hall_imgs_list = hall_imgs_list
+    hall_gallery = HallFormsetFactory(queryset=HallImg.objects.filter(hall_id=hall.id))
+
     hall_form = my_forms.HallForm(instance=hall)
     seo_obj = SeoBlock.objects.get(id=hall.seo_block.id)
     seo_form = my_forms.SeoBlockForm(instance=seo_obj)
-    data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form, 'hall_imgsForm': hall_imgsForm}
+    data = {'hall_form': hall_form, 'hall_number': hall.number, 'seo_form': seo_form, 'hall_gallery': hall_gallery}
     return render(request, 'admin_panel/hall_update2.html', context=data)
 
 
@@ -773,7 +831,9 @@ def update_contacts(request):
 @staff_member_required
 def seances(request):
     template = '../templates/admin_panel/seances.html'
+    Seance.objects.filter(date__lt=date.today()).delete()
     seances = Seance.objects.all()
+
     if is_ajax(request):
         template = '../templates/admin_panel/seances_items.html'
         date_filter = request.GET.get('period')

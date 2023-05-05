@@ -1,7 +1,9 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
-    Мобильные приложения
+    {% trans 'Мобильные приложения' %}
 {% endblock %}
 {% block head %}
 
@@ -15,7 +17,7 @@
         <div class="row">
              <div class="col-md-9 col-lg-10 col-xl-10 pt-4 col-12 pr-1" >
                  <div class="text-center">
-                     <h3 class="mb-3">Мобильные приложения</h3>
+                     <h3 class="mb-3">{% trans 'Мобильные приложения' %}</h3>
                  </div>
                  <p class="content__descr p-3" style="text-align: justify;  text-indent: 50px;letter-spacing: 1px">
                      But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects,
@@ -34,12 +36,12 @@
              </div>
              <div class="column col-md-3 col-lg-2 col-xl-2 col-12 mb-md-0">
                   <div style="height: 100%" class="fs-6 d-none d-md-block bg-danger mb-3">
-                     <span class="text-wrap text-white">Контекстная реклама</span>
+                     <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
                 </div>
              </div>
         </div>
         <div style="height: 100px" class="fs-6 d-md-none bg-danger">
-            <span class="text-wrap text-white">Контекстная реклама</span>
+            <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
         </div>
     </div>
 {% endblock %}

@@ -1,14 +1,15 @@
 {% extends 'kino_app/page.html' %}
+ {% load i18n %}
 
 {% block content3 %}
-    <h4 class="text-center mt-5">Меню Кафе-Бара</h4>
-    <div class="table-responsive ps-3">
+    <h4 class="text-center mt-5">{% trans 'Меню Кафе-Бара' %}</h4>
+    <div class="table-responsive ">
         <table class="text-center table table-bordered table-hover mb-5"  style="width: 100%">
             <thead>
               <tr>
-                <th>Название</th>
-                <th>Вес</th>
-                <th>Цена</th>
+                <th>{% trans 'Название' %}</th>
+                <th>{% trans 'Вес' %}</th>
+                <th>{% trans 'Цена' %}</th>
               </tr>
             </thead>
             <tbody>

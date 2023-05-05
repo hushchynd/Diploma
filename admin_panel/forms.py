@@ -123,7 +123,7 @@ class StockForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
             'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
-            'turn_on': forms.CheckboxInput(attrs={'size': 50, 'class': 'form__elem form__elem_switcher', }),
+            'turn_on': forms.CheckboxInput(attrs={'size': 50, 'class': 'form__elem on_off', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', 'class': 'form__vertical-img', }),
@@ -137,7 +137,7 @@ class StockImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'gallery',
+                'class': 'gallery d-none',
                 'multiple': True,
             })
         }
@@ -187,7 +187,7 @@ class PageImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'gallery',
+                'class': 'gallery d-none',
                 'multiple': True,
             })
         }
@@ -207,7 +207,7 @@ class NewsForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
-            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem form__elem_switcher', }),
+            'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', 'class': 'form__vertical-img', }),
@@ -231,7 +231,7 @@ class NewsImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'gallery',
+                'class': 'gallery d-none',
                 'multiple': True,
             })
         }
@@ -257,7 +257,7 @@ class HallImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'gallery',
+                'class': 'gallery d-none',
                 'multiple': True,
             }),
         }
@@ -268,7 +268,10 @@ class FilmImgForm(forms.ModelForm):
         model = FilmImg
         fields = ('img',)
         widgets = {
-            'img': forms.FileInput(attrs={'multiple': True, 'class': 'gallery', })
+            'img': forms.FileInput(attrs={
+                'multiple': True,
+                'class': 'gallery d-none',
+            })
         }
 
 
@@ -278,7 +281,7 @@ class CinemaImgForm(forms.ModelForm):
         fields = ('img',)
         widgets = {
             'img': forms.FileInput(attrs={
-                'class': 'gallery',
+                'class': 'gallery d-none',
                 'multiple': True,
             }),
         }

@@ -37,7 +37,6 @@ $('.card__item_add').on('click',function () {
     }
 
     $(this).before(newForm)
-
 })
 
 
@@ -45,7 +44,7 @@ $("[name$='DELETE'], [for$='DELETE']").hide()
 $('body').on('click','.card__btn_remove',function () {
     $(this).parent().find('[name$=\'DELETE\']').attr('checked','checked')
     $(this).parent().fadeOut("slow", function() {
-    // Animation complete.
+
   })
 
 })
@@ -79,7 +78,6 @@ $('.card__preview').each(function () {
     }
 });
 
-
 $('.card__btn_change').on('click',function () {
     let preview = $(this).parent().find('.card__preview_horizontal')
     let inputChangedFile = $(this).parent().find('input[type=\'file\']').click()
@@ -92,3 +90,4 @@ $('.card__btn_change').on('click',function () {
           reader.readAsDataURL(file);
     })
 })
+

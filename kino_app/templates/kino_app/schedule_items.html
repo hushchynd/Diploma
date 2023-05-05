@@ -1,4 +1,6 @@
 {% load static %}
+ {% load i18n %}
+
     {% for film ,date_film  in result %}
          <div class="film__item mb-3 bg-gray-light p-3" style="background: #C2C2C2;">
              <div class="d-flex flex-sm-row flex-column align-items-center align-items-sm-start gap-2">
@@ -17,7 +19,7 @@
 {#                                            {{ hall.scheme_html | safe }}#}
 {#                                         </div>#}
 {#                                     </div>#}
-                                         <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">Зал №{{ hall.number }}</div>
+                                         <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">{% trans 'Зал' %} №{{ hall.number }}</div>
                                          {% for tech,seances in tech_film %}
                                              <div class="info__tech">
                                                  <div class="info__text fs-6 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>
@@ -26,13 +28,12 @@
                                                                  <div class="info__time position-relative fs-5 mb-2 " data-seance_id={{ seance.id  }} >
                                                                      <a href="{% url 'seance' seance.id %}">
                                                                          <button type="button" class="btn btn-primary ">
-                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >Купить билет</div>
+                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >{% trans 'Купить билет' %}</div>
                                                                              {{ seance.time }}
                                                                          </button>
                                                                      </a>
                                                                  </div>
                                                      {% endfor %}
-
                                                  </div>
                                              </div>
                                          {% endfor %}
@@ -43,6 +44,5 @@
                      </div>
                 </div>
              </div>
-
          </div>
     {% endfor %}

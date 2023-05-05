@@ -1,4 +1,6 @@
 {% load static %}
+ {% load i18n %}
+
 {% if type == "poster" %}
     {% for film in films %}
         <div class="card mr-3 bg-transparent" style=" width: 11.5rem;; border: 0px">
@@ -6,7 +8,7 @@
               <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px;"alt="...">
               <div class="card-body  d-flex flex-column align-items-center">
                   <p class="card-text text-white">{{ film.name }}</p>
-                <button class="btn btn-primary card-text text-uppercase text-white text-info mb-3">Купить</button>
+                <button class="btn btn-primary card-text text-uppercase text-white text-info mb-3">{% trans 'Купить' %}</button>
               </div>
           </a>
         </div>

@@ -1,5 +1,7 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
     {{ cinema.name }}
 {% endblock %}
@@ -15,26 +17,32 @@
         <div class="row pb-3">
             <div class="column col-md-3 col-lg-2 col-xl-2 col-12 mb-3 mb-md-0">
                   <div style="height: 300px" class="fs-6 d-none d-md-block bg-danger mb-3">
-                     <span class="text-wrap text-white">Контекстная реклама</span>
+                     <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
                 </div>
-                <div class="mb-5 ">
-                    <h5 class="sidebar__title px-4 px-md-2 mb-5 mt-3 mt-md-0">Кол-во залов: {{ halls_num }}</h5>
+                <div class="mb-5 text-center text-md-start">
+                    <h5 class="sidebar__title px-4 px-md-2 mb-5 mt-3 mt-md-0">{% trans 'Кол-во залов:' %} {{ halls_num }}</h5>
                     <div class="d-flex flex-column gap-2 px-4 px-md-2 sidebar__halls">
                         {%  for hall in halls %}
-                            <p><a href="{% url 'hall' hall.id %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Зал {{ hall.number }}</a></p>
+                            <p><a href="{% url 'hall' hall.id %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{% trans 'Зал' %} {{ hall.number }}</a></p>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="mb-5">
-                    <h5 class="sidebar__title px-4 px-md-2 mb-5">Смотрите сегодня: </h5>
+                <div class="mb-5 text-center text-md-start">
+                    <h5 class="sidebar__title px-4 px-md-2 mb-5">{% trans 'Смотрите сегодня: ' %}</h5>
                     <div class="d-flex flex-column gap-2 px-4 px-md-2 sidebar__halls">
-                         {%  for seance in seances %}
-                            <p><a href="{% url 'schedule' %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ seance.time }} {{ seance.film.name }}</a></p>
-                        {% endfor %}
+                        {% if  seances.count  == 0 %}
+                            ...
+                        {% else %}
+                            {%  for seance in seances %}
+                                <p><a href="{% url 'schedule' %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ seance.time }} {{ seance.film.name }}</a></p>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
-                <a class="d-block text-left text-decoration-none px-2 mb-5" href="{% url 'schedule' %}"><button class=" btn btn-success text-black border border-width-3 border-dark mb-3">Расписание сеансов</button></a>
-             </div>
+                <div class="text-center">
+                    <a class="d-block text-left text-decoration-none px-2 mb-5" href="{% url 'schedule' %}"><button class=" btn btn-success text-black border border-width-3 border-dark mb-3">{% trans 'Расписание сеансов' %}</button></a>
+                </div>
+            </div>
              <div class="col-md-9 col-lg-10 col-xl-10 pt-4 col-12 pr-1" >
                  <div class="content__elements d-flex flex-row justify-content-lg-start justify-content-center align-items-center flex-wrap gap-5 mb-5 ">
                      <div class="text-center">
@@ -45,8 +53,8 @@
                      </div>
                      <div class="">
                          <div class="d-inline-flex flex-column mt-3">
-                             <a class="d-block text-center text-decoration-none" href="{% url 'schedule' %}"><button class=" btn btn-success d-none d-lg-block  btn-lg text-black border border-width-3 border-dark mb-3">Расписание сеансов</button></a>
-                             <a class="d-block text-center text-decoration-none" href="{% url 'schedule' %}"><button class=" btn btn-success  d-lg-none text-black border border-width-3 border-dark mb-3">Расписание сеансов</button></a>
+                             <a class="d-block text-center text-decoration-none" href="{% url 'schedule' %}"><button class=" btn btn-success d-none d-lg-block  btn-lg text-black border border-width-3 border-dark mb-3">{% trans 'Расписание сеансов' %}</button></a>
+                             <a class="d-block text-center text-decoration-none" href="{% url 'schedule' %}"><button class=" btn btn-success  d-lg-none text-black border border-width-3 border-dark mb-3">{% trans 'Расписание сеансов' %}</button></a>
                              <div class="d-inline-flex rounded flex-row justify-content-around bg-black p-2">
                                  <span class="badge rounded-pill text-bg-info">HD</span>
                                  <span class="badge rounded-pill text-bg-secondary">2D</span>
@@ -60,7 +68,21 @@
                  <p class="content__descr p-3" style="text-align: justify;  text-indent: 50px;letter-spacing: 1px">
                    {{ cinema.description }}
                  </p>
-                 <h3 class="content__subtitle text-center">ФОТОГАЛЕРЕЯ</h3>
+                <h3 class="content__subtitle text-center">{% trans 'Условия' %}</h3>
+                 <div class="bg-dark d-flex flex-wrap flex-row justify-content-center justify-content-lg-start p-3 mb-3">
+                     {% for page in pages %}
+                         <div class="card bg-dark text-white border-0" style="width: 18rem;">
+                          <div class="card-body" >
+                            <h5 class="card-title"><a href="{% url 'page' page.id %}" class="card-link">{{ page.name }}</a></h5>
+                            <p class="card-text overflow-hidden" style="height: 10rem">{{ page.description }}</p>
+                          </div>
+                        </div>
+                     {% endfor %}
+
+
+
+                </div>
+                 <h3 class="content__subtitle text-center">{% trans 'ФОТОГАЛЕРЕЯ' %}</h3>
                  <div id="carouselExample" class="carousel slide">
                       <div class="carousel-inner">
                           {% for item in cinema_imgs %}
@@ -85,6 +107,9 @@
                       </button>
                 </div>
              </div>
+        </div>
+       <div style="height: 100px" class="fs-6 d-md-none bg-danger">
+            <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
         </div>
     </div>
 {% endblock %}

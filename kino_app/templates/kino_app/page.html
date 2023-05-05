@@ -1,5 +1,7 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
     Зал номер {{ hall.number }}
 {% endblock %}
@@ -30,7 +32,7 @@
                  </p>
                 {% block content3 %}
                 {% endblock %}
-                 <h3 class="content__subtitle text-center">ФОТОГАЛЕРЕЯ</h3>
+                 <h3 class="content__subtitle text-center">{% trans 'ФОТОГАЛЕРЕЯ' %}</h3>
                  <div id="carouselExample" class="carousel slide">
                       <div class="carousel-inner">
                           {% for item in page_imgs %}
@@ -57,12 +59,12 @@
              </div>
              <div class="column col-md-3 col-lg-2 col-xl-2 col-12 mb-md-0">
                   <div style="height: 100%" class="fs-6 d-none d-md-block bg-danger mb-3">
-                     <span class="text-wrap text-white">Контекстная реклама</span>
+                     <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
                 </div>
              </div>
         </div>
         <div style="height: 100px" class="fs-6 d-md-none bg-danger">
-            <span class="text-wrap text-white">Контекстная реклама</span>
+            <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
         </div>
     </div>
 {% endblock %}

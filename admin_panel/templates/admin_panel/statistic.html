@@ -13,7 +13,6 @@
           <div class="col-sm-6">
             <h1>Статистика</h1>
           </div>
-
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -35,15 +34,27 @@
           </div>
         </div>
         <div class="card-body mb-5">
-            <div class="statistic d-flex flex-row flex-wrap justify-content-center">
+            <div class="statistic d-flex flex-row flex-wrap justify-content-start">
                     <div class="pie-chart-sex mb-3 mr-3" style="width: 25rem;height: 20rem"  ></div>
                     <div class="pie-chart-films mb-3 mr-3" style="width: 25rem;height: 20rem"    ></div>
                     <div class="area-seances mb-3 mr-3"  style="width: 100%;height: 20rem"  ></div>
                     <div class="line-stack-films mb-3 mr-3"  style="width: 100%;height: 20rem" ></div>
+                    <div class="small-box bg-warning" style="width: 15rem">
+                      <div class="inner">
+                        <h3>{{ users_count }}</h3>
+
+                        <p>User Registrations</p>
+                      </div>
+                      <div class="icon">
+                            <i class="fa-solid fa-person"></i>
+                      </div>
+                      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
             </div>
         </div>
         <div class="card-footer">
         </div>
+      </div>
     </section>
   </div>
 
@@ -52,7 +63,8 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
+    <script src="https://kit.fontawesome.com/cce590ac92.js" crossorigin="anonymous"></script>
+    <script src="{% static 'AdminLTE/dist/js/adminlte.min.js' %}"></script>
      <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
 
       <script type="text/javascript">
@@ -87,8 +99,8 @@
               type: 'pie',
               radius: '50%',
               data: [
-                { value: 1048, name: 'Мужской' },
-                { value: 735, name: 'Женский' },
+                { value: {{mans_woman.0}}, name: 'Мужской' },
+                { value: {{mans_woman.1}}, name: 'Женский' },
               ],
               emphasis: {
                 itemStyle: {
@@ -123,8 +135,9 @@
               type: 'pie',
               radius: '50%',
               data: [
-                { value: 1048, name: 'Мужской' },
-                { value: 735, name: 'Женский' },
+                  {% for count,film in top_films %}
+                      { value: {{count}}, name: '{{film}}', },
+                  {% endfor %}
               ],
               emphasis: {
                 itemStyle: {
@@ -171,14 +184,28 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: [
+                {% for day in week %}
+                    '{{ day }}',
+                {% endfor %}
+                {#'Tue',#}
+                {#'Wed', #}
+                {#'Thu', #}
+                {#'Fri',#}
+                {#'Sat', #}
+                {#'Sun'#}
+            ]
           },
           yAxis: {
             type: 'value'
           },
           series: [
             {
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
+              data: [
+                  {% for count in seances_for_week %}
+                    {{ count }},
+                  {% endfor %}
+              ],
               type: 'line',
               areaStyle: {}
             }
@@ -215,7 +242,11 @@
             trigger: 'axis'
           },
           legend: {
-            data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+            data: [
+                {% for film, seances in film_seances %}
+                '{{film.name}}',
+                {% endfor %}
+            ]
           },
           grid: {
             left: '3%',
@@ -231,42 +262,34 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: [
+                {% for day in week %}
+                    '{{ day }}',
+                {% endfor %}
+                {#'Tue',#}
+                {#'Wed', #}
+                {#'Thu', #}
+                {#'Fri',#}
+                {#'Sat', #}
+                {#'Sun'#}
+            ]
           },
           yAxis: {
             type: 'value'
           },
           series: [
-            {
-              name: 'Email',
-              type: 'line',
-              stack: 'Total',
-              data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-              name: 'Union Ads',
-              type: 'line',
-              stack: 'Total',
-              data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-              name: 'Video Ads',
-              type: 'line',
-              stack: 'Total',
-              data: [150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-              name: 'Direct',
-              type: 'line',
-              stack: 'Total',
-              data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-              name: 'Search Engine',
-              type: 'line',
-              stack: 'Total',
-              data: [820, 932, 901, 934, 1290, 1330, 1320]
-            }
+            {% for film,seances in film_seances %}
+                {
+                  name: '{{film.name}}',
+                  type: 'line',
+                  stack: 'Total',
+                  data: [
+                      {% for seance in seances %}
+                        {{seance}},
+                      {% endfor %}
+                  ]
+                },
+            {% endfor %}
           ]
         };
 

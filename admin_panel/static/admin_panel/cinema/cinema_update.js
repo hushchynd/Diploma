@@ -10,12 +10,12 @@ upload('.banner-img',{
         update: true,
 
 })
-upload('.gallery',{
-    accept: ['.png','.jpg','.jpeg','.svg'],
-        update: true,
-
-})
-
-
+// upload('.gallery',{
+//     accept: ['.png','.jpg','.jpeg','.svg'],
+//         update: true,
+//
+// })
+//
+//
 
 

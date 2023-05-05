@@ -6,29 +6,6 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% block content %}
-{#    <head>#}
-{#        <link rel="stylesheet" href="{% static 'admin_panel/form.css' %}">#}
-{##}
-{#    </head>#}
-{#    <form action="{% url 'update_client' client_id %}" novalidate method="post" enctype="multipart/form-data">#}
-{#          {% csrf_token %}#}
-{#          <div class="form">#}
-{#             {% for row in client_form %}#}
-{#                  <div class="form__row">#}
-{#                      <label class="form__label" for="{{ row.id_for_label }}" class="">{{ row.label }}:</label>#}
-{#                      {{ row }}#}
-{#                      {{ row.errors }}#}
-{#                  </div>#}
-{#             {% endfor %}#}
-{#          </div>#}
-{##}
-{#          <div class="form__bottom">#}
-{#              <button  class="form__btn btn-primary btn-primary_corner">Сохранить</button>#}
-{#          </div>#}
-{#    </form>#}
-{#    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>#}
-{##}
-{#    <script   src="{% static 'admin_panel/clients/clients.js' %}"></script>#}
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

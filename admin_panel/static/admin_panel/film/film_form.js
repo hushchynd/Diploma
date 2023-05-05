@@ -7,6 +7,6 @@ upload('#card-img',{
    accept: ['.png','.jpg','.jpeg','.svg'],
 })
 
-upload('.gallery', {
-    accept: ['.png', '.jpg', '.jpeg', '.svg'],
-})
+// upload('.gallery', {
+//     accept: ['.png', '.jpg', '.jpeg', '.svg'],
+// })

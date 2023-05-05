@@ -1,7 +1,9 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
-    Акции
+    {% trans 'Акции' %}
 {% endblock %}
 {% load django_bootstrap5 %}
 {% load file_filters %}
@@ -20,7 +22,7 @@
          <picture class="d-block position-relative mb-3">
               <img src="{% static 'kino_app/imgs/placeholderimg.png' %}" style=" width: 100%" class="img-fluid h-auto" alt="...">
           </picture>
-         <h3 class="text-center mb-3">Акции и скидки</h3>
+         <h3 class="text-center mb-3">{% trans 'Акции и скидки' %}</h3>
 
          <div class="px-2 mb-5 d-flex flex-row justify-content-center flex-wrap gap-5">
             {% for stock in stocks %}
@@ -39,7 +41,7 @@
      <div class="d-flex justify-content-center">{% bootstrap_pagination page %}</div>
 
        <div style="height: 100px" class="fs-6 d-block  pr-3 bg-danger">
-             <span class="text-wrap text-white">Контекстная реклама</span>
+             <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
         </div>
      </div>
 {% endblock %}

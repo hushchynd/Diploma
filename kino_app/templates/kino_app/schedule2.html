@@ -1,5 +1,7 @@
 {% extends 'kino_app/base2.html' %}
 {% load static %}
+ {% load i18n %}
+
 {% block title %}
    Расписание
 {% endblock %}
@@ -14,38 +16,38 @@
              <div class="sidebar flex-shrink-1">
                  <div class="card-body  bg-white px-4 pt-2 pb-2">
                      <div class="card-header mb-5">
-                        <h3 class="card-title text-center">Фильтр</h3>
+                        <h3 class="card-title text-center">{% trans 'Фильтр' %}</h3>
                      </div>
                     <form class="column g-3" id="form-filter" action="#" >
                       <div class="col mr-3 mb-3">
-                          <label class="form-label">Дата</label>
+                          <label class="form-label">{% trans 'Дата' %}</label>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="today" value="today">
                               <label class="form-check-label" for="today">
-                                Сегодня
+                                {% trans 'Сегодня' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="tomorrow" value="tomorrow" >
                               <label class="form-check-label" for="tomorrow">
-                                Завтра
+                                {% trans 'Завтра' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="week" value="week">
                               <label class="form-check-label" for="week">
-                                На неделе
+                                {% trans 'На неделе' %}
                               </label>
                           </div>
                           <div class="form-check">
                               <input class="form-check-input" type="radio" name="period" id="month" value="month">
                               <label class="form-check-label" for="month">
-                                В этом месяце
+                                {% trans 'В этом месяце' %}
                               </label>
                           </div>
                       </div>
                       <div class="col mb-3">
-                        <label class="form-label">Фильмы</label>
+                        <label class="form-label">{% trans 'Фильмы' %}</label>
                         <div class="form-check row">
                             {% for checked,film in film_list %}
                                 <div class="col">
@@ -58,20 +60,20 @@
                         </div>
                       </div>
                       <div class="col mb-3">
-                        <label class="form-label">Залы</label>
+                        <label class="form-label">{% trans 'Залы' %}</label>
                          <div class="form-check row">
                              {% for checked, hall in hall_list %}
                                  <div class="col">
                                     <input name="halls_filter"  class="form-check-input" type="checkbox" {% if checked == 'checked' %}  checked {% endif %} value="{{ hall.number }}">
                                     <label class="form-check-label"  for="halls_filter">
-                                        Зал {{ hall.number }}
+                                        {% trans 'Зал' %} {{ hall.number }}
                                     </label>
                                  </div>
                             {% endfor %}
                         </div>
                       </div>
                       <div class="col">
-                        <label class="form-label">Технологии</label>
+                        <label class="form-label">{% trans 'Технологии' %}</label>
                          <div class="form-check row">
                              {% for checked,tech in tech_list %}
                                  <div class="col">
@@ -106,7 +108,7 @@
         {#                                            {{ hall.scheme_html | safe }}#}
         {#                                         </div>#}
         {#                                     </div>#}
-                                                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">Зал №{{ hall.number }}</div>
+                                                 <div class="info__text fs-5 mb-2" style="padding-left: 3.0rem;">{% trans 'Зал' %} №{{ hall.number }}</div>
                                                  {% for tech,seances in tech_film %}
                                                      <div class="info__tech">
                                                          <div class="info__text fs-6 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>
@@ -115,7 +117,7 @@
                                                                  <div class="info__time position-relative fs-5 mb-2 " data-seance_id={{ seance.id  }} >
                                                                      <a href="{% url 'seance' seance.id %}">
                                                                          <button type="button" class="btn btn-primary ">
-                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >Купить билет</div>
+                                                                             <div class="info__descr bg-dark text-white position-absolute p-1" style="right: 0;top:-35px;font-size: 0.8rem;width: 100px;" >{% trans 'Купить билет' %}</div>
                                                                              {{ seance.time }}
                                                                          </button>
                                                                      </a>
@@ -137,7 +139,7 @@
              {% endfor %}
              </div>
             <div style="width: 100px" class="fs-6 d-none d-lg-block  pr-3 bg-danger">
-                 <span class="text-wrap text-white">Контекстная реклама</span>
+                 <span class="text-wrap text-white">{% trans 'Контекстная реклама' %}</span>
              </div>         </div>
      </div>
 {% endblock %}
