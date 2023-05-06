@@ -42,7 +42,7 @@
                     </div>
                     <nav class="navbar header__navbar navbar-expand">
                       <div class="container d-inline">
-                          <ul class="navbar-nav d-flex justify-content-around">
+                          <ul class="navbar-nav d-flex justify-content-around align-items-center">
                             <li class="nav-item">
                               <a class="nav-link active" href="{% url 'poster' %}">{% trans "Афиша" %}</a>
                             </li>
@@ -73,9 +73,23 @@
                             <li class="nav-item">
                               <a class="nav-link active" href="{% url 'stocks' %}">{% trans "Акции" %}</a>
                             </li>
-                            <li class="nav-item">
-                                {% lang_switch_dropdown %}
+                            <li class="nav-item dropdown">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% trans "Язык" %}
+                              </a>
+                              <ul class="dropdown-menu">
 
+                                  {% for language in languages %}
+                                          <li>
+                                              <a class="dropdown-item" href="/{{ language.code }}/">
+                                                {{ language.name_local }} ({{ language.code }})
+                                              </a>
+                                          </li>
+                                  {% endfor %}
+                              </ul>
                             </li>
 
                           </ul>

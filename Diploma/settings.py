@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from django.db import models
+
 import admin_panel
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -70,7 +72,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_bootstrap5",
     "django_google_maps",
-    "rosetta",
     "django_lang_switch",
 
 
@@ -174,9 +175,11 @@ USE_L10N = True
 USE_TZ = True
 from django.utils.translation import gettext_lazy as _
 LANGUAGES = [
-    ('ru', _('Английский')),
-    ('en', _('Русский')),
+    ('en', _('Английский')),
+    ('ru', _('Русский')),
 ]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]

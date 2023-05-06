@@ -95,6 +95,7 @@ def delete_client(request, id):
     return render(request, 'admin_panel/clients.html', )
 
 
+
 @login_required
 @staff_member_required
 def films(request):
@@ -445,8 +446,8 @@ class FilmForm(FormView):
 
 @login_required
 @staff_member_required
-def cinema_card(request, name):
-    cinema = Cinema.objects.get(name=name)
+def cinema_card(request, id):
+    cinema = Cinema.objects.get(id=id)
     CinemaFormsetFactory = modelformset_factory(can_delete=True, model=CinemaImg, form=my_forms.CinemaImgForm,
                                                 extra=0)
     if request.method == 'POST':
@@ -467,7 +468,7 @@ def cinema_card(request, name):
             return redirect('admin_cinemas')
         else:
             halls = Hall.objects.filter(cinema_id=cinema.id)
-            data = {'form': cinema_form, 'cinema_name': cinema.name, 'seo_form': seo_form, 'halls': halls,
+            data = {'form': cinema_form,  'seo_form': seo_form, 'halls': halls,
                     'cinema_gallery': cinema_gallery}
             return render(request, 'admin_panel/cinema_update.html', context=data)
 
@@ -705,8 +706,8 @@ def delete_page(request, id):
 
 @login_required
 @staff_member_required
-def update_film(request, name):
-    film = Film.objects.get(name=name)
+def update_film(request, id):
+    film = Film.objects.get(id=id)
     FilmFormsetFactory = modelformset_factory(can_delete=True, model=FilmImg, form=my_forms.FilmImgForm,
                                               extra=0)
     if request.method == 'POST':

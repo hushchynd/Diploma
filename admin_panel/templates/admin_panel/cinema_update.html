@@ -37,7 +37,7 @@
             </button>
           </div>
         </div>
-        <form  action="{% url 'cinema_card' cinema_name %}"  method="post"  id="cinema_form"  runat="server" enctype="multipart/form-data">
+        <form  action="{% url 'cinema_card' cinema_form.instance.id %}"  method="post"  id="cinema_form"  runat="server" enctype="multipart/form-data">
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form form  layout='horizontal' show_help=True size='sm'%}

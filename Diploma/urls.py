@@ -23,7 +23,6 @@ from Diploma import settings
 urlpatterns = i18n_patterns(
     path('admin/', include('admin_panel.urls')),
     path('accounts/', include('user.urls')),
-    path('rosetta/', include('rosetta.urls')),
     path('', include('kino_app.urls')),
     path('django_lang_switch/', include('django_lang_switch.urls')),
 

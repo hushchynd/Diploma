@@ -35,7 +35,7 @@
         <div class="card-body mb-5 d-flex flex-row justify-content-sm-center flex-wrap">
             {% for film in films.released_films %}
               <div class="card mr-3" style="width: 14rem;">
-                  <a class="text-decoration-none" href="{% url 'update_film' film.name %}">
+                  <a class="text-decoration-none" href="{% url 'update_film' film.id %}">
                   <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                   <div class="card-body">
                     <p class="card-text text-uppercase text-info">{{ film.name }}</p>

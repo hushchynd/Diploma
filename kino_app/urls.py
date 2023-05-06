@@ -6,7 +6,7 @@ urlpatterns = [
     path("base", kino_app.views.base, name='base'),
 
 
-    path("main", kino_app.views.main, name='main'),
+    path("", kino_app.views.main, name='main'),
     path("profile", kino_app.views.profile, name='profile'),
 
     path("cinemas", kino_app.views.cinemas, name='kino_app_cinemas'),

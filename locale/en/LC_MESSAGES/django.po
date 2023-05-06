@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-05 21:53+0300\n"
+"POT-Creation-Date: 2023-05-06 12:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: Diploma/settings.py:175
+#: Diploma/settings.py:179
 msgid "Английский"
 msgstr "English"
 
-#: Diploma/settings.py:176
+#: Diploma/settings.py:180
 msgid "Русский"
 msgstr "Russian"
 
@@ -31,7 +31,7 @@ msgid "Ссылка"
 msgstr "Link"
 
 #: admin_panel/models/film.py:149
-#: kino_app/templates/kino_app/cafe_bar_page.html:9
+#: kino_app/templates/kino_app/cafe_bar_page.html:10
 msgid "Название"
 msgstr "Title"
 
@@ -47,364 +47,362 @@ msgstr "Keys"
 msgid "Seo блок"
 msgstr "Seo block"
 
-#: kino_app/templates/kino_app/about_cinema.html:4
-#: kino_app/templates/kino_app/about_cinema.html:18
-#: kino_app/templates/kino_app/base2.html:58
-#: kino_app/templates/kino_app/base2.html:142
-#: kino_app/templates/kino_app/base2.html:188
+#: kino_app/templates/kino_app/about_cinema.html:6
+#: kino_app/templates/kino_app/about_cinema.html:20
+#: kino_app/templates/kino_app/base2.html:60
+#: kino_app/templates/kino_app/base2.html:171
+#: kino_app/templates/kino_app/base2.html:217
 msgid "О кинотеатре"
 msgstr "About cinema"
 
-#: kino_app/templates/kino_app/about_cinema.html:55
-#| msgid "Название"
+#: kino_app/templates/kino_app/about_cinema.html:57
 msgid "Оборудование"
 msgstr "Title"
 
-#: kino_app/templates/kino_app/about_cinema.html:73
-#: kino_app/templates/kino_app/about_cinema.html:79
-#: kino_app/templates/kino_app/booking.html:22
-#: kino_app/templates/kino_app/booking.html:51
-#: kino_app/templates/kino_app/cinema_card2.html:18
-#: kino_app/templates/kino_app/cinema_card2.html:110
-#: kino_app/templates/kino_app/cinemas2.html:40
-#: kino_app/templates/kino_app/contacts.html:45
-#: kino_app/templates/kino_app/contacts.html:50
-#: kino_app/templates/kino_app/film_card2.html:248
-#: kino_app/templates/kino_app/hall2.html:18
-#: kino_app/templates/kino_app/hall2.html:72
-#: kino_app/templates/kino_app/main2.html:95
-#: kino_app/templates/kino_app/mobile_apps.html:37
-#: kino_app/templates/kino_app/mobile_apps.html:42
-#: kino_app/templates/kino_app/news.html:42
-#: kino_app/templates/kino_app/page.html:60
-#: kino_app/templates/kino_app/page.html:65
-#: kino_app/templates/kino_app/page_news.html:55
-#: kino_app/templates/kino_app/page_news.html:60
-#: kino_app/templates/kino_app/page_stock.html:54
-#: kino_app/templates/kino_app/page_stock.html:59
-#: kino_app/templates/kino_app/poster_soon.html:13
-#: kino_app/templates/kino_app/schedule2.html:140
-#: kino_app/templates/kino_app/stocks.html:42
+#: kino_app/templates/kino_app/about_cinema.html:75
+#: kino_app/templates/kino_app/about_cinema.html:81
+#: kino_app/templates/kino_app/booking.html:24
+#: kino_app/templates/kino_app/booking.html:53
+#: kino_app/templates/kino_app/cinema_card2.html:20
+#: kino_app/templates/kino_app/cinema_card2.html:112
+#: kino_app/templates/kino_app/cinemas2.html:42
+#: kino_app/templates/kino_app/contacts.html:47
+#: kino_app/templates/kino_app/contacts.html:52
+#: kino_app/templates/kino_app/film_card2.html:250
+#: kino_app/templates/kino_app/hall2.html:20
+#: kino_app/templates/kino_app/hall2.html:74
+#: kino_app/templates/kino_app/main2.html:97
+#: kino_app/templates/kino_app/mobile_apps.html:39
+#: kino_app/templates/kino_app/mobile_apps.html:44
+#: kino_app/templates/kino_app/news.html:44
+#: kino_app/templates/kino_app/page.html:62
+#: kino_app/templates/kino_app/page.html:67
+#: kino_app/templates/kino_app/page_news.html:57
+#: kino_app/templates/kino_app/page_news.html:62
+#: kino_app/templates/kino_app/page_stock.html:56
+#: kino_app/templates/kino_app/page_stock.html:61
+#: kino_app/templates/kino_app/poster_soon.html:15
+#: kino_app/templates/kino_app/schedule2.html:142
+#: kino_app/templates/kino_app/stocks.html:44
 msgid "Контекстная реклама"
 msgstr "Context ads"
 
-#: kino_app/templates/kino_app/base2.html:45
-#: kino_app/templates/kino_app/base2.html:129
-#: kino_app/templates/kino_app/base2.html:197
-#: kino_app/templates/kino_app/poster_soon.html:17
+#: kino_app/templates/kino_app/base2.html:47
+#: kino_app/templates/kino_app/base2.html:158
+#: kino_app/templates/kino_app/base2.html:226
+#: kino_app/templates/kino_app/poster_soon.html:19
 msgid "Афиша"
 msgstr "Poster"
 
-#: kino_app/templates/kino_app/base2.html:48
-#: kino_app/templates/kino_app/base2.html:132
-#: kino_app/templates/kino_app/base2.html:199
+#: kino_app/templates/kino_app/base2.html:50
+#: kino_app/templates/kino_app/base2.html:161
+#: kino_app/templates/kino_app/base2.html:228
 msgid "Расписание"
 msgstr "Schedule"
 
-#: kino_app/templates/kino_app/base2.html:51
-#: kino_app/templates/kino_app/base2.html:135
-#: kino_app/templates/kino_app/base2.html:201
-#: kino_app/templates/kino_app/cinemas2.html:4
+#: kino_app/templates/kino_app/base2.html:53
+#: kino_app/templates/kino_app/base2.html:164
+#: kino_app/templates/kino_app/base2.html:230
+#: kino_app/templates/kino_app/cinemas2.html:6
 msgid "Кинотеатры"
 msgstr "Cinemas"
 
-#: kino_app/templates/kino_app/base2.html:54
-#: kino_app/templates/kino_app/base2.html:138
-#: kino_app/templates/kino_app/poster_soon.html:18
+#: kino_app/templates/kino_app/base2.html:56
+#: kino_app/templates/kino_app/base2.html:167
+#: kino_app/templates/kino_app/poster_soon.html:20
 msgid "Скоро"
 msgstr "Soon"
 
-#: kino_app/templates/kino_app/base2.html:61
-#: kino_app/templates/kino_app/base2.html:145
-#: kino_app/templates/kino_app/base2.html:190
-#: kino_app/templates/kino_app/news.html:4
-#: kino_app/templates/kino_app/news.html:23
+#: kino_app/templates/kino_app/base2.html:63
+#: kino_app/templates/kino_app/base2.html:174
+#: kino_app/templates/kino_app/base2.html:219
+#: kino_app/templates/kino_app/news.html:6
+#: kino_app/templates/kino_app/news.html:25
 msgid "Новости"
 msgstr "News"
 
-#: kino_app/templates/kino_app/base2.html:67
-#: kino_app/templates/kino_app/base2.html:151
-#: kino_app/templates/kino_app/base2.html:193
-#: kino_app/templates/kino_app/contacts.html:4
-#: kino_app/templates/kino_app/contacts.html:18
+#: kino_app/templates/kino_app/base2.html:69
+#: kino_app/templates/kino_app/base2.html:180
+#: kino_app/templates/kino_app/base2.html:222
+#: kino_app/templates/kino_app/contacts.html:6
+#: kino_app/templates/kino_app/contacts.html:20
 msgid "Контакты"
 msgstr "Contacts"
 
-#: kino_app/templates/kino_app/base2.html:68
-#: kino_app/templates/kino_app/base2.html:152
+#: kino_app/templates/kino_app/base2.html:70
+#: kino_app/templates/kino_app/base2.html:181
 msgid "Мобильное приложение"
 msgstr "Mobile apps"
 
-#: kino_app/templates/kino_app/base2.html:72
-#: kino_app/templates/kino_app/base2.html:157
-#: kino_app/templates/kino_app/base2.html:202
-#: kino_app/templates/kino_app/stocks.html:4
+#: kino_app/templates/kino_app/base2.html:74
+#: kino_app/templates/kino_app/base2.html:186
+#: kino_app/templates/kino_app/base2.html:231
+#: kino_app/templates/kino_app/stocks.html:6
 msgid "Акции"
 msgstr "Bonuses"
 
-#: kino_app/templates/kino_app/base2.html:81
+#: kino_app/templates/kino_app/base2.html:90
+msgid "Язык"
+msgstr ""
+
+#: kino_app/templates/kino_app/base2.html:110
 msgid "Кабинет"
 msgstr "Cabinet"
 
-#: kino_app/templates/kino_app/base2.html:84
-#: kino_app/templates/kino_app/base2.html:107
+#: kino_app/templates/kino_app/base2.html:113
+#: kino_app/templates/kino_app/base2.html:136
 msgid "Выйти"
 msgstr "SignOut"
 
-#: kino_app/templates/kino_app/base2.html:88
-#: kino_app/templates/kino_app/base2.html:109
+#: kino_app/templates/kino_app/base2.html:117
+#: kino_app/templates/kino_app/base2.html:138
 msgid "Регистрация"
 msgstr "SignUp"
 
-#: kino_app/templates/kino_app/base2.html:91
+#: kino_app/templates/kino_app/base2.html:120
 msgid "Войти"
 msgstr "SignIn"
 
-#: kino_app/templates/kino_app/base2.html:110
+#: kino_app/templates/kino_app/base2.html:139
 msgid "Вход"
 msgstr "SignIn"
 
-#: kino_app/templates/kino_app/base2.html:162
+#: kino_app/templates/kino_app/base2.html:191
 msgid "Поиск"
 msgstr "Search"
 
-#: kino_app/templates/kino_app/base2.html:180
-#: kino_app/templates/kino_app/mobile_apps.html:4
-#: kino_app/templates/kino_app/mobile_apps.html:18
+#: kino_app/templates/kino_app/base2.html:209
+#: kino_app/templates/kino_app/mobile_apps.html:6
+#: kino_app/templates/kino_app/mobile_apps.html:20
 msgid "Мобильные приложения"
 msgstr "Mobile apps"
 
-#: kino_app/templates/kino_app/base2.html:191
+#: kino_app/templates/kino_app/base2.html:220
 msgid "Реклама"
 msgstr "Advertising"
 
-#: kino_app/templates/kino_app/base2.html:192
+#: kino_app/templates/kino_app/base2.html:221
 msgid "Кафе-Бар"
 msgstr "Cafe-Bar"
 
-#: kino_app/templates/kino_app/base2.html:200
+#: kino_app/templates/kino_app/base2.html:229
 msgid "Скоро в прокате"
 msgstr "Coming soon"
 
-#: kino_app/templates/kino_app/booking.html:27
-#: kino_app/templates/kino_app/cinema_card2.html:24
-#: kino_app/templates/kino_app/film_card2.html:60
-#: kino_app/templates/kino_app/film_card2.html:101
-#: kino_app/templates/kino_app/schedule2.html:67
-#: kino_app/templates/kino_app/schedule2.html:109
-#: kino_app/templates/kino_app/schedule_for_film.html:12
-#: kino_app/templates/kino_app/schedule_items.html:20
+#: kino_app/templates/kino_app/booking.html:29
+#: kino_app/templates/kino_app/cinema_card2.html:26
+#: kino_app/templates/kino_app/film_card2.html:62
+#: kino_app/templates/kino_app/film_card2.html:103
+#: kino_app/templates/kino_app/schedule2.html:69
+#: kino_app/templates/kino_app/schedule2.html:111
+#: kino_app/templates/kino_app/schedule_for_film.html:14
+#: kino_app/templates/kino_app/schedule_items.html:22
 msgid "Зал"
 msgstr "Hall"
 
-#: kino_app/templates/kino_app/booking.html:30
+#: kino_app/templates/kino_app/booking.html:32
 msgid "Цена в грн:"
 msgstr "Price in UAH:"
 
-#: kino_app/templates/kino_app/booking.html:34
+#: kino_app/templates/kino_app/booking.html:36
 msgid "Ваш заказ:"
 msgstr "Your order:"
 
-#: kino_app/templates/kino_app/booking.html:36
+#: kino_app/templates/kino_app/booking.html:38
 msgid "Билетов:"
 msgstr "Tickets:"
 
-#: kino_app/templates/kino_app/booking.html:37
+#: kino_app/templates/kino_app/booking.html:39
 msgid "Сумма:"
 msgstr "Price:"
 
-#: kino_app/templates/kino_app/booking.html:37
+#: kino_app/templates/kino_app/booking.html:39
 msgid "грн"
 msgstr "UAH"
 
-#: kino_app/templates/kino_app/booking.html:41
+#: kino_app/templates/kino_app/booking.html:43
 msgid "ЭКРАН"
 msgstr "MONITOR"
 
-#: kino_app/templates/kino_app/booking.html:46
-#: kino_app/templates/kino_app/poster_soon.html:28
-#: kino_app/templates/kino_app/poster_soon_ajax.html:9
+#: kino_app/templates/kino_app/booking.html:48
+#: kino_app/templates/kino_app/poster_soon.html:30
+#: kino_app/templates/kino_app/poster_soon_ajax.html:11
 msgid "Купить"
 msgstr "Buy"
 
-#: kino_app/templates/kino_app/cabinet.html:22
+#: kino_app/templates/kino_app/cabinet.html:24
 msgid "Страница клиента"
 msgstr "Client Page"
 
-#: kino_app/templates/kino_app/cafe_bar_page.html:4
-#| msgid "Кафе-Бар"
+#: kino_app/templates/kino_app/cafe_bar_page.html:5
 msgid "Меню Кафе-Бара"
 msgstr "Cafe-Bar Menu"
 
-#: kino_app/templates/kino_app/cafe_bar_page.html:10
+#: kino_app/templates/kino_app/cafe_bar_page.html:11
 msgid "Вес"
 msgstr "Weight"
 
-#: kino_app/templates/kino_app/cafe_bar_page.html:11
+#: kino_app/templates/kino_app/cafe_bar_page.html:12
 msgid "Цена"
 msgstr "Price"
 
-#: kino_app/templates/kino_app/cinema_card2.html:21
+#: kino_app/templates/kino_app/cinema_card2.html:23
 msgid "Кол-во залов:"
 msgstr "Number of halls"
 
-#: kino_app/templates/kino_app/cinema_card2.html:29
+#: kino_app/templates/kino_app/cinema_card2.html:31
 msgid "Смотрите сегодня: "
 msgstr "Watch today:"
 
-#: kino_app/templates/kino_app/cinema_card2.html:41
-#: kino_app/templates/kino_app/cinema_card2.html:54
-#: kino_app/templates/kino_app/cinema_card2.html:55
-#: kino_app/templates/kino_app/hall2.html:32
-#| msgid "Расписание"
+#: kino_app/templates/kino_app/cinema_card2.html:43
+#: kino_app/templates/kino_app/cinema_card2.html:56
+#: kino_app/templates/kino_app/cinema_card2.html:57
+#: kino_app/templates/kino_app/hall2.html:34
 msgid "Расписание сеансов"
 msgstr "Sessions schedule"
 
-#: kino_app/templates/kino_app/cinema_card2.html:69
+#: kino_app/templates/kino_app/cinema_card2.html:71
 msgid "Условия"
 msgstr "Features"
 
-#: kino_app/templates/kino_app/cinema_card2.html:83
-#: kino_app/templates/kino_app/hall2.html:45
-#: kino_app/templates/kino_app/page.html:33
-#: kino_app/templates/kino_app/page_news.html:27
-#: kino_app/templates/kino_app/page_stock.html:26
+#: kino_app/templates/kino_app/cinema_card2.html:85
+#: kino_app/templates/kino_app/hall2.html:47
+#: kino_app/templates/kino_app/page.html:35
+#: kino_app/templates/kino_app/page_news.html:29
+#: kino_app/templates/kino_app/page_stock.html:28
 msgid "ФОТОГАЛЕРЕЯ"
 msgstr "GALLERY"
 
-#: kino_app/templates/kino_app/cinemas2.html:22
-#: kino_app/templates/kino_app/cinemas2.html:27
-#| msgid "Кинотеатры"
+#: kino_app/templates/kino_app/cinemas2.html:24
+#: kino_app/templates/kino_app/cinemas2.html:29
 msgid "Наши Кинотеатры"
 msgstr "Our Cinemas"
 
-#: kino_app/templates/kino_app/film_card2.html:23
-#: kino_app/templates/kino_app/schedule2.html:17
+#: kino_app/templates/kino_app/film_card2.html:25
+#: kino_app/templates/kino_app/schedule2.html:19
 msgid "Фильтр"
 msgstr "Filter"
 
-#: kino_app/templates/kino_app/film_card2.html:27
-#: kino_app/templates/kino_app/schedule2.html:21
+#: kino_app/templates/kino_app/film_card2.html:29
+#: kino_app/templates/kino_app/schedule2.html:23
 msgid "Дата"
 msgstr "Date"
 
-#: kino_app/templates/kino_app/film_card2.html:31
-#: kino_app/templates/kino_app/schedule2.html:25
+#: kino_app/templates/kino_app/film_card2.html:33
+#: kino_app/templates/kino_app/schedule2.html:27
 msgid "Сегодня"
 msgstr "Today"
 
-#: kino_app/templates/kino_app/film_card2.html:37
-#: kino_app/templates/kino_app/schedule2.html:31
+#: kino_app/templates/kino_app/film_card2.html:39
+#: kino_app/templates/kino_app/schedule2.html:33
 msgid "Завтра"
 msgstr "Tomorrow"
 
-#: kino_app/templates/kino_app/film_card2.html:43
-#: kino_app/templates/kino_app/schedule2.html:37
+#: kino_app/templates/kino_app/film_card2.html:45
+#: kino_app/templates/kino_app/schedule2.html:39
 msgid "На неделе"
 msgstr "On week"
 
-#: kino_app/templates/kino_app/film_card2.html:49
-#: kino_app/templates/kino_app/schedule2.html:43
+#: kino_app/templates/kino_app/film_card2.html:51
+#: kino_app/templates/kino_app/schedule2.html:45
 msgid "В этом месяце"
 msgstr "In this month"
 
-#: kino_app/templates/kino_app/film_card2.html:54
-#: kino_app/templates/kino_app/schedule2.html:61
+#: kino_app/templates/kino_app/film_card2.html:56
+#: kino_app/templates/kino_app/schedule2.html:63
 msgid "Залы"
 msgstr "Halls"
 
-#: kino_app/templates/kino_app/film_card2.html:67
-#: kino_app/templates/kino_app/schedule2.html:74
+#: kino_app/templates/kino_app/film_card2.html:69
+#: kino_app/templates/kino_app/schedule2.html:76
 msgid "Технологии"
 msgstr "Technologies"
 
-#: kino_app/templates/kino_app/film_card2.html:110
-#: kino_app/templates/kino_app/main2.html:46
-#: kino_app/templates/kino_app/schedule2.html:118
-#: kino_app/templates/kino_app/schedule_items.html:29
+#: kino_app/templates/kino_app/film_card2.html:112
+#: kino_app/templates/kino_app/main2.html:48
+#: kino_app/templates/kino_app/schedule2.html:120
+#: kino_app/templates/kino_app/schedule_items.html:31
 msgid "Купить билет"
 msgstr "Buy ticket"
 
-#: kino_app/templates/kino_app/film_card2.html:149
-#| msgid "Вход"
+#: kino_app/templates/kino_app/film_card2.html:151
 msgid "Год"
 msgstr "Year"
 
-#: kino_app/templates/kino_app/film_card2.html:153
+#: kino_app/templates/kino_app/film_card2.html:155
 msgid "Страны"
 msgstr "Countries"
 
-#: kino_app/templates/kino_app/film_card2.html:161
+#: kino_app/templates/kino_app/film_card2.html:163
 msgid "Жанры"
 msgstr "Genres"
 
-#: kino_app/templates/kino_app/film_card2.html:169
+#: kino_app/templates/kino_app/film_card2.html:171
 msgid "Операторы"
 msgstr "Operators"
 
-#: kino_app/templates/kino_app/film_card2.html:177
+#: kino_app/templates/kino_app/film_card2.html:179
 msgid "Продюсеры"
 msgstr "Producers"
 
-#: kino_app/templates/kino_app/film_card2.html:185
+#: kino_app/templates/kino_app/film_card2.html:187
 msgid "Режиссёры"
 msgstr "Editors"
 
-#: kino_app/templates/kino_app/film_card2.html:193
+#: kino_app/templates/kino_app/film_card2.html:195
 msgid "Сценаристы"
 msgstr "Scriptwriters"
 
-#: kino_app/templates/kino_app/film_card2.html:201
+#: kino_app/templates/kino_app/film_card2.html:203
 msgid "Бюджет"
 msgstr "Budget"
 
-#: kino_app/templates/kino_app/film_card2.html:207
+#: kino_app/templates/kino_app/film_card2.html:209
 msgid "Время"
 msgstr "Time"
 
-#: kino_app/templates/kino_app/film_card2.html:209
+#: kino_app/templates/kino_app/film_card2.html:211
 msgid "минут"
 msgstr "minutes"
 
-#: kino_app/templates/kino_app/film_card2.html:213
+#: kino_app/templates/kino_app/film_card2.html:215
 msgid "Возраст"
 msgstr "Age"
 
-#: kino_app/templates/kino_app/film_card2.html:221
+#: kino_app/templates/kino_app/film_card2.html:223
 msgid "Кадры и постеры"
 msgstr "Photos and posters"
 
-#: kino_app/templates/kino_app/hall2.html:4
-#: kino_app/templates/kino_app/hall2.html:36
+#: kino_app/templates/kino_app/hall2.html:6
+#: kino_app/templates/kino_app/hall2.html:38
 msgid "Зал номер"
 msgstr "Hall number"
 
-#: kino_app/templates/kino_app/hall2.html:21
-#: kino_app/templates/kino_app/main2.html:37
+#: kino_app/templates/kino_app/hall2.html:23
+#: kino_app/templates/kino_app/main2.html:39
 msgid "Смотрите сегодня:"
 msgstr "Watch today:"
 
-#: kino_app/templates/kino_app/hall2.html:41
+#: kino_app/templates/kino_app/hall2.html:43
 msgid "Карта Зала"
 msgstr "Hall map"
 
-#: kino_app/templates/kino_app/main2.html:4
+#: kino_app/templates/kino_app/main2.html:6
 msgid "Главная"
 msgstr "Main"
 
-#: kino_app/templates/kino_app/main2.html:53
+#: kino_app/templates/kino_app/main2.html:55
 msgid "Cмотрите скоро"
 msgstr "Watch soon"
 
-#: kino_app/templates/kino_app/main2.html:70
-#| msgid "Новости"
+#: kino_app/templates/kino_app/main2.html:72
 msgid "Новости и Акции"
 msgstr "News and Bonuses"
 
-#: kino_app/templates/kino_app/schedule2.html:48
+#: kino_app/templates/kino_app/schedule2.html:50
 msgid "Фильмы"
 msgstr "Films"
 
-#: kino_app/templates/kino_app/stocks.html:23
+#: kino_app/templates/kino_app/stocks.html:25
 msgid "Акции и скидки"
 msgstr "Bonuses and sales"

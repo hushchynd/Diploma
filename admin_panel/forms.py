@@ -4,6 +4,7 @@ import django.forms as forms
 
 from django_google_maps import widgets as map_widgets
 from django_google_maps import fields as map_fields
+from modeltranslation.forms import TranslationModelForm
 
 from admin_panel.models import *
 
@@ -22,8 +23,10 @@ class FilmForm(forms.ModelForm):
     class Meta:
         model = Film
         fields = (
-            'name',
-            'description',
+            'name_en',
+            'name_ru',
+            'description_en',
+            'description_ru',
             'card_img',
             'released',
             'trailer_link',
@@ -68,8 +71,11 @@ class FilmForm(forms.ModelForm):
 
         )
         widgets = {
-            'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'description': forms.Textarea(
+            'name_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'description_ru': forms.Textarea(
+                attrs={'maxlength': 10_000, 'size': 20, 'class': 'form__elem form__elem_textarea', }),
+            'description_en': forms.Textarea(
                 attrs={'maxlength': 10_000, 'size': 20, 'class': 'form__elem form__elem_textarea', }),
             'card_img': forms.FileInput(attrs={'size': 20, 'id': 'card-img', }),
             'released': forms.DateInput(attrs={'size': 20, 'class': 'form__elem form__elem_date', 'type': 'date'},
@@ -83,13 +89,6 @@ class FilmForm(forms.ModelForm):
             'legal_age': forms.NumberInput(attrs={'size': 20, 'class': 'form__elem form__elem_number', }),
             'duration': forms.NumberInput(
                 attrs={'size': 10, 'class': 'form__elem form__elem_number', 'placeholder': 'В минутах'}),
-            'genres': forms.SelectMultiple(attrs={'class': 'form__elem'}),
-            'editors': forms.SelectMultiple(attrs={'class': 'form__elem'}),
-            'producers': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
-            'scriptwriters': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
-            'operators': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
-            'technology_types': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
-            'countries': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': 'form__elem'}),
             'genres': forms.SelectMultiple(attrs={'class': ''}),
             'editors': forms.SelectMultiple(attrs={'class': ''}),
             'producers': forms.SelectMultiple(attrs={'type': 'checkbox', 'class': ''}),
@@ -104,25 +103,31 @@ class FilmForm(forms.ModelForm):
 class SeoBlockForm(forms.ModelForm):
     class Meta:
         model = SeoBlock
-        fields = ('url', 'title', 'seo_description', 'keywords')
+        fields = ('url', 'title_en', 'seo_description_en', 'keywords_en', 'title_ru', 'seo_description_ru', 'keywords_ru')
 
         widgets = {
             'url': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
-            'title': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
-            'seo_description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
-            'keywords': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
+            'title_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
+            'title_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
+            'seo_description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'seo_description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'keywords_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
+            'keywords_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem', }),
         }
 
 
 class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
-        fields = ('name', 'short_description', 'description', 'turn_on', 'video_link', 'banner', 'card_img')
+        fields = ('name_en','name_ru', 'short_description_en', 'short_description_ru','description_ru','description_en', 'turn_on', 'video_link', 'banner', 'card_img')
         widgets = {
 
-            'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'name_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'short_description_en': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
+            'short_description_ru': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 50, 'class': 'form__elem on_off', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
@@ -146,12 +151,15 @@ class StockImgForm(forms.ModelForm):
 class PageForm(forms.ModelForm):
     class Meta:
         model = Page
-        fields = ('name', 'banner', 'description', 'first_pic', 'second_pic', 'third_pic', 'description2', 'turn_on',)
+        fields = ('name_ru','name_en', 'banner', 'description_ru','description_en', 'first_pic', 'second_pic', 'third_pic', 'description2_ru', 'description2_en','turn_on',)
         widgets = {
 
-            'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
-            'description2': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'name_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'type': 'checkbox', 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(attrs={'size': 20, 'id': 'pic1', 'class': 'form__horizontal-img_2', }),
@@ -164,11 +172,13 @@ class PageForm(forms.ModelForm):
 class PageUpdateForm(forms.ModelForm):
     class Meta:
         model = Page
-        fields = ('banner', 'description', 'first_pic', 'second_pic', 'third_pic', 'description2', 'turn_on',)
+        fields = ('banner', 'description_en','description_ru', 'first_pic', 'second_pic', 'third_pic', 'description2', 'turn_on',)
         widgets = {
 
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
-            'description2': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description2_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'first_pic': forms.FileInput(
@@ -196,17 +206,20 @@ class PageImgForm(forms.ModelForm):
 class MainPageForm(forms.ModelForm):
     class Meta:
         model = MainPage
-        fields = ('number', 'number2', 'seo_text',)
+        fields = ('number', 'number2', 'seo_text_en','seo_text_ru',)
 
 
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ('name', 'short_description', 'description', 'turn_on', 'video_link', 'banner', 'card_img')
+        fields = ('name_ru', 'short_description_ru', 'description_ru','name_en', 'short_description_en', 'description_en', 'turn_on', 'video_link', 'banner', 'card_img')
         widgets = {
-            'name': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
-            'short_description': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
+            'name_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
+            'short_description_ru': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
+            'short_description_en': forms.Textarea(attrs={"maxlength": 250, 'size': 20, 'class': 'form__elem', }),
             'turn_on': forms.CheckboxInput(attrs={'size': 20, 'class': 'form__elem on_off', }),
             'banner': forms.FileInput(attrs={'size': 20, 'id': 'banner-img', 'class': 'form__horizontal-img', }),
             'video_link': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
@@ -218,11 +231,10 @@ class NewsForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ('name', 'address', 'coordinate', 'logo',)
+        fields = ('name_en', 'address_en','name_ru', 'address_ru', 'coordinate', 'logo',)
         widgets = {
             'logo': forms.FileInput(attrs={'class': 'form__horizontal-img', }),
         }
-
 
 
 class NewsImgForm(forms.ModelForm):
@@ -240,10 +252,11 @@ class NewsImgForm(forms.ModelForm):
 class HallForm(forms.ModelForm):
     class Meta:
         model = Hall
-        fields = ('number', 'description', 'banner', 'num_tickets', 'scheme', 'scheme_html')
+        fields = ('number', 'description_ru','description_en', 'banner', 'num_tickets', 'scheme', 'scheme_html')
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form__elem'}),
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
             'banner': forms.FileInput(attrs={'id': 'banner-img', 'class': 'form__horizontal-img'}),
             'num_tickets': forms.NumberInput(attrs={'class': 'form__elem'}),
             'scheme': forms.FileInput(attrs={'id': 'scheme-img', 'class': 'form__horizontal-img_2'}),
@@ -290,14 +303,19 @@ class CinemaImgForm(forms.ModelForm):
 class CinemaForm(forms.ModelForm):
     class Meta:
         model = Cinema
-        fields = ['name',
-                  'description',
+        fields = [
+                  'name_en',
+                  'name_ru',
+                  'description_en',
+                  'description_ru',
                   'banner',
                   'logo',
                   ]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form__elem'}),
-            'description': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
+            'name_en': forms.TextInput(attrs={'class': 'form__elem'}),
+            'name_ru': forms.TextInput(attrs={'class': 'form__elem'}),
+            'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
+            'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
             'banner': forms.FileInput(attrs={'class': 'banner-img', 'multiple': True}),
             'logo': forms.FileInput(attrs={'size': 20, 'class': 'logo-img'}),
         }
@@ -307,7 +325,8 @@ class CafeBarMenuForm(forms.ModelForm):
     class Meta:
         model = CafeBarMenu
         fields = [
-            'name',
+            'name_en',
+            'name_ru',
             'weight',
             'price',
         ]
@@ -319,12 +338,14 @@ class TopCarouselForm(forms.ModelForm):
         fields = [
             'img',
             'link',
-            'title',
+            'title_en',
+            'title_ru',
         ]
         widgets = {
             'img': forms.FileInput(attrs={'class': 'form__horizontal-img'}),
             'link': forms.URLInput(attrs={'class': 'form__elem', 'placeholder': 'Ссылка'}),
-            'title': forms.TextInput(attrs={'class': 'form__elem', 'placeholder': 'Заголовок'}),
+            'title_en': forms.TextInput(attrs={'class': 'form__elem', 'placeholder': 'Заголовок'}),
+            'title_ru': forms.TextInput(attrs={'class': 'form__elem', 'placeholder': 'Заголовок'}),
         }
 
 

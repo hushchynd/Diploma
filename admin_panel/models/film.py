@@ -2,6 +2,8 @@ from django.core import validators
 from django.db import models
 import django.forms as forms
 from django.utils.translation import gettext_lazy as _
+from parler.models import TranslatableModel, TranslatedFields
+
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
@@ -136,8 +138,15 @@ class FilmImg(models.Model):
     class Meta:
         db_table = 'film_imgs'
 
-
 class SeoBlock(models.Model):
+    title = models.CharField(verbose_name=_('Название'), max_length=50,
+                             validators=[
+                                 validators.MaxLengthValidator(50, 'Название не более 20ти символов.'),
+                                 validators.RegexValidator('^[A-ZА-Я]{1}.*',
+                                                           'Название должно начинаться с заглавной буквы'),
+                                 validators.ProhibitNullCharactersValidator(),
+                             ]
+                             )
     url = models.URLField(verbose_name=_('Ссылка'),
                           validators=[
                               validators.URLValidator(
@@ -146,14 +155,7 @@ class SeoBlock(models.Model):
 
                           ],
                           )
-    title = models.CharField(verbose_name=_('Название'),max_length=50,
-                             validators=[
-                                 validators.MaxLengthValidator(50, 'Название не более 20ти символов.'),
-                                 validators.RegexValidator('^[A-ZА-Я]{1}.*',
-                                                           'Название должно начинаться с заглавной буквы'),
-                                 validators.ProhibitNullCharactersValidator(),
-                             ]
-                             )
+
     seo_description = models.TextField(verbose_name=_('Описание'), null=True,
                                        validators=[
                                            validators.RegexValidator('^[A-ZА-Я]{1}.*',
