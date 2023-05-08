@@ -66,12 +66,12 @@ class Genre(models.Model):
 
 
 class Film(models.Model):
-    name = models.CharField(max_length=20, unique=True, verbose_name="Название", validators=[
+    name = models.CharField(max_length=20, unique=True, verbose_name=_('Название'), validators=[
         validators.MaxLengthValidator(20),
         validators.RegexValidator('^[A-ZА-Я]{1}.*', message='Название должно начинаться с заглавной буквы'),
         validators.ProhibitNullCharactersValidator(),
     ])
-    description = models.TextField(verbose_name="Описание",
+    description = models.TextField(verbose_name=_('Описание'),
                                    validators=[
                                        validators.MaxLengthValidator(10_000),
                                        validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -80,37 +80,37 @@ class Film(models.Model):
 
                                    ])
     card_img = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                                 verbose_name="Картинка карточки",)
-    released = models.DateField(verbose_name="Дата выхода")
-    trailer_link = models.URLField(verbose_name="Ссылка на трейлер",
+                                 verbose_name=_('Картинка карточки'))
+    released = models.DateField(verbose_name=_('Дата выхода'))
+    trailer_link = models.URLField(verbose_name=_('Ссылка на трейлер'),
                                    validators=[
                                                validators.URLValidator(regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)',message='XYZ'),
                                                ],
                                    )
     banner = models.ImageField(upload_to="photos/%Y/%m/%d/", max_length=100, unique=True, null=True,
-                               verbose_name="Баннер",)
-    year = models.PositiveSmallIntegerField(verbose_name="Год",
+                               verbose_name=_('Баннер'),)
+    year = models.PositiveSmallIntegerField(verbose_name=_('Год'),
                                             validators=[
                                                 validators.MaxValueValidator(2100),
                                                 validators.MinValueValidator(1900),
                                             ])
-    countries = models.ManyToManyField(Country, verbose_name="Страны")
-    genres = models.ManyToManyField(Genre, verbose_name="Жанры")
-    producers = models.ManyToManyField(Producer, verbose_name="Продюсеры")
-    editors = models.ManyToManyField(Editor, verbose_name="Режисёры")
-    scriptwriters = models.ManyToManyField(ScriptWriter, verbose_name="Сценаристы")
-    operators = models.ManyToManyField(Operator, verbose_name="Операторы")
-    budget = models.PositiveIntegerField(verbose_name="Бюджет")
-    legal_age = models.PositiveSmallIntegerField(verbose_name="Мин Возраст",
+    countries = models.ManyToManyField(Country, verbose_name=_('Страны'))
+    genres = models.ManyToManyField(Genre, verbose_name=_('Жанры'))
+    producers = models.ManyToManyField(Producer, verbose_name=_('Продюсеры'))
+    editors = models.ManyToManyField(Editor, verbose_name=_('Режисёры'))
+    scriptwriters = models.ManyToManyField(ScriptWriter, verbose_name=_('Сценаристы'))
+    operators = models.ManyToManyField(Operator, verbose_name=_('Операторы'))
+    budget = models.PositiveIntegerField(verbose_name=_('Бюджет'))
+    legal_age = models.PositiveSmallIntegerField(verbose_name=_('Мин Возраст'),
                                                  validators=[
                                                      validators.MaxValueValidator(18),
                                                      validators.MinValueValidator(8),
                                                  ])
-    duration = models.PositiveSmallIntegerField(verbose_name="Длительность",
+    duration = models.PositiveSmallIntegerField(verbose_name=_('Длительность'),
                                                 validators=[
                                                     validators.MinValueValidator(10),
                                                 ])
-    technology_types = models.ManyToManyField('TechnologyType', verbose_name="Форматы")
+    technology_types = models.ManyToManyField('TechnologyType', verbose_name=_('Форматы'),)
     seo_block = models.OneToOneField('SeoBlock', on_delete=models.CASCADE, null=True)
 
     def __str__(self):

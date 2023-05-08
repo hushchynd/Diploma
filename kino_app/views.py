@@ -44,6 +44,7 @@ def page(request, page_id):
         return render(request, '../templates/kino_app/cafe_bar_page.html', context=data)
     return render(request, '../templates/kino_app/page.html', context=data)
 
+
 @login_required
 def cabinet(request):
     user = Account.objects.get(id=request.user.id)
@@ -55,10 +56,10 @@ def cabinet(request):
             return redirect('main')
         else:
             data['form'] = form
-            return render(request, '../templates/kino_app/cabinet.html',context=data)
+            return render(request, '../templates/kino_app/cabinet.html', context=data)
     form = UserForm(instance=user)
     data['form'] = form
-    return render(request, '../templates/kino_app/cabinet.html',context=data)
+    return render(request, '../templates/kino_app/cabinet.html', context=data)
 
 
 @method_decorator([login_required], name='dispatch')
@@ -234,8 +235,10 @@ def schedule(request):
     return render(request, template, context=data)
 
 
-def schedule_for_film(request):
+def schedule_for_film(request, id):
     seances = Seance.objects.filter(date__gte=date.today())
+    seances = Seance.objects.filter(film_id=id)
+    print(id)
 
     date_filter = request.GET.get('period')
     halls_filter = request.GET.getlist('halls_filter')
@@ -458,14 +461,14 @@ def page_stock(request, id):
     return render(request, '../templates/kino_app/page_stock.html', context=data)
 
 
-def page_news(request,id):
+def page_news(request, id):
     news = News.objects.get(id=id)
     news_imgs = NewsImg.objects.filter(news_id=id)
     data = {
         'news': news,
         'news_imgs': news_imgs,
     }
-    return render(request, '../templates/kino_app/page_news.html',context=data)
+    return render(request, '../templates/kino_app/page_news.html', context=data)
 
 
 def search(request):

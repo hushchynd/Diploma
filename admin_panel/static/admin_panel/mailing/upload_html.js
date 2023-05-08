@@ -19,7 +19,7 @@ export function upload(selector,options){
                reader.addEventListener('load',(event)=>{
                    preview.insertAdjacentHTML('afterbegin', `
                      <div class="preview__item">
-                           Загружен файл: <span>${file.name}</span>
+                           ${updloadedTemplateLabel}: <span>${file.name}</span>
                      </div>
                     `);
                });
@@ -38,7 +38,7 @@ export function upload(selector,options){
     inputFile.style.display = 'none';
 
     let btnOpen = document.createElement('button');
-    btnOpen.innerHTML = 'Загрузить шаблон';
+    btnOpen.innerHTML = updloadTemplateLabel;
     btnOpen.classList.add('btn','btn-primary','form__btn');
     btnOpen.type = 'button';
     inputFile.before(btnOpen);

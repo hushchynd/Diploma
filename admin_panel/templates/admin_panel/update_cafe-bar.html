@@ -1,21 +1,27 @@
 {% extends 'admin_panel/page_update2.html' %}
 {% load static %}
+{% load i18n %}
+{% load file_filters %}
 {% load django_bootstrap5 %}
 
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+{% block head %}
+        <link rel="stylesheet" href="{% static 'upload.css' %}">
+{% endblock %}
 {% block content3 %}
 
-    <h4 class="text-center">Меню Кафе-Бара</h4>
+    <h4 class="text-center">{% trans 'Меню Кафе-Бара' %}</h4>
     <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Вес</th>
-                <th scope="col">Цена</th>
-                <th scope="col">Удалить</th>
+                <th scope="col">{% trans 'Название' %}[ru]</th>
+                <th scope="col">{% trans 'Название' %}[en]</th>
+                <th scope="col">{% trans 'Вес' %}</th>
+                <th scope="col">{% trans 'Цена' %}</th>
+                <th scope="col">{% trans 'Удалить' %}</th>
             </tr>
           </thead>
           <tbody>
@@ -44,11 +50,14 @@
           {% endfor %}
           </tbody>
         </table>
-        <button type="button" class="btn-add btn btn-primary">Добавить запись</button>
+        <button type="button" class="btn-add btn btn-primary">{% trans 'Добавить запись' %}</button>
 
     </div>
 {% endblock %}
 {% block script %}
+        <script type="module" src="{% static 'admin_panel/gallery/gallery.js' %}"></script>
+
         <script type="module" src="{% static 'admin_panel/page/page_form_update.js' %}"></script>
+
         <script type="module" src="{% static 'admin_panel/cafe-bar/cafe.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block content %}
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -7,10 +9,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Акции</h1>
+            <h1>{% trans 'Акции' %}</h1>
           </div>
           <div class="col-sm-6 text-right">
-              <a class="text-decoration-none" href="{% url 'stock_form' %}"><button type="button" class="btn btn-success">Добавить акцию</button></a>
+              <a class="text-decoration-none" href="{% url 'stock_form' %}"><button type="button" class="btn btn-success">{% trans 'Добавить акцию' %}</button></a>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -22,7 +24,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Таблица акций</h3>
+          <h3 class="card-title">{% trans 'Таблица акций' %}</h3>
 
           <div class="card-tools mt-1">
             <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
@@ -37,11 +39,11 @@
                 <table class="table">
                   <thead>
                     <tr>
-                        <th scope="col">Название</th>
-                        <th scope="col">Дата Создания</th>
-                        <th scope="col">Статус</th>
-                        <th scope="col">Изменить</th>
-                        <th scope="col">Удалить</th>
+                        <th scope="col">{% trans 'Название' %}</th>
+                        <th scope="col">{% trans 'Дата Создания' %}</th>
+                        <th scope="col">{% trans 'Статус' %}</th>
+                        <th scope="col">{% trans 'Изменить' %}</th>
+                        <th scope="col">{% trans 'Удалить' %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -51,9 +53,9 @@
                         <td>{{ stock.creation_date }}</td>
                         <td>
                             {% if stock.turn_on %}
-                                ВКЛ
+                               {% trans 'ВКЛ' %}
                             {% else %}
-                                ВЫКЛ
+                               {% trans 'ВЫКЛ' %}
                             {% endif %}
                         </td>
                         <td>

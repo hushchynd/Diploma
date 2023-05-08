@@ -84,6 +84,12 @@
     cursor: pointer;
     background: #FDCB6E;
   }
+  .hall__seat_booked {
+    background: #989797;
+  }
+  .hall__seat_choosed {
+    background: #00B894;
+  }
 }
 @media screen and (max-width: 894px) {
   .hall {
@@ -112,6 +118,12 @@
     font-size: 8px;
     cursor: pointer;
     background: #FDCB6E;
+  }
+  .hall__seat_booked {
+    background: #989797;
+  }
+  .hall__seat_choosed {
+    background: #00B894;
   }
 }
 @media screen and (max-width: 390px) {
@@ -145,6 +157,12 @@
     font-size: 5px;
     cursor: pointer;
     background: #FDCB6E;
+  }
+  .hall__seat_booked {
+    background: #989797;
+  }
+  .hall__seat_choosed {
+    background: #00B894;
   }
 }
 

@@ -1,4 +1,5 @@
 from datetime import date
+from django.utils.translation import gettext_lazy as _
 
 import django.forms as forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
@@ -24,11 +25,11 @@ class UserForm(UserCreationForm):
             'phone': forms.TextInput(attrs={'class': 'form__elem', 'size': '10','placeholder':'Телефон: +38 (098) 567-81-23'}),
         }
 
-    password1 = forms.CharField(label=("Пароль"),
+    password1 = forms.CharField(label=_("Пароль"),
                                 widget=forms.PasswordInput(attrs={'class': 'form__elem'}))
-    password2 = forms.CharField(label=("Повторите пароль"),
+    password2 = forms.CharField(label=_("Повторите пароль"),
                                 widget=forms.PasswordInput(attrs={'class': 'form__elem'}),
-                                help_text=("Введите пароль повторно"))
+                                help_text=_("Введите пароль повторно"))
 
 
 class AdminUserForm(forms.ModelForm):
@@ -48,15 +49,15 @@ class AdminUserForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class': 'form__elem', 'size': '10'}),
         }
 
-    password1 = forms.CharField(label=("Пароль"),
+    password1 = forms.CharField(label=_("Пароль"),
                                 widget=forms.PasswordInput(attrs={'class': 'form__elem'}))
-    password2 = forms.CharField(label=("Повторите пароль"),
+    password2 = forms.CharField(label=_("Повторите пароль"),
                                 widget=forms.PasswordInput(attrs={'class': 'form__elem'}),
-                                help_text=("Введите пароль повторно"))
+                                help_text=_("Введите пароль повторно"))
 
 
 class SignInForm(forms.Form):
-    email = forms.EmailField(label=("Электронная почта"),
+    email = forms.EmailField(label=_("Электронная почта"),
                              widget=forms.EmailInput(attrs={'class': 'form__elem'}))
-    password = forms.CharField(label=("Пароль"),
+    password = forms.CharField(label=_("Пароль"),
                                widget=forms.PasswordInput(attrs={'class': 'form__elem'}))

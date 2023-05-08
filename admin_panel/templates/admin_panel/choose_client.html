@@ -1,6 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -18,7 +19,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Адресаты</h1>
+            <h1>{% trans 'Адресаты' %}</h1>
           </div>
 
         </div>
@@ -31,7 +32,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Выбрать адресатов</h3>
+          <h3 class="card-title">{% trans 'Выбрать адресатов' %}</h3>
 
           <div class="card-tools mt-1">
             <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
@@ -49,12 +50,12 @@
                             <tr>
                                 <th>_</th>
                                 <th>ID</th>
-                                <th>Дата регистрации</th>
-                                <th>День рождения</th>
-                                <th>Почта</th>
-                                <th>Телефон</th>
-                                <th>ФИО</th>
-                                <th>Город</th>
+                                <th>{% trans 'Дата регистрации' %}</th>
+                                <th>{% trans 'День рождения' %}</th>
+                                <th>{% trans 'Почта' %}</th>
+                                <th>{% trans 'Телефон' %}</th>
+                                <th>{% trans 'ФИО' %}</th>
+                                <th>{% trans 'Город' %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,8 +78,8 @@
                         </tbody>
                     </table>
                     <div class="card-footer">
-                         {% bootstrap_button button_type="submit" content="Выбрать" %}
-                         {% bootstrap_button button_type="reset" content="Сбросить" %}
+                         {% bootstrap_button button_type="submit" content=save %}
+                         {% bootstrap_button button_type="reset" content=reset %}
                     </div>
                 </form>
             </div>

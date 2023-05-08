@@ -1,5 +1,6 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}
+{% load i18n %}
 {% block head %}
             <link rel="stylesheet" href="{% static 'admin_panel/statistic/statistic.css' %}">
 
@@ -11,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Статистика</h1>
+            <h1>{% trans 'Статистика' %}</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -23,7 +24,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Текущая статистика</h3>
+          <h3 class="card-title">{% trans 'Текущая статистика' %}</h3>
 
           <div class="card-tools mt-1">
             <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
@@ -43,12 +44,11 @@
                       <div class="inner">
                         <h3>{{ users_count }}</h3>
 
-                        <p>User Registrations</p>
+                        <p>{% trans 'Кол-во пользователей' %}</p>
                       </div>
                       <div class="icon">
                             <i class="fa-solid fa-person"></i>
                       </div>
-                      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
             </div>
         </div>
@@ -80,10 +80,9 @@
         });
 
 
-
         var optionForPieChartSex = {
           title: {
-            text: 'Пол 100% от общего числа билетов',
+            text: '{% trans 'Пол 100% от общего числа билетов' %}',
             left: 'center',
             textStyle: {
                   fontSize : 14,
@@ -99,8 +98,8 @@
               type: 'pie',
               radius: '50%',
               data: [
-                { value: {{mans_woman.0}}, name: 'Мужской' },
-                { value: {{mans_woman.1}}, name: 'Женский' },
+                { value: {{mans_woman.0}}, name: '{% trans 'Мужской' %}' },
+                { value: {{mans_woman.1}}, name: '{% trans 'Женский' %}' },
               ],
               emphasis: {
                 itemStyle: {
@@ -114,7 +113,7 @@
         };
         var optionForPieChartFilms = {
           title: {
-            text: 'Фильмы по популярности',
+            text: '{% trans 'Фильмы по популярности' %}',
             left: 'center',
             textStyle: {
                   fontSize : 14,
@@ -175,7 +174,7 @@
 
         var optionForAreaSeances = {
           title: {
-            text: 'Сеансы',
+            text: '{% trans 'Сеансы' %}',
             left: 'center',
             textStyle: {
                   fontSize : 14,
@@ -233,7 +232,7 @@
 
         var optionForLineStackFilms = {
           title: {
-            text: 'Сеансы',
+            text: '{% trans 'Сеансы' %}',
             textStyle: {
                   fontSize : 14,
               },

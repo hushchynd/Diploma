@@ -1,4 +1,5 @@
 # Create your models here.
+from django.utils.translation import gettext_lazy as _
 
 import django.utils.timezone
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
@@ -51,12 +52,12 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=150, unique=True, verbose_name='Электронная почта',
+    email = models.EmailField(max_length=150, unique=True, verbose_name=_('Электронная почта'),
                               validators=[
                                   validators.EmailValidator(),
                               ]
                               )
-    first_name = models.CharField(max_length=150, verbose_name='Имя',
+    first_name = models.CharField(max_length=150, verbose_name=_('Имя'),
                                   validators=[
                                       validators.MaxLengthValidator(150),
                                       validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -64,7 +65,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
                                       validators.ProhibitNullCharactersValidator(),
                                   ]
                                   )
-    last_name = models.CharField(max_length=150, verbose_name='Фамилия',
+    last_name = models.CharField(max_length=150, verbose_name=_('Фамилия'),
                                  validators=[
                                      validators.MaxLengthValidator(150),
                                      validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -72,7 +73,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
                                      validators.ProhibitNullCharactersValidator(),
                                  ]
                                  )
-    phone = models.CharField(max_length=19, verbose_name='Номер телефона',
+    phone = models.CharField(max_length=19, verbose_name=_('Номер телефона'),
                              validators=[
                                  validators.MaxLengthValidator(19),
                                  validators.MinLengthValidator(19),
@@ -81,7 +82,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
                                                            message='Неверно введён номер телефона.Пример ввода: +38 (098) 567-81-23')
                              ]
                              )
-    address = models.CharField(max_length=50, verbose_name='Город',
+    address = models.CharField(max_length=50, verbose_name=_('Город'),
                                validators=[
                                    validators.MaxLengthValidator(50),
                                    validators.RegexValidator('^[A-ZА-Я]{1}.*',
@@ -90,17 +91,17 @@ class Account(AbstractBaseUser, PermissionsMixin):
                                ]
                                )
     SEX_CHOICE = (
-        ('Мужской', 'Мужской'),
-        ('Женский', 'Женский'),
+        ('Мужской', _('Мужской')),
+        ('Женский', _('Женский')),
     )
     LANG_CHOICE = (
-        ('Английский', 'Английский'),
-        ('Русский', 'Русский'),
+        ('Английский', _('Английский')),
+        ('Русский', _('Русский')),
     )
-    sex = models.CharField(max_length=50, choices=SEX_CHOICE, default='Мужской', verbose_name='Пол')
-    lang = models.CharField(max_length=50, choices=LANG_CHOICE, default='Русский', verbose_name='Язык')
+    sex = models.CharField(max_length=50, choices=SEX_CHOICE, default='Мужской', verbose_name=_('Пол'))
+    lang = models.CharField(max_length=50, choices=LANG_CHOICE, default='Русский', verbose_name=_('Язык'))
 
-    date_of_birth = models.DateField(blank=True, null=True, verbose_name='День рождения')
+    date_of_birth = models.DateField(blank=True, null=True, verbose_name=_('День рождения'))
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)

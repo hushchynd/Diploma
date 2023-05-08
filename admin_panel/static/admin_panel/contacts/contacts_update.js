@@ -1,9 +1,8 @@
 import {bytesToSize} from "../../js/upload.js";
 let contactsTotal = $('#id_form-TOTAL_FORMS')
 $("[name$='DELETE'], [for$='DELETE']").hide()
-
 $('.form__horizontal-img').each(function () {
-    let btnOpen = $('<button class="btn btn-primary choose-file-btn" type="button">Открыть</button>')
+    let btnOpen = $('<button class="btn btn-primary choose-file-btn" type="button"><i class="fa-regular fa-image fa-xl p-3"></i></button>')
     $(this).before(btnOpen)
     let preview = $('<div class="preview d-flex flex-wrap justify-content-center"></div>');
 
@@ -50,7 +49,7 @@ $('.form__horizontal-img').each(async function () {
         $(this).closest('.preview__item').remove()
 
     })
-
+    $(this).closest('.card-body').find('.logo-data').remove()
     // let reader = new FileReader();
 
 })
@@ -65,6 +64,7 @@ function UploadFunction() {
         let reader = new FileReader();
         reader.onload = function (event) {
             // let preview = $('<div class="preview d-flex flex-wrap justify-content-center"></div>');
+            preview.empty()
             if (inputElem.hasClass('form__horizontal-img')) {
                 preview.append($(`
                       <div class="preview__item d-inline position-relative text-center mt-3" style="width: 12rem" >
@@ -120,27 +120,40 @@ $('.btn-add-contact').on('click',function () {
         </div>
         <div class="card-body ">
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-name">Название</label>
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-name_ru">${title} [ru]</label>
                 <div class="col-sm-10">
-                <input type="text" name="form-${contactsTotal.val()}-name"  maxlength="100" class="form-control form-control-sm" placeholder="Название" id="id_form-${contactsTotal.val()}-name">
+                    <input type="text" name="form-${contactsTotal.val()}-name_ru"  maxlength="100" class="form-control form-control-sm" placeholder="${title} [ru]" id="id_form-${contactsTotal.val()}-name_ru">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-address">Адрес</label>
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-name_en">${title} [en]</label>
                 <div class="col-sm-10">
-                <textarea name="form-${contactsTotal.val()}-address" cols="40" rows="10" class="form-control form-control-sm" placeholder="Адрес" id="id_form-${contactsTotal.val()}-address"></textarea>
+                    <input type="text" name="form-${contactsTotal.val()}-name_en"  maxlength="100" class="form-control form-control-sm" placeholder="${title} [en]" id="id_form-${contactsTotal.val()}-name_en">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-coordinate">Координаты</label>
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-address_ru">${address} [ru]</label>
                 <div class="col-sm-10">
-                    <textarea name="form-${contactsTotal.val()}-coordinate" cols="40" rows="10" maxlength="10000" class="form-control form-control-sm" placeholder="Координаты" id="id_form-${contactsTotal.val()}-coordinate"></textarea>
+                <textarea name="form-${contactsTotal.val()}-address_ru" cols="40" rows="10" class="form-control form-control-sm" placeholder="${address} [ru]" id="id_form-${contactsTotal.val()}-address_ru"></textarea>
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-logo">Логотип</label>
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-address_en">${address} [en]</label>
                 <div class="col-sm-10">
-                <button class="btn btn-primary choose-file-btn" type="button">Открыть</button>
+                <textarea name="form-${contactsTotal.val()}-address_en" cols="40" rows="10" class="form-control form-control-sm" placeholder="${address} [en]" id="id_form-${contactsTotal.val()}-address_en"></textarea>
+                </div>
+            </div>
+           
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-coordinate">${coordinateLabel}</label>
+                <div class="col-sm-10">
+                    <textarea name="form-${contactsTotal.val()}-coordinate" cols="40" rows="10" maxlength="10000" class="form-control form-control-sm" placeholder="${coordinateLabel}" id="id_form-${contactsTotal.val()}-coordinate"></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="id_form-${contactsTotal.val()}-logo">${logoLabel}</label>
+                <div class="col-sm-10">
+                <button class="btn btn-primary choose-file-btn" type="button"><i class="fa-regular fa-image fa-xl p-3"></i></button>
                 <div class="preview d-flex flex-wrap justify-content-center"></div>
                 <input type="file" name="form-${contactsTotal.val()}-logo" class="form-control form__horizontal-img form-control-sm" accept="image/*" id="id_form-${contactsTotal.val()}-logo" style="display: none;">
                 </div>

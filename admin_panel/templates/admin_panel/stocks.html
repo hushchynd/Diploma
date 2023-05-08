@@ -1,5 +1,6 @@
 {% extends 'admin_panel/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <div class="content-wrapper">
@@ -11,12 +12,12 @@
               <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-7">
-                        <h4 class="m-0 text-right ">Список Акций</h4>
+                        <h4 class="m-0 text-right ">{% trans 'Список Акций' %}</h4>
                     </div>
                     <div class="col-sm-4 " >
                         <a href="{% url 'stock_form' %}"style="text-decoration: none">
                         <button type="button"   style="width: 70%; margin-left: 70px;text-align: left " class="btn-sm btn-block btn-success">
-                            <h6><img src="{% static 'dist/img/plus.png' %}" width="20px" height="20px" alt="">   Создать акцию</h6></button></a>
+                            <h6><img src="{% static 'dist/img/plus.png' %}" width="20px" height="20px" alt="">  {% trans 'Создать акцию' %} </h6></button></a>
                     </div>
                 </div><!-- /.row -->
               </div><!-- /.container-fluid -->
@@ -24,9 +25,9 @@
           <table class="table table-bordered table-hover"  style="width: 90%">
                   <thead>
                     <tr>
-                      <th>Название</th>
-                      <th>Дата Создания</th>
-                      <th>Статус</th>
+                      <th>{% trans 'Название' %}</th>
+                      <th>{% trans 'Дата Создания' %}</th>
+                      <th>{% trans 'Статус' %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -40,9 +41,9 @@
                       <td>{{ stock.creation_date }}</td>
                       <td>
                           {% if stock.turn_on %}
-                            ВКЛ
+                              {% trans 'ВКЛ' %}
                           {% else %}
-                            ВЫКЛ
+                              {% trans 'ВЫКЛ' %}
 
                           {% endif %}
 

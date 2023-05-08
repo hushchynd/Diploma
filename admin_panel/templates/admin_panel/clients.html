@@ -1,6 +1,8 @@
 
 {% extends 'admin_panel/base3.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block head %}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 
@@ -12,7 +14,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Клиенты</h1>
+            <h1>{% trans 'Клиенты' %}</h1>
           </div>
 
         </div>
@@ -25,7 +27,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Таблица клиентов</h3>
+          <h3 class="card-title">{% trans 'Таблица клиентов' %}</h3>
 
           <div class="card-tools mt-1">
             <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
@@ -41,14 +43,14 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Дата регистрации</th>
-                            <th>День рождения</th>
-                            <th>Почта</th>
-                            <th>Телефон</th>
-                            <th>ФИО</th>
-                            <th>Город</th>
-                            <th>Изменить</th>
-                            <th>Удалить</th>
+                            <th>{% trans 'Дата регистрации' %}</th>
+                            <th>{% trans 'День рождения' %}</th>
+                            <th>{% trans 'Почта' %}</th>
+                            <th>{% trans 'Телефон' %}</th>
+                            <th>{% trans 'ФИО' %}</th>
+                            <th>{% trans 'Город' %}</th>
+                            <th>{% trans 'Изменить' %}</th>
+                            <th>{% trans 'Удалить' %}</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -8,7 +8,7 @@ $('.card__item_add').on('click',function () {
     newForm = $(`
        <div class="card__item mb-2 d-flex flex-column justify-content-center">
          <img class="card__preview card__preview_horizontal img-fluid" src="/static/kino_app/imgs/placeholderimg.png" style="width: 12rem;height: auto" alt="">
-         <button type="button" class="btn card__btn card__btn_change btn-primary mb-3">  Изменить картинку </button>
+         <button type="button" class="btn card__btn card__btn_change btn-primary mb-3">  <i class="fa-regular fa-image fa-xl p-3"></i> </button>
          <div class="mb-3">
              <input type="file" name="form-${carouselTotalForms.val()}-img" class="form-control gallery d-none" multiple="" accept="image/*" id="id_form-${carouselTotalForms.val()}-img">
          </div>
@@ -19,7 +19,7 @@ $('.card__item_add').on('click',function () {
                 <label class="form-check-label " for="id_form-${carouselTotalForms.val()}-DELETE">Удалить</label>
              </div>
          </div>
-         <button type="button" class="btn card__btn card__btn_remove bg-danger">Удалить</button>
+           <div type='button' class="btn card__btn card__btn_remove bg-danger w-auto"><i class="fa-solid fa-trash-can fa-xl p-3"></i></div>
        </div>
     `)
     carouselTotalForms.val(Number(carouselTotalForms.val())+1);

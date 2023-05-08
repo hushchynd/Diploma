@@ -1,5 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
+{% load i18n %}
+
 {% load django_bootstrap5 %}
 
 {# Load CSS and JavaScript #}
@@ -16,7 +18,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Форма для обновления главной страницы</h1>
+            <h1>{% trans 'Форма для обновления главной страницы' %}</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -39,13 +41,13 @@
                 {% csrf_token %}
                 {% bootstrap_form main_page_form   show_help=True layout='horizontal'   size='sm'%}
                 <div class="card-header mb-5">
-                    <h3 class="card-title text-center">Seo блок</h3>
+                    <h3 class="card-title text-center">{% trans 'Seo блок' %}</h3>
                 </div>
                 {% bootstrap_form seo_form  layout='horizontal' show_help=True size='sm'%}
             </div>
             <div class="card-footer">
-                 {% bootstrap_button button_type="submit" content="Сохранить" %}
-                 {% bootstrap_button button_type="reset" content="Сбросить" %}
+                 {% bootstrap_button button_type="submit" content=save %}
+                 {% bootstrap_button button_type="reset" content=reset %}
             </div>
         </form>
       </div>

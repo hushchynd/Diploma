@@ -36,7 +36,6 @@ def statistic(request):
         popular_films.append([tickets.filter(seance__film=film).count(), film.id])
     top_films = (sorted(top_films)[-1:-4:-1])
 
-
     film_seances = []
     for count, film_id in sorted(popular_films)[-1:-6:-1]:
         seances_list = []
@@ -44,9 +43,6 @@ def statistic(request):
             seances_list.append(Seance.objects.filter(film=film_id, date=(date.today() + timedelta(days=i))).count())
 
         film_seances.append([Film.objects.get(id=film_id), seances_list])
-
-
-
 
     seances_for_week = []
     week = []
@@ -93,7 +89,6 @@ def update_client(request, id):
 @staff_member_required
 def delete_client(request, id):
     return render(request, 'admin_panel/clients.html', )
-
 
 
 @login_required
@@ -201,7 +196,6 @@ def mailing(request):
         to = []
         for i in users:
             to.append(i.email)
-
 
         task = send_email.delay(html_content, to)
         total_time = len(to)
@@ -468,7 +462,7 @@ def cinema_card(request, id):
             return redirect('admin_cinemas')
         else:
             halls = Hall.objects.filter(cinema_id=cinema.id)
-            data = {'form': cinema_form,  'seo_form': seo_form, 'halls': halls,
+            data = {'form': cinema_form, 'seo_form': seo_form, 'halls': halls,
                     'cinema_gallery': cinema_gallery}
             return render(request, 'admin_panel/cinema_update.html', context=data)
 
@@ -637,7 +631,7 @@ def update_page(request, id):
 
     if request.method == 'POST':
         if page.name == 'Кафе-Бар':
-            menu_formset = menuFormset(request.POST)
+            menu_formset = menuFormset(request.POST, prefix="menu")
             page_gallery = PageFormsetFactory(request.POST, request.FILES)
 
             page_form = my_forms.PageUpdateForm(request.POST, request.FILES, instance=page)
@@ -654,6 +648,7 @@ def update_page(request, id):
                 for instance in instances:
                     instance.page_id = page_obj.id
                     instance.save()
+
                 return redirect('pages')
             else:
                 data = {
@@ -673,7 +668,12 @@ def update_page(request, id):
         if page_form.is_valid() and seo_form.is_valid() and page_gallery.is_valid():
             page_obj = page_form.save()
             seo_form.save()
-            page_gallery.save()
+            instances = page_gallery.save(commit=False)
+            for object in page_gallery.deleted_objects:
+                object.delete()
+            for instance in instances:
+                instance.page_id = page_obj.id
+                instance.save()
             return redirect('pages')
         else:
             data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form,
@@ -686,7 +686,7 @@ def update_page(request, id):
     page_gallery = PageFormsetFactory(queryset=PageImg.objects.filter(page_id=page.id))
     data = {'page_form': page_form, 'page_id': page.id, 'seo_form': seo_form, 'page_gallery': page_gallery}
     if page.name == 'Кафе-Бар':
-        menu_formset = menuFormset(queryset=CafeBarMenu.objects.all())
+        menu_formset = menuFormset(queryset=CafeBarMenu.objects.all(), prefix="menu")
         data['menu_formset'] = menu_formset
         data['labels'] = my_forms.CafeBarMenuForm
         return render(request, 'admin_panel/update_cafe-bar.html', context=data)
@@ -819,7 +819,7 @@ def update_contacts(request):
         contacts_formset = contactFormset(request.POST, request.FILES)
         if contacts_formset.is_valid():
             contacts_formset.save()
-            redirect("pages")
+            return redirect("pages")
         else:
             data = {'contacts_formset': contacts_formset}
             return render(request, 'admin_panel/update_contacts.html', context=data)
@@ -906,6 +906,7 @@ def get_seance_form(request):
             return render(request, 'admin_panel/seance_form.html', context=data)
 
     seance_form = my_forms.SeanceForm()
+    seance_form.fields['film'].queryset = Film.objects.filter(released__lt=date.today())
     seo_form = my_forms.SeoBlockForm()
 
     data = {'seance_form': seance_form, 'seo_form': seo_form}

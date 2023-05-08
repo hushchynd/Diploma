@@ -48,7 +48,7 @@ $('.main-card__btn').on('click',function () {
         });
         $.ajax({
             headers: { "X-CSRFToken": $.cookie("csrftoken") },
-            url: '/booking',         /* Куда отправить запрос */
+            url: urlBooking,         /* Куда отправить запрос */
             method: 'post',             /* Метод запроса (post или get) */
             dataType: 'json',          /* Тип данных в ответе (xml, json, script, html). */
 

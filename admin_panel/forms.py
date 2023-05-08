@@ -1,6 +1,7 @@
 from datetime import date
 
 import django.forms as forms
+from django.utils.translation import gettext_lazy as _
 
 from django_google_maps import widgets as map_widgets
 from django_google_maps import fields as map_fields
@@ -23,10 +24,10 @@ class FilmForm(forms.ModelForm):
     class Meta:
         model = Film
         fields = (
-            'name_en',
             'name_ru',
-            'description_en',
+            'name_en',
             'description_ru',
+            'description_en',
             'card_img',
             'released',
             'trailer_link',
@@ -103,7 +104,8 @@ class FilmForm(forms.ModelForm):
 class SeoBlockForm(forms.ModelForm):
     class Meta:
         model = SeoBlock
-        fields = ('url', 'title_en', 'seo_description_en', 'keywords_en', 'title_ru', 'seo_description_ru', 'keywords_ru')
+        fields = (
+        'url', 'title_ru', 'title_en', 'seo_description_ru', 'seo_description_en', 'keywords_ru', 'keywords_en',)
 
         widgets = {
             'url': forms.URLInput(attrs={'size': 20, 'class': 'form__elem', }),
@@ -119,7 +121,9 @@ class SeoBlockForm(forms.ModelForm):
 class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
-        fields = ('name_en','name_ru', 'short_description_en', 'short_description_ru','description_ru','description_en', 'turn_on', 'video_link', 'banner', 'card_img')
+        fields = (
+        'name_ru', 'name_en', 'short_description_ru', 'short_description_en', 'description_ru', 'description_en',
+        'turn_on', 'video_link', 'banner', 'card_img')
         widgets = {
 
             'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
@@ -151,7 +155,9 @@ class StockImgForm(forms.ModelForm):
 class PageForm(forms.ModelForm):
     class Meta:
         model = Page
-        fields = ('name_ru','name_en', 'banner', 'description_ru','description_en', 'first_pic', 'second_pic', 'third_pic', 'description2_ru', 'description2_en','turn_on',)
+        fields = (
+        'name_ru', 'name_en', 'banner', 'description_ru', 'description_en', 'first_pic', 'second_pic', 'third_pic',
+        'description2_ru', 'description2_en', 'turn_on',)
         widgets = {
 
             'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
@@ -172,7 +178,9 @@ class PageForm(forms.ModelForm):
 class PageUpdateForm(forms.ModelForm):
     class Meta:
         model = Page
-        fields = ('banner', 'description_en','description_ru', 'first_pic', 'second_pic', 'third_pic', 'description2', 'turn_on',)
+        fields = (
+        'banner', 'description_ru', 'description_en', 'first_pic', 'second_pic', 'third_pic', 'description2_ru',
+        'description2_en', 'turn_on',)
         widgets = {
 
             'description_en': forms.Textarea(attrs={"maxlength": 10_000, 'size': 20, 'class': 'form__elem', }),
@@ -206,13 +214,15 @@ class PageImgForm(forms.ModelForm):
 class MainPageForm(forms.ModelForm):
     class Meta:
         model = MainPage
-        fields = ('number', 'number2', 'seo_text_en','seo_text_ru',)
+        fields = ('number', 'number2', 'seo_text_ru', 'seo_text_en',)
 
 
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ('name_ru', 'short_description_ru', 'description_ru','name_en', 'short_description_en', 'description_en', 'turn_on', 'video_link', 'banner', 'card_img')
+        fields = (
+        'name_ru', 'name_en', 'short_description_ru', 'short_description_en', 'description_ru', 'description_en',
+        'turn_on', 'video_link', 'banner', 'card_img')
         widgets = {
             'name_ru': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
             'name_en': forms.TextInput(attrs={'size': 20, 'class': 'form__elem form__elem_text', }),
@@ -231,7 +241,7 @@ class NewsForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ('name_en', 'address_en','name_ru', 'address_ru', 'coordinate', 'logo',)
+        fields = ('name_ru', 'name_en', 'address_ru', 'address_en', 'coordinate', 'logo',)
         widgets = {
             'logo': forms.FileInput(attrs={'class': 'form__horizontal-img', }),
         }
@@ -252,7 +262,7 @@ class NewsImgForm(forms.ModelForm):
 class HallForm(forms.ModelForm):
     class Meta:
         model = Hall
-        fields = ('number', 'description_ru','description_en', 'banner', 'num_tickets', 'scheme', 'scheme_html')
+        fields = ('number', 'description_ru', 'description_en', 'banner', 'num_tickets', 'scheme', 'scheme_html')
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form__elem'}),
             'description_ru': forms.Textarea(attrs={"maxlength": 10_000, 'class': 'form__elem'}),
@@ -304,13 +314,13 @@ class CinemaForm(forms.ModelForm):
     class Meta:
         model = Cinema
         fields = [
-                  'name_en',
-                  'name_ru',
-                  'description_en',
-                  'description_ru',
-                  'banner',
-                  'logo',
-                  ]
+            'name_ru',
+            'name_en',
+            'description_ru',
+            'description_en',
+            'banner',
+            'logo',
+        ]
         widgets = {
             'name_en': forms.TextInput(attrs={'class': 'form__elem'}),
             'name_ru': forms.TextInput(attrs={'class': 'form__elem'}),
@@ -325,8 +335,8 @@ class CafeBarMenuForm(forms.ModelForm):
     class Meta:
         model = CafeBarMenu
         fields = [
-            'name_en',
             'name_ru',
+            'name_en',
             'weight',
             'price',
         ]
@@ -338,8 +348,8 @@ class TopCarouselForm(forms.ModelForm):
         fields = [
             'img',
             'link',
-            'title_en',
             'title_ru',
+            'title_en',
         ]
         widgets = {
             'img': forms.FileInput(attrs={'class': 'form__horizontal-img'}),
@@ -365,18 +375,19 @@ class BottomCarouselForm(forms.ModelForm):
 class FormInterval(forms.Form):
     interval_choices = (
         (None, '---------'),
-        (1, '1 сек'),
-        (2, '2 сек'),
-        (3, '3 сек'),
-        (4, '4 сек'),
-        (5, '5 сек'),
-        (6, '6 сек'),
-        (7, '7 сек'),
-        (8, '8 сек'),
-        (9, '9 сек'),
-        (10, '10 сек'),
+        (1, _('1 сек')),
+        (2, _('2 сек')),
+        (3, _('3 сек')),
+        (4, _('4 сек')),
+        (5, _('5 сек')),
+        (6, _('6 сек')),
+        (7, _('7 сек')),
+        (8, _('8 сек')),
+        (9, _('9 сек')),
+        (10, _('10 сек')),
+
     )
-    interval = forms.ChoiceField(choices=interval_choices, label='Скорость вращения')
+    interval = forms.ChoiceField(choices=interval_choices, label=_('Скорость вращения'))
 
 
 # class FormBottomCarouselInterval(forms.Form):
@@ -400,7 +411,7 @@ class BookingForm(forms.Form):
 
 
 today_date = date.today()
-
+filmQuery = Film.objects.filter(released__lt=today_date)
 
 class SeanceForm(forms.ModelForm):
     class Meta:
@@ -420,13 +431,14 @@ class SeanceForm(forms.ModelForm):
 
         )
         film = forms.ModelChoiceField(
-            queryset=Film.objects.filter(released__lt=today_date),
+            queryset=filmQuery,
             widget=forms.RadioSelect,
+
         )
         widgets = {
             'hall': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio'}),
             'price': forms.TextInput(attrs={'class': 'form__elem'}),
-            'date': forms.DateInput(attrs={'class': 'form__elem'}),
+            'date': forms.DateInput(attrs={'class': 'form__elem','type':'date'}, format=('%Y-%m-%d')),
             'film': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio'}),
             'time': forms.TimeInput(attrs={'class': 'form__elem'}),
             'tech_type': forms.RadioSelect(attrs={'class': 'form__elem form__elem_radio', }),

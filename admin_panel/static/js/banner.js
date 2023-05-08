@@ -8,12 +8,21 @@ $('.card__item_add').on('click',function () {
 
         newForm = $(`
        <div class='card__item mr-5 mb-5'> 
-           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> <i class="fa-regular fa-image fa-xl p-3"></i> </button>
             <input type="file" name="top_carousel-${topCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_top_carousel-${topCarouselTotal.val()}-img">
-            <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem mb-3" placeholder="Ссылка" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
-            <input type="text" name="top_carousel-${topCarouselTotal.val()}-title" class="form__elem mb-3" placeholder="Заголовок" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title">
+            <input type="url" name="top_carousel-${topCarouselTotal.val()}-link"  class="form__elem mb-2" placeholder="${linkLabel}" maxlength="200" id="id_top_carousel-${topCarouselTotal.val()}-link">
+            
+            <div class="mb-1">
+                <label class="form-label" for="id_top_carousel-${topCarouselTotal.val()}-title_ru"> [ru]</label>
+                <input type="text" name="top_carousel-${topCarouselTotal.val()}-title_ru"   class="form-control form__elem" placeholder="${titleLabel}" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title_ru">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="id_top_carousel-${topCarouselTotal.val()}-title_en"> [en]</label>
+                <input type="text" name="top_carousel-${topCarouselTotal.val()}-title_en" class="form-control form__elem" placeholder="${titleLabel}" maxlength="50" id="id_top_carousel-${topCarouselTotal.val()}-title_en">
+           </div>
            <input type="hidden" name="top_carousel-${topCarouselTotal.val()}-id"  id="id_top_carousel-${topCarouselTotal.val()}-id">
-           <button type='button' class="btn card__btn card__btn_remove bg-danger">Удалить</button>
+           <div type='button' class="btn card__btn card__btn_remove bg-danger w-auto"><i class="fa-solid fa-trash-can fa-xl p-3"></i></div>
 
        </div>
 
@@ -24,11 +33,11 @@ $('.card__item_add').on('click',function () {
 
     newForm =  $(`
        <div class='card__item  mr-5 mb-5'> 
-           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> Выбрать картинку </button>
+           <button type='button' class='btn card__btn card__btn_add btn-primary mb-3'> <i class="fa-regular fa-image fa-xl p-3"></i> </button>
            <input type="file" name="bottom_carousel-${bottomCarouselTotal.val()}-img" class="form__horizontal-img mb-3" accept="image/*" id="id_bottom_carousel-${bottomCarouselTotal.val()}-img">
-           <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem mb-3 " placeholder="Ссылка" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
+           <input type="url" name="bottom_carousel-${bottomCarouselTotal.val()}-link"  class="form__elem mb-3 " placeholder="${linkLabel}" maxlength="200" id="id_bottom_carousel-${bottomCarouselTotal.val()}-link">
            <input type="hidden" name="bottom_carousel-${bottomCarouselTotal.val()}-id"  id="id_bottom_carousel-${bottomCarouselTotal.val()}-id">
-           <button type='button' class="btn card__btn card__btn_remove bg-danger">Удалить</button>
+           <div type='button' class="btn card__btn card__btn_remove bg-danger w-auto"><i class="fa-solid fa-trash-can fa-xl p-3"></i></div>
 
        </div>
     `)

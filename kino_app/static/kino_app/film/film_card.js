@@ -36,7 +36,7 @@ $('.info__time').each(function () {
 
 $('#form-filter').on('change',function () {
      $.ajax({
-        url: '/schedule_for_film',         /* Куда отправить запрос */
+        url: urlSchedule,         /* Куда отправить запрос */
         method: 'get',             /* Метод запроса (post или get) */
         dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
         data: $(this).serialize(),     /* Данные передаваемые в массиве */

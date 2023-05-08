@@ -1,6 +1,7 @@
 from django.core import validators
 from django.db import models
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from admin_panel.models import SeoBlock
 
@@ -55,7 +56,7 @@ class BottomCarousel(models.Model):
 
 
 class MainPage(models.Model):
-    number = models.CharField(verbose_name='Телефон 1',max_length=19, unique=True,
+    number = models.CharField(verbose_name=_('Телефон 1'),max_length=19, unique=True,
                               validators=[
                                   validators.MaxLengthValidator(19),
                                   validators.MinLengthValidator(19),
@@ -64,7 +65,7 @@ class MainPage(models.Model):
                                                             message='Неверно введён номер телефона.Пример ввода: +38 (098) 567-81-23')
                               ]
                               )
-    number2 = models.CharField(verbose_name='Телефон 2',max_length=19, unique=True,
+    number2 = models.CharField(verbose_name=_('Телефон 2'),max_length=19, unique=True,
                                validators=[
                                    validators.MaxLengthValidator(19),
                                    validators.MinLengthValidator(19),
@@ -73,7 +74,7 @@ class MainPage(models.Model):
                                                              message='Неверно введён номер телефона.Пример ввода: +38 (098) 567-81-23')
                                ]
                                )
-    seo_text = models.TextField(verbose_name='SEO текст',max_length=500,
+    seo_text = models.TextField(verbose_name=_('SEO текст'),max_length=500,
                                 validators=[
                                     validators.MaxLengthValidator(500),
                                     validators.RegexValidator('^[A-ZА-Я]{1}.*',

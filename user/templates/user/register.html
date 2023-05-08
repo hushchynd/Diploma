@@ -1,5 +1,6 @@
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
@@ -36,7 +37,8 @@
             <div class="row">
                 <!-- /.col -->
               <div class="col-4">
-                     {% bootstrap_button button_type="submit" content="Зарегистрироваться" %}
+                  {% translate 'Зарегистрироваться' as register %}
+                     {% bootstrap_button button_type="submit" content=register %}
               </div>
               <!-- /.col -->
             </div>
@@ -44,7 +46,7 @@
 
 
 
-      <a href="{% url 'signin' %}" class="text-center">У меня есть аккаунт</a>
+      <a href="{% url 'signin' %}" class="text-center">{% trans 'У меня есть аккаунт' %}</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

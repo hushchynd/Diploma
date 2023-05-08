@@ -1,5 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
+{% load i18n %}
+
 {% load django_bootstrap5 %}
 {% load file_filters %}
 {# Load CSS and JavaScript #}
@@ -18,10 +20,10 @@
       <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Форма для обновления контактов</h1>
+            <h1>{% trans 'Форма для обновления контактов' %}</h1>
           </div>
           <div class="col-sm-6 text-right">
-              <button type="button" class="btn btn-add-contact btn-success">Добавить кинотеатр</button>
+              <button type="button" class="btn btn-add-contact btn-success">{% trans 'Добавить кинотеатр' %}</button>
           </div>
         </div>
 
@@ -30,7 +32,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Default box -->
-    <form  action="{% url 'update_contacts' %}" method="post"    runat="server" enctype="multipart/form-data">
+    <form  action="{% url 'update_contacts' %}" method="post" runat="server" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-collection">
           {{ contacts_formset.management_form }}
@@ -60,8 +62,8 @@
           </div>
 
          <div class="card-footer">
-                 {% bootstrap_button button_type="submit" content="Сохранить" %}
-                 {% bootstrap_button button_type="reset" content="Сбросить" %}
+                 {% bootstrap_button button_type="submit" content=save %}
+                 {% bootstrap_button button_type="reset" content=reset %}
          </div>
 
     </form>
@@ -70,6 +72,13 @@
   </div>
 {% endblock %}
 {% block script %}
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <script>
+        let title = '{% trans 'Название'%}'
+        let address = '{% trans 'Адрес'%}'
+        let coordinateLabel = '{% trans 'Координаты'%}'
+        let logoLabel = '{% trans 'Логотип'%}'
+    </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="{% static 'admin_panel/contacts/contacts_update.js' %}"></script>
 {% endblock %}

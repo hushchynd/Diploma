@@ -20,7 +20,7 @@ class SignUp(CreateView):
     form_class = UserForm
     context_object_name = 'user_form'
     template_name = "../templates/user/register.html"
-    success_url = '/main'
+    success_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

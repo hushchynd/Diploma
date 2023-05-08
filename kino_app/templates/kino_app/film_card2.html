@@ -81,7 +81,7 @@
                     </form>
                 </div>
              </div>
-             <div class="film flex-grow-1 flex-shrink-0 bg-light" >
+            <div class="film flex-grow-1 flex-shrink-0" >
                  {% for film ,date_film  in result %}
                  <div class="film__item mb-3 bg-gray-light p-3" style="background: #C2C2C2;">
                      <div class="d-flex flex-sm-row flex-column align-items-center align-items-sm-start gap-2">
@@ -126,6 +126,7 @@
                              </div>
                         </div>
                      </div>
+
                  </div>
              {% endfor %}
              </div>
@@ -252,6 +253,10 @@
     </div>
 {% endblock %}
 {% block script %}
+    <script>
+      {% get_current_language as LANGUAGE_CODE %}
+        let urlSchedule= '/{{ LANGUAGE_CODE }}/schedule_for_film/{{ film.id }}';
+    </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 {#    <script src="{% static 'kino_app/node_modules/lightslider/src/js/lightslider.js' %}"></script>#}
     <script src="{% static 'kino_app/film/film_card.js' %}"></script>

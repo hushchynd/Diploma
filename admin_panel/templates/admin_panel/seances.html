@@ -1,5 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}{# Load the tag library #}
+{% load i18n %}
+
 {% load django_bootstrap5 %}
 
 {# Load CSS and JavaScript #}
@@ -19,10 +21,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Сеансы</h1>
+            <h1>{% trans 'Сеансы' %}</h1>
           </div>
             <div class="col-sm-6 text-right">
-             <a href="{% url 'seance_form' %}"><button class="btn btn-success">Создать сеанс</button></a>
+             <a href="{% url 'seance_form' %}"><button class="btn btn-success">{% trans 'Создать сеанс' %}</button></a>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -42,15 +44,15 @@
         </div>
         <div class="card-body mb-5 ">
              <div class="card-header mb-5">
-                <h3 class="card-title text-center">Фильтр</h3>
+                <h3 class="card-title text-center">{% trans 'Фильтр' %}</h3>
              </div>
             <form class="row g-3" id="form-filter" action="#" >
               <div class="col mr-3">
-                  <label class="form-label">Дата</label>
+                  <label class="form-label">{% trans 'Дата' %}</label>
                   <input type="date" name="period" id="date" class="form-control sidebar-second__input sidebar-second__input_date">
               </div>
               <div class="col">
-                <label class="form-label">Фильмы</label>
+                <label class="form-label">{% trans 'Фильмы' %}</label>
                 <div class="form-check row">
                     {% for checked,film in film_list %}
                         <div class="col">
@@ -63,7 +65,7 @@
                 </div>
               </div>
               <div class="col">
-                <label class="form-label">Залы</label>
+                <label class="form-label">{% trans 'Залы' %}</label>
                  <div class="form-check row">
                      {% for checked, hall in hall_list %}
                          <div class="col">
@@ -76,7 +78,7 @@
                 </div>
               </div>
               <div class="col">
-                <label class="form-label">Технологии</label>
+                <label class="form-label">{% trans 'Технологии' %}</label>
                  <div class="form-check row">
                      {% for checked,tech in tech_list %}
                          <div class="col">
@@ -92,7 +94,7 @@
         </div>
 
         <div class="card-header">
-            <h3 class="card-title">Расписание</h3>
+            <h3 class="card-title">{% trans 'Расписание' %}</h3>
          </div>
         <div class="film">
              {% for film ,date_film  in result %}
@@ -109,7 +111,7 @@
 {#                                            {{ hall.scheme_html | safe }}#}
 {#                                         </div>#}
 {#                                     </div>#}
-                                         <div class="info__text fs-3 mb-2" style="padding-left: 3.0rem;">Зал №{{ hall.number }}</div>
+                                         <div class="info__text fs-3 mb-2" style="padding-left: 3.0rem;">{% trans 'Зал' %} №{{ hall.number }}</div>
                                          {% for tech,seances in tech_film %}
                                              <div class="info__tech">
                                                  <div class="info__text fs-4 mb-2" style="padding-left: 4.5rem;">{{ tech }}</div>

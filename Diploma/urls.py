@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.views.i18n import JavaScriptCatalog
 
 import admin_panel.views
 from Diploma import settings
 
 urlpatterns = i18n_patterns(
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+
     path('admin/', include('admin_panel.urls')),
     path('accounts/', include('user.urls')),
     path('', include('kino_app.urls')),

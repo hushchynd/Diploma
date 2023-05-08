@@ -7,7 +7,7 @@ function bytesToSize(bytes) {
 export function upload(selector,options) {
     $(selector).each(function () {
         // Подготовка интерфейса
-        let btnOpen = $('<button class="btn btn-primary choose-file-btn" type="button">Открыть</button>')
+        let btnOpen = $('<button class="btn btn-primary choose-file-btn" type="button"><i class="fa-regular fa-image fa-xl p-3"></i></button>')
         $(this).before(btnOpen)
         $(btnOpen).on('click', function () {
             $(this).siblings('input[type=\'file\']').click()
