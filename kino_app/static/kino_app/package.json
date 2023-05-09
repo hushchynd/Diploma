@@ -2,8 +2,6 @@
   "dependencies": {
     "chart.js": "^4.2.1",
     "datatables.net": "^1.13.4",
-    "echarts": "^5.4.2",
-    "jqwidgets-framework": "^16.0.0",
-    "lightslider": "^1.1.6"
+    "echarts": "^5.4.2"
   }
 }
