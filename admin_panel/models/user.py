@@ -13,7 +13,7 @@ from django.utils import timezone
 class AccountManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self,email, first_name, last_name, phone, sex, lang, password ,**extra_fields):
+    def _create_user(self, email, first_name, last_name, phone, sex, lang, password, **extra_fields):
         values = [email, first_name, last_name, phone, sex, lang]
         field_value_map = dict(zip(self.model.REQUIRED_FIELDS, values))
         for field_name, value in field_value_map.items():
@@ -39,7 +39,7 @@ class AccountManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, first_name, last_name, phone, sex, lang, password, **extra_fields)
 
-    def create_superuser(self, email, first_name, last_name, phone, password=None, **extra_fields):
+    def create_superuser(self, email, first_name, last_name, phone, sex, lang, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -48,7 +48,7 @@ class AccountManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, first_name, last_name, phone, password, **extra_fields)
+        return self._create_user(email, first_name, last_name, phone, sex, lang, password, **extra_fields)
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
