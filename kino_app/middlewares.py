@@ -12,5 +12,5 @@ def baseView(request):
         'pages': Page.objects.all(),
         'number1': '+380685126322',
         'number2': '+380685126322',
-        'seo_text': info.seo_text,
+        'seo_text': "info.seo_text",
     }
