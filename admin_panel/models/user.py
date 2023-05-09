@@ -13,7 +13,7 @@ from django.utils import timezone
 class AccountManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, first_name, last_name, phone, sex, lang, password, **extra_fields):
+    def _create_user(self,request,email, first_name, last_name, phone, sex, lang, password, *args ,**extra_fields):
         values = [email, first_name, last_name, phone, sex, lang]
         field_value_map = dict(zip(self.model.REQUIRED_FIELDS, values))
         for field_name, value in field_value_map.items():
