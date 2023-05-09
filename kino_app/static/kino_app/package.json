@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "chart.js": "^4.2.1",
-    "datatables.net": "^1.13.4",
-    "echarts": "^5.4.2"
-  }
-}
