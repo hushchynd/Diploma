@@ -68,8 +68,6 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "django_google_maps",
 
-
-
 ]
 AUTH_USER_MODEL = 'admin_panel.Account'
 
@@ -110,7 +108,7 @@ TEMPLATES = [
                 'kino_app.middlewares.baseView',
 
             ],
-            'libraries':{
+            'libraries': {
                 'file_filters': 'admin_panel.templatetags.file_filters'
             }
         },
@@ -167,6 +165,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 from django.utils.translation import gettext_lazy as _
+
 LANGUAGES = [
     ('en', _('Английский')),
     ('ru', _('Русский')),
@@ -193,3 +192,7 @@ INTERNAL_IPS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+import django_on_heroku
+
+django_on_heroku.settings(locals())
