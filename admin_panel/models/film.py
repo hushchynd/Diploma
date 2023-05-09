@@ -2,7 +2,6 @@ from django.core import validators
 from django.db import models
 import django.forms as forms
 from django.utils.translation import gettext_lazy as _
-from parler.models import TranslatableModel, TranslatedFields
 
 
 class Country(models.Model):

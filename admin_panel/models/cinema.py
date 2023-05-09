@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 import django.utils.timezone
 from django.core import validators
 from django.db import models
-from parler.models import TranslatableModel, TranslatedFields
 
 from admin_panel.models.film import Film, TechnologyType, SeoBlock
 from admin_panel.models.user import Account
