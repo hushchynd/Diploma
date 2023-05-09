@@ -18,8 +18,8 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
 
+import Diploma.settings as proj
 import admin_panel.views
-from Diploma import settings
 
 urlpatterns = i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
@@ -27,14 +27,20 @@ urlpatterns = i18n_patterns(
     path('admin/', include('admin_panel.urls')),
     path('accounts/', include('user.urls')),
     path('', include('kino_app.urls')),
-    path('django_lang_switch/', include('django_lang_switch.urls')),
 
 )
 
-
-if settings.DEBUG:
+if proj.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  ] + urlpatterns + static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
+
+# from django.contrib.staticfiles.views import serve
+# from django.views.static import serve as media_serve
+# from django.conf import settings
+#
+# if not settings.DEBUG:
+#     urlpatterns.append(path('static/<path:path>', serve, {"insecure": True}))
+#     urlpatterns.append(path('media/<path:path>', media_serve, {"document_root": proj.MEDIA_ROOT}))

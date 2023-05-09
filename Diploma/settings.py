@@ -63,16 +63,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'kino_app.apps.KinoAppConfig',
     'admin_panel.apps.AdminPanelConfig',
-    'django_test_app.apps.DjangoTestAppConfig',
     'user.apps.UserConfig',
-    'crispy_forms',
-    'qr_code',
     'django.contrib.postgres',
-    'rest_framework',
-    "corsheaders",
     "django_bootstrap5",
     "django_google_maps",
-    "django_lang_switch",
 
 
 
@@ -83,7 +77,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
