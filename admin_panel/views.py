@@ -762,7 +762,7 @@ def update_hall(request, number):
             for object in hall_gallery.deleted_objects:
                 object.delete()
             for instance in instances:
-                instance.hall_id = hall_gallery.id
+                instance.hall_id = hall_obj.id
                 instance.save()
             return redirect('admin_cinemas')
         else:
