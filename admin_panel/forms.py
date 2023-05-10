@@ -393,6 +393,8 @@ class FormInterval(forms.Form):
 # class FormBottomCarouselInterval(forms.Form):
 #     interval = forms.ChoiceField(choices=interval_choices)
 
+# class FormBottomCarouselInterval(forms.Form):
+#     interval = forms.ChoiceField(choices=interval_choices)
 
 class BackImgForm(forms.ModelForm):
     class Meta:
