@@ -20,7 +20,9 @@ from django.forms import inlineformset_factory, modelformset_factory
 # Create your views here.
 from admin_panel.models import *
 from datetime import date, timedelta
+from django.db import connections
 
+connections.close_all()
 
 @login_required
 @staff_member_required
