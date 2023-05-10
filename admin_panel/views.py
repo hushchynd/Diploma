@@ -137,21 +137,18 @@ def cinemas(request):
     if request.method == "POST":
         hall_form = my_forms.HallForm(request.POST, request.FILES)
         seo_form = my_forms.SeoBlockForm(request.POST)
-        HallFormsetFactory = modelformset_factory(can_delete=True, model=HallImg, form=my_forms.HallImgForm,
-                                                  extra=0)
-        hall_gallery = HallFormsetFactory(request.POST, request.FILES)
-        if seo_form.is_valid() and hall_form.is_valid() and hall_gallery.is_valid():
+        hall_gallery_form = my_forms.HallImgForm(request.POST, request.FILES)
+        if seo_form.is_valid() and hall_form.is_valid() and hall_gallery_form.is_valid():
             seo_obj = seo_form.save()
             hall_obj = hall_form.save()
             hall_obj.seo_block_id = seo_obj.id
             hall_obj.cinema_id = 1
             hall_obj.save()
-            instances = hall_gallery.save(commit=False)
-            for instance in instances:
-                instance.hall_id = hall_obj.id
-                instance.save()
+            for file in request.FILES.getlist('img'):
+                if file:
+                    HallImg.objects.create(img=file, hall_id=hall_obj.id)
         else:
-            data = {'hall_form': hall_form, 'hall_gallery': hall_gallery, 'seo_form': seo_form}
+            data = {'hall_form': hall_form, 'hallImgs_form': hall_gallery_form, 'seo_form': seo_form}
             return render(request, 'admin_panel/hall_form.html', context=data)
 
     cinemas = Cinema.objects.all()
@@ -761,7 +758,7 @@ def update_hall(request, number):
             for object in hall_gallery.deleted_objects:
                 object.delete()
             for instance in instances:
-                instance.hall_id = hall_obj.id
+                instance.hall_id = hall_gallery.id
                 instance.save()
             return redirect('admin_cinemas')
         else:

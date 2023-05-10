@@ -190,8 +190,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '/app/media')
-MEDIA_URL = '/app/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 import django_on_heroku
 
