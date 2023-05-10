@@ -41,9 +41,10 @@
             </button>
           </div>
         </div>
+          <form action="{% url 'top_carousel'  %}" method="post" enctype="multipart/form-data">
+
         <div class="card-body d-flex flex-row justify-content-sm-center flex-wrap">
 
-            <form action="{% url 'top_carousel'  %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
                      <div class="d-flex flex-row flex-wrap justify-content-center align-items-center">
                          {{ top_carousel_formset.management_form }}
@@ -59,17 +60,15 @@
                                 <img class="img-fluid h-auto" style="width: 5rem;cursor: pointer" src="{% static 'admin_panel/imgs/add.png' %}">
                          </div>
                      </div>
-
-                     <div class="card-footer">
-                         {% bootstrap_form interval %}
-
-                         {% bootstrap_button button_type="submit" content=save %}
-                        {% bootstrap_button button_type="reset" content=reset %}
-                     </div>
-
-            </form>
-
         </div>
+          <div class="card-footer">
+                 {% bootstrap_form interval %}
+
+                 {% bootstrap_button button_type="submit" content=save %}
+                {% bootstrap_button button_type="reset" content=reset %}
+          </div>
+          </form>
+
         <!-- /.card-body -->
 
         <!-- /.card-footer-->
@@ -91,8 +90,8 @@
             </button>
           </div>
         </div>
+        <form action="{% url 'background'  %}" method="post" enctype="multipart/form-data">
         <div class="card-body d-flex flex-row justify-content-sm-center flex-wrap">
-            <form action="{% url 'background'  %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
                      <div class="d-flex flex-column   justify-content-center align-items-center">
                           {% for row in back_img_form %}
@@ -104,12 +103,14 @@
                          {% endfor %}
 
                      </div>
-                     <div class="card-footer text-center">
-                         {% bootstrap_button button_type="submit" content=save %}
-                     </div>
-            </form>
+
 
         </div>
+        <div class="card-footer text-center">
+            {% bootstrap_button button_type="submit" content=save %}
+        </div>
+        </form>
+
         <!-- /.card-body -->
 
         <!-- /.card-footer-->
@@ -130,8 +131,9 @@
             </button>
           </div>
         </div>
+          <form action="{% url 'bottom_carousel'  %}" method="post" enctype="multipart/form-data">
+
         <div class="card-body  d-flex flex-row justify-content-sm-center flex-wrap">
-            <form action="{% url 'bottom_carousel'  %}" method="post" enctype="multipart/form-data">
                  {% csrf_token %}
                  <div class="d-flex flex-row flex-wrap justify-content-center align-items-center">
                      {{ bottom_carousel_formset.management_form }}
@@ -147,13 +149,15 @@
                         <img class="img-fluid h-auto" style="width: 5rem;cursor: pointer" src="{% static 'admin_panel/imgs/add.png' %}">
                      </div>
                  </div>
-                 <div class="card-footer mb-0">
-                     {% bootstrap_form interval %}
-                     {% bootstrap_button button_type="submit" content=save %}
-                    {% bootstrap_button button_type="reset" content=reset %}
-                 </div>
-            </form>
+
         </div>
+        <div class="card-footer mb-0">
+             {% bootstrap_form interval %}
+             {% bootstrap_button button_type="submit" content=save %}
+            {% bootstrap_button button_type="reset" content=reset %}
+         </div>
+          </form>
+
       </div>
     </section>
   </div>

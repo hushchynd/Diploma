@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-6v-km5ek+98hkvq^wf!*h1yiyg6lqeknkixqj%m^-j-#4k@y+u'
+SECRET_KEY = 'django-insecure-6v-km5ek+98hkvq^wf!*h1yiyg6lqeknkixqj%m^-j-#4k@y+u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,11 +35,11 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.outlook.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'danilservices@outlook.com'
-EMAIL_HOST_PASSWORD = 'bubuta4114'
-DEFAULT_FROM_EMAIL = 'danilservices@outlook.com'
+EMAIL_HOST_USER = 'dhushchyn@gmail.com'
+EMAIL_HOST_PASSWORD = 'mfpxzbsjatijcboa'
+DEFAULT_FROM_EMAIL = 'dhushchyn@gmail.com'
 DEFAULT_TO_EMAIL = 'Your email'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
