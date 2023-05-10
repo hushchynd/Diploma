@@ -27,6 +27,7 @@ connections.close_all()
 @login_required
 @staff_member_required
 def statistic(request):
+    connections.close_all()
     mans_woman = [Account.objects.filter(sex='Мужской').count(), Account.objects.filter(sex='Женский').count()]
 
     tickets = Ticket.objects.all()
