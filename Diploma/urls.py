@@ -33,14 +33,13 @@ urlpatterns = i18n_patterns(
     path('', include('kino_app.urls')),
 
 )
-urlpatterns = [
-                  ] + urlpatterns + static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
+
 if proj.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),
-                  ]
+                  ] + urlpatterns + static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
 
 # from django.contrib.staticfiles.views import serve
 # from django.views.static import serve as media_serve
