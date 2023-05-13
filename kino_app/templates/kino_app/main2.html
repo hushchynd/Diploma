@@ -14,10 +14,6 @@
 
          <div id="carouselExampleCaptions" class="carousel slide">
               <div class="carousel-inner">
-                  <img src="{{banner.img.url}}" class="d-block w-100" alt="...">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h3 class="p-4 w-100" style="background:  RGBA(96, 96, 96,0.7)">Hello</h3>
-                  </div>
                   {% for item in banners_sliders.top_carousel %}
                       {% if forloop.first %}
                           <div class="carousel-item active">
