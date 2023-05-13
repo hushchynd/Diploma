@@ -2,6 +2,8 @@ amqp==5.1.1
 asgiref==3.6.0
 async-timeout==4.0.2
 billiard==3.6.4.0
+cloudinary==1.32.0
+django-cloudinary-storage==0.3.0
 celery==5.2.7
 certifi==2022.12.7
 charset-normalizer==3.1.0
@@ -12,7 +14,6 @@ django-bootstrap5==23.1
 django-debug-toolbar==3.7.0
 django-google-maps==0.13.0
 django-modeltranslation==0.18.9
-django-on-heroku==1.1.2
 extensions==0.4
 i18n==0.2
 idna==3.4

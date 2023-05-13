@@ -14,7 +14,9 @@ from pathlib import Path
 import os
 
 from django.db import models
-
+# At the top of the settings
+import cloudinary
+import cloudinary_storage
 import admin_panel
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -65,6 +67,9 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'django.contrib.postgres',
     "django_bootstrap5",
+    "django_google_maps",
+    "cloudinary",
+    "cloudinary_storage",
     "django_google_maps",
 
 ]
@@ -198,7 +203,11 @@ INTERNAL_IPS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "dq3mkjc6i",
+    "API_KEY": "538121678774191",
+    "API_SECRET": "G2jsRBW6bW1sVg9rL3XAOmAOguU"
+}
 
-import django_on_heroku
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-django_on_heroku.settings(locals())
