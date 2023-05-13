@@ -22,8 +22,6 @@ import Diploma.settings as proj
 import admin_panel.views
 from django.db import connections
 
-
-
 connections.close_all()
 urlpatterns = i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
@@ -32,7 +30,7 @@ urlpatterns = i18n_patterns(
     path('accounts/', include('user.urls')),
     path('', include('kino_app.urls')),
 
-)
+) + static(proj.STATIC_URL, document_root=proj.STATIC_ROOT)
 
 if proj.DEBUG:
     import debug_toolbar
