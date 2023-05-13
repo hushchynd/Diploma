@@ -28,7 +28,7 @@
             {% for row in news %}
                      <div class="card mr-3 bg-transparent" style=" height: auto;width: 15rem;; border: 0px">
                           <a class="text-decoration-none" href="{% url 'page_news' row.id %}">
-                              <img src="{% get_media_prefix %}{{ row.card_img }}" class="card-img-top img-fluid " alt="...">
+                              <img src="{{ row.card_img.url }}" class="card-img-top img-fluid " alt="...">
                               <div class="card-body  d-flex flex-column p-0 pt-1">
                                   <p class="card-text text-black text-start"><a href="{% url 'page_news' row.id %}">{{ row.name }}</a></p>
                                   <p class="card-text text-primary">{{ row.creation_date }}</p>

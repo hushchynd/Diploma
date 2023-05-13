@@ -48,8 +48,8 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form stock_form  layout='horizontal' show_help=True size='sm'%}
-                    <div class="d-none" id="card-img-data" data-size = '{{ stock_form.instance.card_img.path | filesize}}' data-name = '{{ stock_form.card_img.value | filename }}' data-path = '{% get_media_prefix %}{{ stock_form.card_img.value }}'></div>
-                    <div  class="d-none" id="banner-img-data" data-size = '{{ stock_form.instance.banner.path | filesize}}' data-name = '{{ stock_form.banner.value | filename }}' data-path = '{% get_media_prefix %}{{ stock_form.banner.value }}'></div>
+                    <div class="d-none" id="card-img-data" data-size = '{{ stock_form.instance.card_img.path | filesize}}' data-name = '{{ stock_form.card_img.value | filename }}' data-path = '{{ stock_form.card_img.value.url }}'></div>
+                    <div  class="d-none" id="banner-img-data" data-size = '{{ stock_form.instance.banner.path | filesize}}' data-name = '{{ stock_form.banner.value | filename }}' data-path = '{{ stock_form.banner.value.url }}'></div>
 
 
                 <div id="card-header mb-5" style="margin-bottom: 50px">
@@ -59,7 +59,7 @@
                     {{ stock_gallery.management_form }}
                      {% for form in stock_gallery %}
                          <div class="card__item   mb-2 d-flex flex-column justify-content-center">
-                             <img class="card__preview card__preview_horizontal img-fluid" src="{% get_media_prefix %}{{ form.img.value }}" style="width: 12rem;height: auto" alt="">
+                             <img class="card__preview card__preview_horizontal img-fluid" src="{{ form.img.value.url }}" style="width: 12rem;height: auto" alt="">
                              <button type='button' class='btn card__btn card__btn_change btn-primary mb-3'>  {% trans 'Изменить картинку' %} </button>
                              {% bootstrap_form form %}
 

@@ -32,7 +32,7 @@
             {% for cinema in cinemas %}
               <div class="card border-0" style="width: 24rem;">
                   <a class="text-decoration-none" href="{% url  'card_cinema' cinema.name %}">
-                  <img class="card-img-top img-fluid mb-3 h-auto " src="{% get_media_prefix %}{{ cinema.banner }}" alt="...">
+                  <img class="card-img-top img-fluid mb-3 h-auto " src="{{ cinema.banner.url }}" alt="...">
                       <p class="card-text text-uppercase text-center text-black">{{ cinema.name }}</p>
                   </a>
               </div>

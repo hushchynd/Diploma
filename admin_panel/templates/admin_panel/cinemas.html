@@ -36,7 +36,7 @@
             {% for cinema in cinemas %}
               <div class="card" style="width: 24rem;">
                   <a class="text-decoration-none" href="{% url  'cinema_card' cinema.id %}">
-                  <img src="{% get_media_prefix %}{{ cinema.banner }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
+                  <img src="{{ cinema.banner.url }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                   <div class="card-body">
                     <p class="card-text text-uppercase text-info">{{ cinema.name }}</p>
                   </div>

@@ -38,7 +38,7 @@
             {% for film in films.released_films %}
               <div class="card mr-3" style="width: 14rem;">
                   <a class="text-decoration-none" href="{% url 'update_film' film.id %}">
-                  <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
+                  <img src="{{ film.card_img.url }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                   <div class="card-body">
                     <p class="card-text text-uppercase text-info">{{ film.name }}</p>
                   </div>
@@ -53,7 +53,7 @@
             {% for film in films.unreleased_films %}
               <div class="card mr-3" style="width: 14rem;">
                   <a class="text-decoration-none" href="{% url 'update_film' film.id %}">
-                  <img src="../../../media/{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
+                  <img src="{{ film.card_img.url }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                   <div class="card-body">
                     <p class="card-text text-uppercase text-info">{{ film.name }}</p>
                   </div>

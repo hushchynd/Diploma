@@ -20,7 +20,7 @@
                       {% else %}
                           <div class="carousel-item">
                       {% endif %}
-                              <img src="{% get_media_prefix %}{{ item.img }}" class="d-block w-100" alt="...">
+                              <img src="{{ item.img.url }}" class="d-block w-100" alt="...">
                               <div class="carousel-caption d-none d-md-block">
                                 <h3 class="p-4 w-100" style="background:  RGBA(96, 96, 96,0.7)">{{ item.title }}</h3>
                               </div>
@@ -44,7 +44,7 @@
                {% for seance in seances_today %}
                      <div class="card mr-3" style=" width: 14rem; border: 0px">
                       <a class="text-decoration-none" href="{% url 'film_card'  seance.film.name %}">
-                          <img src="{% get_media_prefix %}{{ seance.film.card_img }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
+                          <img src="{{ seance.film.card_img.url }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                           <div class="card-body">
                             <p class="card-text text-uppercase text-success">{{  seance.film.name}}</p>
                                <button class="btn  btn-success">
@@ -61,7 +61,7 @@
 
                     <div class="card mr-3" style=" width: 14rem; border: 0px">
                       <a class="text-decoration-none" href="{% url 'film_card' film.name %}">
-                          <img src="{% get_media_prefix %}{{ film.card_img }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
+                          <img src="{{ film.card_img.url }}" class="card-img-top img-fluid " style="height: 300px"alt="...">
                           <div class="card-body">
                             <button   class="btn btn-primary btn-sm-sm card-text text-uppercase text-white text-wrap mb-3  ">{{ film.name }}</button>
                             <p class="card-text text-uppercase">{{ film.released }}</p>
@@ -81,7 +81,7 @@
                       {% else %}
                           <div class="carousel-item">
                       {% endif %}
-                              <img src="{% get_media_prefix %}{{ item.img }}" class="d-block w-100" alt="...">
+                              <img src="{{ item.img.url }}" class="d-block w-100" alt="...">
                           </div>
                   {% endfor %}
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
