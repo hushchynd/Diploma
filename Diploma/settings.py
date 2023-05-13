@@ -200,8 +200,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = 'media/'
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": "dq3mkjc6i",
     "API_KEY": "538121678774191",
