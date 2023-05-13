@@ -1531,7 +1531,7 @@
   var CLASS_NAME_DROPRIGHT = 'dropright';
   var CLASS_NAME_DROPLEFT = 'dropleft';
   var CLASS_NAME_MENURIGHT = 'dropdown-menu-right';
-  var CLASS_NAME_POSITION_STATIC = 'position-staticfiles';
+  var CLASS_NAME_POSITION_STATIC = 'position-static';
   var EVENT_HIDE$3 = "hide" + EVENT_KEY$6;
   var EVENT_HIDDEN$3 = "hidden" + EVENT_KEY$6;
   var EVENT_SHOW$3 = "show" + EVENT_KEY$6;
@@ -1641,7 +1641,7 @@
           if (typeof this._config.reference.jquery !== 'undefined') {
             referenceElement = this._config.reference[0];
           }
-        } // If boundary is not `scrollParent`, then set position to `staticfiles`
+        } // If boundary is not `scrollParent`, then set position to `static`
         // to allow the menu to "escape" the scroll parent's boundaries
         // https://github.com/twbs/bootstrap/issues/24251
 
@@ -1796,9 +1796,9 @@
             boundariesElement: this._config.boundary
           }
         }
-      }; // Disable Popper if we have a staticfiles display
+      }; // Disable Popper if we have a static display
 
-      if (this._config.display === 'staticfiles') {
+      if (this._config.display === 'static') {
         popperConfig.modifiers.applyStyle = {
           enabled: false
         };
@@ -2023,7 +2023,7 @@
   var CLASS_NAME_OPEN = 'modal-open';
   var CLASS_NAME_FADE$4 = 'fade';
   var CLASS_NAME_SHOW$4 = 'show';
-  var CLASS_NAME_STATIC = 'modal-staticfiles';
+  var CLASS_NAME_STATIC = 'modal-static';
   var EVENT_HIDE$2 = "hide" + EVENT_KEY$5;
   var EVENT_HIDE_PREVENTED = "hidePrevented" + EVENT_KEY$5;
   var EVENT_HIDDEN$2 = "hidden" + EVENT_KEY$5;
@@ -2390,7 +2390,7 @@
             return;
           }
 
-          if (_this9._config.backdrop === 'staticfiles') {
+          if (_this9._config.backdrop === 'static') {
             _this9._triggerBackdropTransition();
           } else {
             _this9.hide();
