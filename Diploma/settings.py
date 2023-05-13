@@ -32,6 +32,7 @@ SECRET_KEY = 'django-insecure-6v-km5ek+98hkvq^wf!*h1yiyg6lqeknkixqj%m^-j-#4k@y+u
 DEBUG = True
 #Hello
 ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = []
 GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
 CSRF_TRUSTED_ORIGINS = ['https://diploma-production-4824.up.railway.app']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -135,11 +136,12 @@ DATABASES = {
         'PASSWORD': os.environ["PGPASSWORD"],
         'HOST': os.environ["PGHOST"],
         'PORT': os.environ["PGPORT"],
+        #
         # 'NAME': 'kino_cms',
         # 'USER': 'postgres',
         # 'PASSWORD': 'buzaho4114',
         # 'HOST': '127.0.0.0',
-        # 'PORT': 5432,
+        # 'PORT': 5433,
     }
 }
 
