@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-6v-km5ek+98hkvq^wf!*h1yiyg6lqeknkixqj%m^-j-#4k@y+u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['diploma-production-a075.up.railway.app']
 GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
 CSRF_TRUSTED_ORIGINS = ['*']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
