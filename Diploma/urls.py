@@ -41,10 +41,10 @@ if proj.DEBUG:
                       path('__debug__/', include(debug_toolbar.urls)),
                   ] + urlpatterns + static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
 
-# from django.contrib.static.views import serve
-# from django.views.static import serve as media_serve
+# from django.contrib.staticfiles.views import serve
+# from django.views.staticfiles import serve as media_serve
 # from django.conf import settings
 #
 # if not settings.DEBUG:
-#     urlpatterns.append(path('static/<path:path>', serve, {"insecure": True}))
+#     urlpatterns.append(path('staticfiles/<path:path>', serve, {"insecure": True}))
 #     urlpatterns.append(path('media/<path:path>', media_serve, {"document_root": proj.MEDIA_ROOT}))
