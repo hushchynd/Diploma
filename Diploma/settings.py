@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'django.contrib.postgres',
     "django_bootstrap5",
-    "django_google_maps",
     "cloudinary",
     "cloudinary_storage",
     "django_google_maps",
