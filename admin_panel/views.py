@@ -232,7 +232,7 @@ def get_task_info(request):
         }
         # data = task.state or task.result
 
-        return HttpResponse(json.dumps(data), content_type='application/json')
+        return HttpResponse(json.dump(data), content_type='application/json')
     else:
         return HttpResponse('No job id given.')
 
