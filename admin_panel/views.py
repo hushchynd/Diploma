@@ -227,8 +227,8 @@ def get_task_info(request):
     if task_id is not None:
         task = AsyncResult(task_id)
         data = {
-            'state': task.state,
-            'result': task.result,
+            'state': str(task.state),
+            'result': str(task.result),
         }
         # data = task.state or task.result
 
