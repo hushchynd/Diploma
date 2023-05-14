@@ -47,11 +47,11 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form page_form  layout='horizontal'   size='sm'%}
-{##}
-{#                <div class="d-none" id="pic1-data" data-size = '{{ page_form.instance.first_pic.path | filesize}}' data-name = '{{ page_form.first_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.first_pic.value }}'></div>#}
-{#                <div class="d-none" id="pic2-data" data-size = '{{ page_form.instance.second_pic.path | filesize}}' data-name = '{{ page_form.second_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.second_pic.value }}'></div>#}
-{#                <div class="d-none" id="pic3-data" data-size = '{{ page_form.instance.third_pic.path | filesize}}' data-name = '{{ page_form.third_pic.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.third_pic.value }}'></div>#}
-{#                <div class="d-none" id="banner-img-data" data-size = '{{ page_form.instance.banner.path | filesize}}' data-name = '{{ page_form.banner.value | filename }}' data-path = '{% get_media_prefix %}{{ page_form.banner.value }}'></div>#}
+
+                <div class="d-none" id="pic1-data"  data-path = '{{ page_form.first_pic.value.url }}'></div>
+                <div class="d-none" id="pic2-data"  data-path = '{{ page_form.second_pic.value.url }}'></div>
+                <div class="d-none" id="pic3-data"  data-path = '{{ page_form.third_pic.value.url }}'></div>
+                <div class="d-none" id="banner-img-data" data-path = '{{ page_form.banner.value.url }}'></div>
 
                 {% block content3 %}
 

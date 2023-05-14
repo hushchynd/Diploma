@@ -48,8 +48,8 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form news_form  layout='horizontal' show_help=True size='sm'%}
-                    <div class="d-none" id="card-img-data" data-size = '{{ news_form.instance.card_img.path | filesize}}' data-name = '{{ news_form.card_img.value | filename }}' data-path = '{{ news_form.card_img.value.url }}'></div>
-                    <div  class="d-none" id="banner-img-data" data-size = '{{ news_form.instance.banner.path | filesize}}' data-name = '{{ news_form.banner.value | filename }}' data-path = '{{ news_form.banner.value.url }}'></div>
+                    <div class="d-none" id="card-img-data" data-path = '{{ news_form.card_img.value.url }}'></div>
+                    <div  class="d-none" id="banner-img-data" data-path = '{{ news_form.banner.value.url }}'></div>
 
                 <div id="card-header mb-5" style="margin-bottom: 50px">
                     <h3 class="card-title text-center">{% trans 'Галерея' %}</h3>

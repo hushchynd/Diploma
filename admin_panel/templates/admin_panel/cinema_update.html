@@ -41,8 +41,8 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form form  layout='horizontal' show_help=True size='sm'%}
-                 <div  class="d-none logo-img-data" data-size = '{{ form.instance.logo.path | filesize}}' data-name = '{{ form.logo.value | filename }}' data-path = '{{ form.logo.value.url }}'></div>
-                 <div  class="d-none banner-img-data" data-size = '{{ form.instance.banner.path | filesize}}' data-name = '{{ form.banner.value | filename }}' data-path = '{{ form.banner.value.url }}'></div>
+                 <div  class="d-none logo-img-data"  data-path = '{{ form.logo.value.url }}'></div>
+                 <div  class="d-none banner-img-data" data-path = '{{ form.banner.value.url }}'></div>
 
 
                 <div class="card-header mb-5">

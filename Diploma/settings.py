@@ -45,9 +45,9 @@ DEFAULT_FROM_EMAIL = 'dhushchyn@gmail.com'
 DEFAULT_TO_EMAIL = 'Your email'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_BROKER_URL = "rediss://:p935eb5f0097da33d3517959945c79180f38c8a05ea62bdac9c4e82bf405e51e5@ec2-52-71-63-156.compute-1.amazonaws.com:13730"
+CELERY_BROKER_URL = "redis://default:Ush7wuyuBLvjnzmTnULO@containers-us-west-106.railway.app:5452"
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = "rediss://:p935eb5f0097da33d3517959945c79180f38c8a05ea62bdac9c4e82bf405e51e5@ec2-52-71-63-156.compute-1.amazonaws.com:13730"
+CELERY_RESULT_BACKEND = "redis://default:Ush7wuyuBLvjnzmTnULO@containers-us-west-106.railway.app:5452"
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
@@ -84,7 +84,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
@@ -137,11 +136,11 @@ DATABASES = {
         'HOST': os.environ["PGHOST"],
         'PORT': os.environ["PGPORT"],
         #
-        # 'NAME': 'kino_cms',
+        # 'NAME': 'railway',
         # 'USER': 'postgres',
-        # 'PASSWORD': 'buzaho4114',
-        # 'HOST': '127.0.0.0',
-        # 'PORT': 5433,
+        # 'PASSWORD': 'pKOBaMVgJ0ZapwLtqoYN',
+        # 'HOST': 'containers-us-west-154.railway.app',
+        # 'PORT': 7017,
     }
 }
 

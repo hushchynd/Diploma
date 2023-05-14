@@ -1,7 +1,7 @@
 {% extends 'admin_panel/base3.html' %}
 {% load static %}
 {% load i18n %}
-
+{% load file_filters %}
 {% block head %}
        <link rel="stylesheet" href="{% static 'admin_panel/mailing/mailing.css' %}">
        <link rel="stylesheet" href="{% static 'admin_panel/mailing/upload_html.css' %}">
@@ -74,7 +74,7 @@
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="templates_filter" id="{{ file.id }}" value="{{ file.id }}">
                           <label class="form-check-label" for="{{ file.id }}">
-                            {{ file.filename }}
+                            {{ file.template_html.name | filename }}
                               <a href="{% url 'delete_template' file.id %}">
                                 <div class="list-item__del">
                                     {% trans 'Удалить' %}

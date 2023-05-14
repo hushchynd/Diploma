@@ -48,8 +48,8 @@
             <div class="card-body mb-5 ">
                 {% csrf_token %}
                 {% bootstrap_form stock_form  layout='horizontal' show_help=True size='sm'%}
-                    <div class="d-none" id="card-img-data" data-size = '{{ stock_form.instance.card_img.path | filesize}}' data-name = '{{ stock_form.card_img.value | filename }}' data-path = '{{ stock_form.card_img.value.url }}'></div>
-                    <div  class="d-none" id="banner-img-data" data-size = '{{ stock_form.instance.banner.path | filesize}}' data-name = '{{ stock_form.banner.value | filename }}' data-path = '{{ stock_form.banner.value.url }}'></div>
+                    <div class="d-none" id="card-img-data"  data-path = '{{ stock_form.card_img.value.url }}'></div>
+                    <div  class="d-none" id="banner-img-data" data-path = '{{ stock_form.banner.value.url }}'></div>
 
 
                 <div id="card-header mb-5" style="margin-bottom: 50px">

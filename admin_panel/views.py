@@ -197,9 +197,8 @@ def mailing(request):
                     'templates_html': templates_html,
                 }
                 return render(request, 'admin_panel/mailing.html', context=data)
-
-        with open(f'media/{obj.template_html}', 'r') as file:
-            html_content = file.read()
+        import urllib.request
+        html_content = urllib.request.urlopen(f'{obj.template_html.url}').read()
         to = []
         for i in users:
             to.append(i.email)

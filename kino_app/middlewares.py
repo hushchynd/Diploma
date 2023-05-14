@@ -10,7 +10,7 @@ def baseView(request):
     return {
         'banner': getBanner(),
         'pages': Page.objects.all(),
-        'number1': '+380685126322',
-        'number2': '+380685126322',
-        'seo_text': "info.seo_text",
+        'number1': info.number,
+        'number2': info.number2,
+        'seo_text': info.seo_text,
     }
