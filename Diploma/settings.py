@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'kino_app.apps.KinoAppConfig',
     'admin_panel.apps.AdminPanelConfig',
     'user.apps.UserConfig',
@@ -130,17 +129,13 @@ WSGI_APPLICATION = 'Diploma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': os.environ["PGDATABASE"],
-        # 'USER': os.environ["PGUSER"],
-        # 'PASSWORD': os.environ["PGPASSWORD"],
-        # 'HOST': os.environ["PGHOST"],
-        # 'PORT': os.environ["PGPORT"],
+        'NAME': os.environ["PGDATABASE"],
+        'USER': os.environ["PGUSER"],
+        'PASSWORD': os.environ["PGPASSWORD"],
+        'HOST': os.environ["PGHOST"],
+        'PORT': os.environ["PGPORT"],
 
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'pKOBaMVgJ0ZapwLtqoYN',
-        'HOST': 'containers-us-west-154.railway.app',
-        'PORT': 7017,
+
     }
 }
 
