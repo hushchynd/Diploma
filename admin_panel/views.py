@@ -199,6 +199,7 @@ def mailing(request):
                 return render(request, 'admin_panel/mailing.html', context=data)
         import urllib.request
         html_content = urllib.request.urlopen(f'{obj.template_html.url}').read()
+        html_content = html_content.decode()
         to = []
         for i in users:
             to.append(i.email)
@@ -227,8 +228,8 @@ def get_task_info(request):
     if task_id is not None:
         task = AsyncResult(task_id)
         data = {
-            'state': str(task.state),
-            'result': str(task.result),
+            'state': task.state,
+            'result': task.result,
         }
         # data = task.state or task.result
 

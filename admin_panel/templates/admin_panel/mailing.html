@@ -123,7 +123,6 @@
                         'task_id': tid,
                             },
                     success: function (data) {
-
                         if (data.state == 'PROGRESS') {
                             pgrbar.parent().removeClass('d-none')
                             pgrbar.css('width', String(data.result.current / data.result.total * 100) + '%');
