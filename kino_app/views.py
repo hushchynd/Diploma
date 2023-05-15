@@ -189,7 +189,7 @@ def schedule(request):
         if films_filter:
             seances = seances.filter(film_id__in=films_filter)
         if techs_filter:
-            seances = seances.filter(tech_type__name__in=techs_filter)
+            seances = seances.filter(tech_type__id__in=techs_filter)
 
     result = []
     for film_seance in seances.distinct('film_id'):
@@ -219,7 +219,7 @@ def schedule(request):
     for film in Film.objects.filter(released__lt=today_date).order_by('name'):
         film_list.append(('unchecked', film))
     tech_list = []
-    for tech in TechnologyType.objects.order_by('name'):
+    for tech in TechnologyType.objects.order_by('id'):
         tech_list.append(('unchecked', tech))
 
     hall_list = []
@@ -236,9 +236,9 @@ def schedule(request):
 
 
 def schedule_for_film(request, id):
-    seances = Seance.objects.filter(date__gte=date.today())
-    seances = Seance.objects.filter(film_id=id)
-    print(id)
+    seances = Seance.objects.filter(date__gte=date.today(),film_id=id)
+
+    print(seances.count())
 
     date_filter = request.GET.get('period')
     halls_filter = request.GET.getlist('halls_filter')
@@ -259,7 +259,7 @@ def schedule_for_film(request, id):
     if films_filter:
         seances = seances.filter(film_id__in=films_filter)
     if techs_filter:
-        seances = seances.filter(tech_type__name__in=techs_filter)
+        seances = seances.filter(tech_type__id__in=techs_filter)
 
     result = []
     for date_seance in seances.distinct('date'):
@@ -279,10 +279,10 @@ def schedule_for_film(request, id):
         result.append((date_seance.date, hall_film))
 
     film_list = []
-    for film in Film.objects.order_by('name'):
+    for film in Film.objects.order_by('id'):
         film_list.append(('unchecked', film))
     tech_list = []
-    for tech in TechnologyType.objects.order_by('name'):
+    for tech in TechnologyType.objects.order_by('id'):
         tech_list.append(('unchecked', tech))
 
     hall_list = []
@@ -314,8 +314,8 @@ def card_cinema(request, name):
     return render(request, '../templates/kino_app/cinema_card2.html', context=data)
 
 
-def film_card(request, name):
-    seances = Seance.objects.filter(film__name=name)
+def film_card(request, id):
+    seances = Seance.objects.filter(film__id=id)
     date_filter = request.GET.get('date_filter')
     halls_filter = request.GET.getlist('halls_filter')
     techs_filter = request.GET.getlist('techs_filter')
@@ -352,7 +352,7 @@ def film_card(request, name):
     hall_list = Hall.objects.order_by('number')
     tech_list = TechnologyType.objects.order_by('name')
 
-    film = Film.objects.get(name=name)
+    film = Film.objects.get(id=id)
     scriptwriter = film.scriptwriters.all()
     editor = film.editors.all()
     producer = film.producers.all()

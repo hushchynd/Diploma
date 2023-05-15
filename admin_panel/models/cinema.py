@@ -147,7 +147,7 @@ class Hall(models.Model):
                                null=True, )
     creation_date = models.DateField(verbose_name=_("Дата создания"), auto_now_add=True)
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, default=1)
-    scheme_html = models.TextField(blank=True, null=True)
+    scheme_html = models.TextField(null=False,default='')
     seo_block = models.OneToOneField(SeoBlock, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

@@ -77,7 +77,7 @@
                          <div class="form-check row">
                              {% for checked,tech in tech_list %}
                                  <div class="col">
-                                    <input name="techs_filter"  class="form-check-input" type="checkbox" {% if checked == 'checked' %}  checked {% endif %} value="{{ tech.name }}">
+                                    <input name="techs_filter"  class="form-check-input" type="checkbox" {% if checked == 'checked' %}  checked {% endif %} value="{{ tech.id }}">
                                     <label class="form-check-label"  for="{{ tech.name }}">
                                         {{ tech.name }}
                                     </label>
@@ -93,10 +93,10 @@
                  {% for film ,date_film  in result %}
                  <div class="film__item mb-3 bg-gray-light p-3" style="background: #C2C2C2;">
                      <div class="d-flex flex-sm-row flex-column align-items-center align-items-sm-start gap-2">
-                         <div class="film__title d-sm-none fs-4 mb-3"><a href="{% url 'film_card' film.name %}">{{ film.name }} ({{ film.legal_age}}+)</a></div>
+                         <div class="film__title d-sm-none fs-4 mb-3"><a href="{% url 'film_card' film.id %}">{{ film.name }} ({{ film.legal_age}}+)</a></div>
                          <img src="{{ film.card_img.url }}" style="width: 12rem" class=" flex-shrink-1 img-fluid film__img "/>
                          <div class="d-flex flex-column justify-content-center flex-shrink-0">
-                            <div class="film__title fs-4 mb-3 d-none d-sm-block "><a href="{% url 'film_card' film.name %}">{{ film.name }} ({{ film.legal_age}}+)</a></div>
+                            <div class="film__title fs-4 mb-3 d-none d-sm-block "><a href="{% url 'film_card' film.id %}">{{ film.name }} ({{ film.legal_age}}+)</a></div>
                             <div class="film__info info">
                                  {% for date,hall_film in date_film %}
                                      <div class="info__date">
