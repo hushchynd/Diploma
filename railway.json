@@ -4,14 +4,8 @@
         "builder": "NIXPACKS"
     },
     "deploy": {
-        "startCommand": "python manage.py migrate && python manage.py collectstatic && celery -A Diploma worker -l info && gunicorn Diploma.wsgi",
-        "restartPolicyType": "ON_FAILURE",
-        "restartPolicyMaxRetries": 10
-    },
-    "deploy": {
-        "startCommand": "celery -A Diploma worker -l info",
+        "startCommand": "python manage.py migrate && python manage.py collectstatic && gunicorn Diploma.wsgi",
         "restartPolicyType": "ON_FAILURE",
         "restartPolicyMaxRetries": 10
     }
-
 }
