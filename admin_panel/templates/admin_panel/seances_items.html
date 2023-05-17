@@ -2,7 +2,7 @@
 
 {% for film ,date_film  in result %}
  <div class="film__item mb-3 bg-gray-light p-3">
-     <div class="film__title fs-1 mb-3"><a href="{% url 'film_card' film.name %}">{{ film.name }} ({{ film.legal_age}}+)</a></div>
+     <div class="film__title fs-1 mb-3">{{ film.name }} ({{ film.legal_age}}+)</div>
      <div class="film__info info">
          {% for date,hall_film in date_film %}
              <div class="info__date">

@@ -855,7 +855,7 @@ def seances(request):
         if films_filter:
             seances = seances.filter(film_id__in=films_filter)
         if techs_filter:
-            seances = seances.filter(tech_type__name__in=techs_filter)
+            seances = seances.filter(tech_type__id__in=techs_filter)
 
     result = []
     for film_seance in seances.distinct('film_id'):
@@ -884,7 +884,7 @@ def seances(request):
     for film in Film.objects.filter(released__lt=today_date).order_by('name'):
         film_list.append(('unchecked', film))
     tech_list = []
-    for tech in TechnologyType.objects.order_by('name'):
+    for tech in TechnologyType.objects.order_by('id'):
         tech_list.append(('unchecked', tech))
 
     hall_list = []
