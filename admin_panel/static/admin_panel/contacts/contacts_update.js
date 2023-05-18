@@ -11,8 +11,8 @@ $('.form__horizontal-img').each(function () {
 })
 $('.form__horizontal-img').each(async function () {
     let path = $(this).closest('.card-body').find('.logo-data').data('path');
-    let name = $(this).closest('.card-body').find('.logo-data').data('name');
-    let size = $(this).closest('.card-body').find('.logo-data').data('size');
+    // let name = $(this).closest('.card-body').find('.logo-data').data('name');
+    // let size = $(this).closest('.card-body').find('.logo-data').data('size');
     const srcToFile = async (src, fileName) => {
         const response = await axios.get(src, {
             responseType: "blob",
@@ -20,9 +20,12 @@ $('.form__horizontal-img').each(async function () {
         const mimeType = response.headers["content-type"];
         return new File([response.data], fileName, {type: mimeType});
     };
-    let datr = new DataTransfer()
-    datr.items.add(await srcToFile(path, name));
-    $(this).prop('files', datr.files)
+    // let datr = new DataTransfer()
+    // datr.items.add(await srcToFile(path, name));
+    // $(this).prop('files', datr.files)
+    let name = String(path).split('/')[String(path).split('/').length-1]
+    let file = await srcToFile(path, name)
+
     $(this).siblings('.preview').append(`
         <div class="preview__item d-inline position-relative text-center mt-3" style="width: 12rem" >
             <div class="preview__del text-danger" style="cursor:pointer;">
@@ -32,20 +35,20 @@ $('.form__horizontal-img').each(async function () {
             </div>
             <img class="img-fluid" style="width: 12rem" src="${path}" alt="${name}"/>
             <div className="preview__info d-flex  flex-column position-absolute bottom-0 start-0">
-               <span>${bytesToSize(size)}</span>
+               <span>${bytesToSize(file.size)}</span>
             </div>
          </div>
     `)
     $('.preview__del').on('click', function (event) {
-        let inputFile = $(this).closest('.preview').siblings('.form__horizontal-img')
-        const dt = new DataTransfer();
-        let name = $(this).find('svg').data('name')
-        for (let i = 0; i < inputFile.prop('files').length; i++) {
-            if (inputFile.prop('files')[i].name !== name) { // фильтруем элемент который надо удалить
-                dt.items.add(inputFile.prop('files')[i])
-            }
-        }
-        inputFile.prop('files', dt.files)  // присваиваем отфильтрованную коллекцию
+        // let inputFile = $(this).closest('.preview').siblings('.form__horizontal-img')
+        // const dt = new DataTransfer();
+        // let name = $(this).find('svg').data('name')
+        // for (let i = 0; i < inputFile.prop('files').length; i++) {
+        //     if (inputFile.prop('files')[i].name !== name) { // фильтруем элемент который надо удалить
+        //         dt.items.add(inputFile.prop('files')[i])
+        //     }
+        // }
+        // inputFile.prop('files', dt.files)  // присваиваем отфильтрованную коллекцию
         $(this).closest('.preview__item').remove()
 
     })

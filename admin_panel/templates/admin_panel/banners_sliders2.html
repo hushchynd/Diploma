@@ -50,7 +50,7 @@
                          {{ top_carousel_formset.management_form }}
                          {% for form in top_carousel_formset %}
                              <div class="card__item mr-5 mb-5">
-                                 <img class="card__preview card__preview_horizontal img-fluid" src="{{ form.img.value.url }}" alt="">
+                                 <img class="card__preview card__preview_horizontal img-fluid" src="{% get_media_prefix %}{{ form.img.value }}" alt="">
                                  <button type='button' class='btn card__btn card__btn_change btn-primary mb-3'> {% trans 'Изменить картинку' %}  </button>
                                  {% bootstrap_form form %}
                                   <button type='button' class="btn card__btn card__btn_remove bg-danger">{% trans 'Удалить' %}</button>

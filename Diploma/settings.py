@@ -31,10 +31,10 @@ SECRET_KEY = 'django-insecure-6v-km5ek+98hkvq^wf!*h1yiyg6lqeknkixqj%m^-j-#4k@y+u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #Hello
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = []
 GOOGLE_MAPS_API_KEY = 'AIzaSyBCATtzO_qe6Iv19vT0x0eymL7DKuFzotI'
-CSRF_TRUSTED_ORIGINS = ['https://diploma-production-4824.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['https://diploma-production-4824.up.railway.app']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -45,9 +45,9 @@ DEFAULT_FROM_EMAIL = 'dhushchyn@gmail.com'
 DEFAULT_TO_EMAIL = 'Your email'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_BROKER_URL = "redis://default:Ush7wuyuBLvjnzmTnULO@containers-us-west-106.railway.app:5452"
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = "redis://default:Ush7wuyuBLvjnzmTnULO@containers-us-west-106.railway.app:5452"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
@@ -67,8 +67,6 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'django.contrib.postgres',
     "django_bootstrap5",
-    "cloudinary_storage",
-    "cloudinary",
     "django_google_maps",
 
 ]
@@ -83,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 ROOT_URLCONF = 'Diploma.urls'
@@ -129,17 +126,11 @@ WSGI_APPLICATION = 'Diploma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': os.environ["PGDATABASE"],
-        # 'USER': os.environ["PGUSER"],
-        # 'PASSWORD': os.environ["PGPASSWORD"],
-        # 'HOST': os.environ["PGHOST"],
-        # 'PORT': os.environ["PGPORT"],
-
-        'NAME': "railway",
-        'USER': "postgres",
-        'PASSWORD': "pKOBaMVgJ0ZapwLtqoYN",
-        'HOST': "containers-us-west-154.railway.app",
-        'PORT': 7017,
+        'NAME': 'kino_cms',
+        'USER': 'postgres',
+        'PASSWORD': 'buzaho4114',
+        'HOST': '127.0.0.1',
+        'PORT': 5432
     }
 }
 
@@ -185,12 +176,10 @@ LOCALE_PATHS = [
 ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = []
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -202,11 +191,5 @@ INTERNAL_IPS = [
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dq3mkjc6i",
-    "API_KEY": "538121678774191",
-    "API_SECRET": "G2jsRBW6bW1sVg9rL3XAOmAOguU"
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

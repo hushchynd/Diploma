@@ -31,7 +31,7 @@ urlpatterns = i18n_patterns(
     path('', include('kino_app.urls')),
 
 ) + static(proj.STATIC_URL, document_root=proj.STATIC_ROOT)
-# urlpatterns += static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
+urlpatterns += static(proj.MEDIA_URL, document_root=proj.MEDIA_ROOT)
 
 # if proj.DEBUG:
 #     import debug_toolbar

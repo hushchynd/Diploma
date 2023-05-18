@@ -49,7 +49,7 @@
                 </div>
                 <div class="card-body">
                     {% bootstrap_form form  layout='horizontal'   size='sm'%}
-                    <div class="logo-data" data-size = '{{ form.instance.logo.path | filesize}}' data-name = '{{ form.logo.value | filename }}' data-path = '{{ form.logo.value.url }}'></div>
+                    <div class="logo-data" data-path = '{{ form.logo.value.url }}'></div>
     {#                <div class="card-header mb-5">#}
     {#                    <h3 class="card-title text-center">Seo блок</h3>#}
     {#                </div>#}

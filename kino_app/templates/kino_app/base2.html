@@ -18,7 +18,7 @@
     {% block head %}
     {% endblock %}
 </head>
-<body style="background: url('{{ banner.img.url }}') no-repeat fixed center;">
+<body style="background: url('{% get_media_prefix %}{{ banner.img }}') no-repeat fixed center;">
     <div class="wrapper">
         <header class="header">
             <div class="container">
